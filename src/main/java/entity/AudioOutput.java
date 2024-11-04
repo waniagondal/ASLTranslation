@@ -1,2 +1,3 @@
-package entity;public class AudioOutput {
+package entity;
+public class AudioOutput {
 }
