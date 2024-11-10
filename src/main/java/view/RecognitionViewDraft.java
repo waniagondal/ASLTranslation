@@ -15,7 +15,7 @@ public class RecognitionViewDraft {
     }
 
     // A draft for visualizing the View Model
-    public static void main(String[] args) {
+    public static void initializeUI() {
         // Create the ASL Recognition Part (Left Part)
         JPanel ASL_Panel = new JPanel();
         ASL_Panel.setLayout(new BoxLayout(ASL_Panel, BoxLayout.Y_AXIS));
