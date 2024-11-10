@@ -7,8 +7,7 @@ public class RunSignLanguageApp {
         String pythonInterpreter = "python3";
         String scriptPath = "src/main/python/hand_gesture_recognition.py";
 
-        PythonScriptRunner scriptRunner = new PythonScriptRunner(pythonInterpreter, scriptPath);
-        String output = scriptRunner.runScript();
-        System.out.println("Python script output: \n" + output);
+        PredictionInterface predictor = new PredictionService(pythonInterpreter, scriptPath);
+        new RecognitionViewDraft(predictor);
     }
 }
