@@ -30,7 +30,7 @@ public class ProcessSpeechInputUseCaseTest {
 
     @Test
     public void testProcessSpeech_Success() throws Exception {
-        byte[] audioData = new byte[]{1, 2, 3}; // 示例音频数据
+        byte[] audioData = new byte[]{1, 2, 3};
 
         AudioTranscription result = useCase.processSpeech(audioData);
 
