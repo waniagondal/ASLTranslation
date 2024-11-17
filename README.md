@@ -1,7 +1,7 @@
 # CSC207-Project
 Final Project for CSC207
 
-Team User Story:
+**Gesture User Story -- Wania** ✅
 1. Gesture Detection/Tracking ✅
 2. Model training ✅
 3. Integration of Model so text is displayed ✅
@@ -33,13 +33,13 @@ __
 -Configure parameters for voice and speed customization within the Google Text-to-Speech API requests.
 -Bind the selected customization settings in the UI to dynamically adjust API requests.
 __
-4. **Login Story:** As a user, I want to log in using either email or social media to securely access my profile and settings **(Wania)**.
+4. **Login Story:** As a user, I want to log in using either email or social media to securely access my profile and settings **(Changed to Team Story)**
 **Expanded Implementation Plan:**
 -Implement authentication options for both email and social media login (e.g., using OAuth for Google, Facebook).
 -Use secure methods to handle user credentials and token storage (Lab Five for Inspiration)
 -Display error messages for login failures (e.g., incorrect password, network issues).
 __
-5. **Transcription for Hearing Impairments Story:** As a user with hearing impairments, I want the application to transcribe the spoken words of others into text, so I can read what they are saying and engage in the conversation effectively **(Trent(Fang))**.
+5. **Transcription for Hearing Impairments Story:** As a user with hearing impairments, I want the application to transcribe the spoken words of others into text, so I can read what they are saying and engage in the conversation effectively **(Trent(Fang))**. ✅
 **Expanded Implementation Plan:**
 -Use the Speech-To-Text API to convert audio input into text transcription.
 -Enable a microphone button that triggers the transcription function and listens for audio input.
