@@ -7,6 +7,8 @@ import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
+import interface_adapter.Text2Speech.Text2SpeechController;
+
 public class SignLanguageView {
 
     private JFrame frame;
@@ -18,6 +20,8 @@ public class SignLanguageView {
     private GlowButton endTranscriptionButton;
     private JPanel mainPanel;
 
+    private final Text2SpeechController text2SpeechController;
+
     // Define a color scheme
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
@@ -26,6 +30,7 @@ public class SignLanguageView {
     private final Color TEXT_COLOR = new Color(44, 62, 80);
 
     public SignLanguageView() {
+        text2SpeechController = new Text2SpeechController(null);
         initializeUI();
     }
 
@@ -202,7 +207,8 @@ public class SignLanguageView {
     }
 
     private void performTextToSpeech() {
-        JOptionPane.showMessageDialog(frame, "Text-to-speech functionality not implemented yet.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        String inputText = signLanguageTextArea.getText();
+
     }
 
     private void beginTranscription() {

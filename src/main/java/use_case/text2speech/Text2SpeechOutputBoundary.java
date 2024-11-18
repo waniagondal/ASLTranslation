@@ -8,5 +8,7 @@ public interface Text2SpeechOutputBoundary {
      * Prepares the success view for the Text to Speech Use Case.
      * @param outputData the output data
      */
-    void prepareSuccessView(Text2SpeechInputData outputData);
+    void prepareSuccessView(Text2SpeechOutputData outputData);
+
+    void prepareFailView(String error);
 }
