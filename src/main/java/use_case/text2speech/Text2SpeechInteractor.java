@@ -5,33 +5,36 @@ package use_case.text2speech;
 import com.google.cloud.texttospeech.v1.*;
 import com.google.protobuf.ByteString;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class Text2SpeechInteractor implements Text2SpeechInputBoundary{
-    private final Text2SpeechOutputBoundary userpresenter;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 
-    public Text2SpeechInteractor(Text2SpeechOutputBoundary text2SpeechOutputBoundary) {
-        this.userpresenter = text2SpeechOutputBoundary;
+public class Text2SpeechInteractor implements Text2SpeechInputBoundary{
+
+    public Text2SpeechInteractor() {
     }
 
     @Override
-    public void execute(Text2SpeechInputData Text2SpeechInputData) throws IOException {
+    public void execute(Text2SpeechInputData Text2SpeechInputData) throws IOException, LineUnavailableException {
         // Instantiates a client
         ByteString audioContents;
-        AudioInputStream audioStream;
         try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
             // Set the text input to be synthesized
             SynthesisInput input = SynthesisInput.newBuilder().setText(Text2SpeechInputData.getText()).build();
             // Get the required gender
             final boolean gender = Text2SpeechInputData.getGender();
+            String gend = "FEMALE";
+            if (gender == true){
+                gend = "MALE";
+            }
             // Build the voice request, select the language code and the ssml voice gender
             VoiceSelectionParams voice =
                     VoiceSelectionParams.newBuilder()
                             .setLanguageCode(Text2SpeechInputData.getLanguageCode())
-                            .setSsmlGender(SsmlVoiceGender.valueOf(String.valueOf(gender)))
+                            .setSsmlGender(SsmlVoiceGender.valueOf(gend))
                             .build();
 
             // Select the type of audio file you want returned
@@ -49,11 +52,15 @@ public class Text2SpeechInteractor implements Text2SpeechInputBoundary{
             audioContents = response.getAudioContent();
 
             // Convert ByteString to an audio stream for playback
-            audioStream = new AudioInputStream(
+            AudioInputStream audioStream = new AudioInputStream(
                     new ByteArrayInputStream(audioContents.toByteArray()),
                     new AudioFormat(16000, 16, 1, true, false),
                     audioContents.size());
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream); // Open the AudioInputStream
+            clip.start();
         }
-        final Text2SpeechOutputData Text2SpeechOutputData = new Text2SpeechOutputData(audioStream);
+        final Text2SpeechOutputData Text2SpeechOutputData = new Text2SpeechOutputData(audioContents);
     }
 }

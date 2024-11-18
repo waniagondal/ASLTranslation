@@ -4,6 +4,7 @@ import entity.AudioParam;
 import use_case.text2speech.Text2SpeechInputBoundary;
 import use_case.text2speech.Text2SpeechInputData;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 
 /**
@@ -23,7 +24,7 @@ public class Text2SpeechController {
      * @param languageCode the language code
      * @param audioParam the settings for the audio
      */
-    public void execute(String text, String languageCode, AudioParam audioParam) throws IOException {
+    public void execute(String text, String languageCode, AudioParam audioParam) throws IOException, LineUnavailableException {
         final Text2SpeechInputData text2SpeechInputData = new Text2SpeechInputData(text, languageCode, audioParam);
 
         userText2SpeechUseCaseInteractor.execute(text2SpeechInputData);
