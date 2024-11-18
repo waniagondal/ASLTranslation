@@ -9,7 +9,7 @@ Final Project for CSC207
 5. Testing (done through checking accuracy on each gesture - wania (not shown in commits) ✅
 
 __
-1. **Secondary User Story:** As a user who is unfamiliar with sign language, I want the application to vocalize the interpreted text so I can hear what the person (who is hard of hearing) is communicating with their sign language **(Shuxiao)**.
+1. **Secondary User Story:** As a user who is unfamiliar with sign language, I want the application to vocalize the interpreted text so I can hear what the person (who is hard of hearing) is communicating with their sign language **(Shuxiao)**. ✅
 **Expanded Implementation Plan:**
 -Use the Google Text-to-Speech API to convert interpreted text into spoken language.
 -Inject this API into a button labeled "Speak" or "Voice Output."
@@ -27,7 +27,7 @@ __
 -After translating the text, send the translated text to the Text-to-Speech API to vocalize it in the selected language.
 __
 3. **Customization Story:** As a user, I want to customize the voice and speed of the spoken output in the application, so I can tailor the experience to my preferences or need **(Gavin)**.
-**Expanded Implementation Plan:**
+**Expanded Implementation Plan:** ✅
 -Create a settings menu with options to adjust: Voice type (male, female, etc.), Speaking speed (slow, normal, fast)
 -Store these settings in user preferences if logged in.
 -Configure parameters for voice and speed customization within the Google Text-to-Speech API requests.
