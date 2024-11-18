@@ -4,7 +4,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
@@ -12,9 +11,7 @@ import java.io.IOException;
 import entity.AudioParam;
 import entity.AudioParamFactory;
 import interface_adapter.Text2Speech.Text2SpeechController;
-import interface_adapter.Text2Speech.Text2SpeechPresenter;
 import use_case.text2speech.Text2SpeechInteractor;
-import use_case.text2speech.Text2SpeechOutputBoundary;
 
 public class SignLanguageView {
 
