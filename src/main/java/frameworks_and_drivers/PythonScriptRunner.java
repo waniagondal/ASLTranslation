@@ -13,19 +13,21 @@ public class PythonScriptRunner {
         this.scriptPath = scriptPath;
     }
 
-    public String runScript() throws IOException, InterruptedException {
+    public void runScriptContinuous(PredictionListener listener) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder(pythonInterpreter, scriptPath);
-        processBuilder.redirectErrorStream(true);
+        processBuilder.redirectErrorStream(false);
         Process process = processBuilder.start();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        StringBuilder output = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
-            output.append(line).append("\n");
+            listener.onPrediction(line);  // Trigger the listener for each new letter
         }
 
         process.waitFor();
-        return output.toString();
+    }
+
+    public interface PredictionListener {
+        void onPrediction(String prediction);
     }
 }

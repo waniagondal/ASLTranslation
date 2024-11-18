@@ -12,8 +12,8 @@ public class PredictionService implements PredictionInterface {
         this.scriptRunner = new PythonScriptRunner(pythonInterpreter, scriptPath);
     }
 
-    @Override
-    public String getPrediction() throws IOException, InterruptedException {
-        return scriptRunner.runScript();
+    public void startRecognition(PythonScriptRunner.PredictionListener listener) throws IOException, InterruptedException {
+        scriptRunner.runScriptContinuous(listener);
     }
 }
+

@@ -1,8 +1,10 @@
 package interface_adapters;
 
+import frameworks_and_drivers.PythonScriptRunner;
+
 import java.io.IOException;
 
 public interface PredictionInterface {
 
-    String getPrediction() throws IOException, InterruptedException;
+    void startRecognition(PythonScriptRunner.PredictionListener listener) throws IOException, InterruptedException;
 }
