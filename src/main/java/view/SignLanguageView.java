@@ -1,11 +1,17 @@
 package view;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.io.IOException;
+
+import entity.AudioParam;
+import entity.AudioParamFactory;
+import interface_adapter.Text2Speech.Text2SpeechController;
+import use_case.text2speech.Text2SpeechInteractor;
 
 public class SignLanguageView {
 
@@ -17,6 +23,9 @@ public class SignLanguageView {
     private GlowButton beginTranscriptionButton;
     private GlowButton endTranscriptionButton;
     private JPanel mainPanel;
+
+    private Text2SpeechInteractor text2SpeechInteractor;
+    private Text2SpeechController text2SpeechController;
 
     // Define a color scheme
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
@@ -103,7 +112,13 @@ public class SignLanguageView {
         frame.setVisible(true);
 
         // Add action listeners
-        textToSpeechButton.addActionListener(e -> performTextToSpeech());
+        textToSpeechButton.addActionListener(e -> {
+            try {
+                performTextToSpeech();
+            } catch (IOException | LineUnavailableException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         beginTranscriptionButton.addActionListener(e -> beginTranscription());
         endTranscriptionButton.addActionListener(e -> endTranscription());
     }
@@ -201,8 +216,13 @@ public class SignLanguageView {
         return panel;
     }
 
-    private void performTextToSpeech() {
-        JOptionPane.showMessageDialog(frame, "Text-to-speech functionality not implemented yet.", "Information", JOptionPane.INFORMATION_MESSAGE);
+    private void performTextToSpeech() throws IOException, LineUnavailableException {
+        String inputText = signLanguageTextArea.getText();
+        AudioParamFactory audioParamFactory = new AudioParamFactory();
+        final AudioParam audioParam = audioParamFactory.create(1, 1, true, 1);
+        text2SpeechInteractor = new Text2SpeechInteractor();
+        text2SpeechController = new Text2SpeechController(text2SpeechInteractor);
+        text2SpeechController.execute(inputText, "en-US", audioParam);
     }
 
     private void beginTranscription() {
