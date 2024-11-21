@@ -26,15 +26,15 @@ public class Text2SpeechInteractor implements Text2SpeechInputBoundary{
             SynthesisInput input = SynthesisInput.newBuilder().setText(Text2SpeechInputData.getText()).build();
             // Get the required gender
             final boolean gender = Text2SpeechInputData.getGender();
-            String gend = "FEMALE";
+            String genderValue = "FEMALE";
             if (gender == true){
-                gend = "MALE";
+                genderValue = "MALE";
             }
             // Build the voice request, select the language code and the ssml voice gender
             VoiceSelectionParams voice =
                     VoiceSelectionParams.newBuilder()
                             .setLanguageCode(Text2SpeechInputData.getLanguageCode())
-                            .setSsmlGender(SsmlVoiceGender.valueOf(gend))
+                            .setSsmlGender(SsmlVoiceGender.valueOf(genderValue))
                             .build();
 
             // Select the type of audio file you want returned
