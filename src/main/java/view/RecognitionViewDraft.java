@@ -3,6 +3,9 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+// Add the settings & logout buttons
+// Add logo
+// Make the whole UI look nicer (after finishing usecase implementation)
 public class RecognitionViewDraft {
         // A draft for visualizing the View Model
         public static void main(String[] args) {

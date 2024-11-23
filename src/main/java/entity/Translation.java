@@ -4,7 +4,8 @@ import java.util.List;
 
 public class Translation {
     private final String text;
-    private final String targetLanguage;
+    // Is this the translated text or the original transcription of ASL? - For now assuming this is original transcription
+    private String targetLanguage;
     private final List<String> translationHistory;
 
     Translation (String text, String targetLanguage, List<String> translationHistory) {
