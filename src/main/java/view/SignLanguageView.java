@@ -216,14 +216,28 @@ public class SignLanguageView {
         return panel;
     }
 
-    private void performTextToSpeech() throws IOException, LineUnavailableException {
+    // with audio from sign language text area
+    /*private void performTextToSpeech() throws IOException, LineUnavailableException {
         String inputText = signLanguageTextArea.getText();
         AudioParamFactory audioParamFactory = new AudioParamFactory();
-        final AudioParam audioParam = audioParamFactory.create(1, 1, true, 1);
+        final AudioParam audioParam = audioParamFactory.create(1, 1, false, 1);
+        text2SpeechInteractor = new Text2SpeechInteractor();
+        text2SpeechController = new Text2SpeechController(text2SpeechInteractor);
+        text2SpeechController.execute(inputText, "en-US", audioParam);
+    }*/
+
+    // with audio from sign language text area
+    private void performTextToSpeech() throws IOException, LineUnavailableException {
+        String inputText = transcriptionTextArea.getText();
+        AudioParamFactory audioParamFactory = new AudioParamFactory();
+        final AudioParam audioParam = audioParamFactory.create(1, 1, false, 1);
         text2SpeechInteractor = new Text2SpeechInteractor();
         text2SpeechController = new Text2SpeechController(text2SpeechInteractor);
         text2SpeechController.execute(inputText, "en-US", audioParam);
     }
+
+    // with audio from transcrpition text area
+
 
     private void beginTranscription() {
         transcriptionTextArea.setText("Transcription started...\n");
