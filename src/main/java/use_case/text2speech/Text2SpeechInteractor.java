@@ -2,11 +2,14 @@ package use_case.text2speech;
 
 // Imports the Google Cloud client library
 
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.texttospeech.v1.*;
 import com.google.protobuf.ByteString;
 
 import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFormat;
@@ -19,9 +22,16 @@ public class Text2SpeechInteractor implements Text2SpeechInputBoundary{
 
     @Override
     public void execute(Text2SpeechInputData Text2SpeechInputData) throws IOException, LineUnavailableException {
+        GoogleCredentials credentials = GoogleCredentials.fromStream(
+                new FileInputStream("/Users/yibinwang/Desktop/summer-ranger-441414-f8-0a863841dab9.json"));
+
+        TextToSpeechSettings settings = TextToSpeechSettings.newBuilder()
+                .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
+                .build();
+
         // Instantiates a client
         ByteString audioContents;
-        try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
+        try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create(settings)) {
             // Set the text input to be synthesized
             SynthesisInput input = SynthesisInput.newBuilder().setText(Text2SpeechInputData.getText()).build();
             // Get the required gender
