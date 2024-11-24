@@ -6,7 +6,7 @@ public class AudioParam {
     private final Boolean voiceType;
     private final double pitch;
 
-    AudioParam (double speed, double volume, Boolean voiceType, double pitch) {
+    public AudioParam(double speed, double volume, Boolean voiceType, double pitch) {
         this.speed = speed;
         this.volume = volume;
         this.voiceType = voiceType;
