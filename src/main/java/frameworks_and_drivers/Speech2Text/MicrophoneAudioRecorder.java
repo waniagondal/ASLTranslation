@@ -1,11 +1,14 @@
-package frameworks_and_drivers;
+package frameworks_and_drivers.Speech2Text;
 
-import interface_adapters.AudioRecorder;
+import interface_adapter.Speech2Text.AudioRecorder;
 
 import javax.sound.sampled.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
+/**
+ * A class that implements the {@link AudioRecorder} interface to record audio using the system's microphone.
+ * It captures audio data and provides it in byte array format for further processing.
+ */
 public class MicrophoneAudioRecorder implements AudioRecorder {
     private TargetDataLine targetDataLine;
     private AudioFormat audioFormat;
@@ -58,7 +61,9 @@ public class MicrophoneAudioRecorder implements AudioRecorder {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Stops the audio recording process. If the recorder is not recording, this method does nothing.
+     */
     @Override
     public void stop() {
         if (!isRecording) {
@@ -86,7 +91,11 @@ public class MicrophoneAudioRecorder implements AudioRecorder {
     public byte[] getAudioData() {
         return out != null ? out.toByteArray() : new byte[0];
     }
-
+    /**
+     * Configures and returns the audio format to be used for recording.
+     *
+     * @return The {@link AudioFormat} for the recording.
+     */
     private AudioFormat getAudioFormat() {
         float sampleRate = 16000F;
         int sampleSizeInBits = 16;

@@ -1,6 +1,6 @@
 package presenter;
 
-import interface_adapters.PredictionInterface;
+import interface_adapter.PredictionInterface;
 import view.SignLanguageView;
 
 import java.io.IOException;

@@ -1,5 +1,6 @@
 package entities;
 
+import entity.AudioTranscription;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

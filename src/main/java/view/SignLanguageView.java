@@ -8,8 +8,10 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 
+import controller.SpeechtoTextController;
 import entity.AudioParam;
 import entity.AudioParamFactory;
+import frameworks_and_drivers.Speech2Text.MicrophoneAudioRecorder;
 import interface_adapter.Text2Speech.Text2SpeechController;
 import use_case.text2speech.Text2SpeechInteractor;
 
@@ -27,6 +29,10 @@ public class SignLanguageView {
     private Text2SpeechInteractor text2SpeechInteractor;
     private Text2SpeechController text2SpeechController;
 
+    private SpeechtoTextController speechToTextController;
+    private MicrophoneAudioRecorder audioRecorder;
+
+
     // Define a color scheme
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
@@ -34,7 +40,9 @@ public class SignLanguageView {
     private final Color BACKGROUND_COLOR = new Color(236, 240, 241);
     private final Color TEXT_COLOR = new Color(44, 62, 80);
 
-    public SignLanguageView() {
+    public SignLanguageView(SpeechtoTextController speechToTextController) {
+        this.speechToTextController = speechToTextController;
+        this.audioRecorder = new MicrophoneAudioRecorder();
         initializeUI();
     }
 
@@ -243,12 +251,37 @@ public class SignLanguageView {
         transcriptionTextArea.setText("Transcription started...\n");
         beginTranscriptionButton.setEnabled(false);
         endTranscriptionButton.setEnabled(true);
+        startRecording();
     }
 
     private void endTranscription() {
         transcriptionTextArea.append("Transcription ended.\n");
         beginTranscriptionButton.setEnabled(true);
         endTranscriptionButton.setEnabled(false);
+        stopRecordingAndTranscribe();
+    }
+
+    private void startRecording() {
+        try {
+            audioRecorder.start();
+        } catch (Exception e) {
+            transcriptionTextArea.append("Error starting recording: " + e.getMessage() + "\n");
+            e.printStackTrace();
+        }
+    }
+
+    private void stopRecordingAndTranscribe() {
+        try {
+            audioRecorder.stop();
+            byte[] audioData = audioRecorder.getAudioData();
+
+            String transcription = speechToTextController.handleSpeechInput(audioData);
+            updateTranscriptionText("Transcription Result: " + transcription);
+
+        } catch (Exception e) {
+            transcriptionTextArea.append("Error during transcription: " + e.getMessage() + "\n");
+            e.printStackTrace();
+        }
     }
 
     public void updateDisplay(String prediction) {
