@@ -1,7 +1,7 @@
 package use_case;
 
 import frameworks_and_drivers.PythonScriptRunner;
-import interface_adapters.PredictionInterface;
+import interface_adapter.PredictionInterface;
 
 import java.io.IOException;
 

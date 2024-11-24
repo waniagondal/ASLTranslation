@@ -1,4 +1,4 @@
-package use_case.customize_voice;
+package interface_adapter.customize_voice;
 
 import entity.AudioParam;
 

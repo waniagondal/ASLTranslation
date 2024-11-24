@@ -1,10 +1,11 @@
 package use_case;
 
-import entities.AudioTranscription;
-import interface_adapters.SpeechInputBoundary;
-import interface_adapters.SpeechRecognizer;
+import entity.AudioTranscription;
+import interface_adapter.Speech2Text.SpeechInputBoundary;
+import interface_adapter.Speech2Text.SpeechRecognizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import use_case.Speech2Text.ProcessSpeechInputUseCase;
 
 import static org.junit.jupiter.api.Assertions.*;
 

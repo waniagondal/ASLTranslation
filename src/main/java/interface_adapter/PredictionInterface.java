@@ -1,4 +1,4 @@
-package interface_adapters;
+package interface_adapter;
 
 import frameworks_and_drivers.PythonScriptRunner;
 

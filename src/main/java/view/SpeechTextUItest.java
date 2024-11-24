@@ -1,7 +1,7 @@
 package view;
 
-import controllers.SpeechtoTextController;
-import frameworks_and_drivers.MicrophoneAudioRecorder;
+import controller.SpeechtoTextController;
+import frameworks_and_drivers.Speech2Text.MicrophoneAudioRecorder;
 
 import javax.swing.*;
 import java.awt.*;
