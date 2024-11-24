@@ -11,6 +11,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Objects;
 
 import controller.SpeechtoTextController;
 import entity.AudioParam;
@@ -272,24 +273,26 @@ public class SignLanguageView extends JPanel implements ActionListener, Property
     }
 
     // with audio from sign language text area
-    /*private void performTextToSpeech() throws IOException, LineUnavailableException {
+    private void performTextToSpeech() throws IOException, LineUnavailableException {
         String inputText = signLanguageTextArea.getText();
         AudioParamFactory audioParamFactory = new AudioParamFactory();
         final AudioParam audioParam = audioParamFactory.create(1, 1, false, 1);
+        String languageCode = getLanguageCode((String) languageBox.getSelectedItem());
         text2SpeechInteractor = new Text2SpeechInteractor();
         text2SpeechController = new Text2SpeechController(text2SpeechInteractor);
-        text2SpeechController.execute(inputText, "en-US", audioParam);
-    }*/
-
-    // with audio from sign language text area
-    private void performTextToSpeech() throws IOException, LineUnavailableException {
-        String inputText = transcriptionTextArea.getText();
-        AudioParamFactory audioParamFactory = new AudioParamFactory();
-        final AudioParam audioParam = audioParamFactory.create(1, 1, false, 1);
-        text2SpeechInteractor = new Text2SpeechInteractor();
-        text2SpeechController = new Text2SpeechController(text2SpeechInteractor);
-        text2SpeechController.execute(inputText, "en-US", audioParam);
+        text2SpeechController.execute(inputText, languageCode, audioParam);
     }
+
+//    // with audio from sign language text area
+//    private void performTextToSpeech() throws IOException, LineUnavailableException {
+//        String inputText = transcriptionTextArea.getText();
+//        AudioParamFactory audioParamFactory = new AudioParamFactory();
+//        String languagecode =
+//        final AudioParam audioParam = audioParamFactory.create(1, 1, false, 1);
+//        text2SpeechInteractor = new Text2SpeechInteractor();
+//        text2SpeechController = new Text2SpeechController(text2SpeechInteractor);
+//        text2SpeechController.execute(inputText, "en-US", audioParam);
+//    }
 
 
     private void beginTranscription() {
@@ -395,5 +398,23 @@ public class SignLanguageView extends JPanel implements ActionListener, Property
 
     public void setSelectLanguageController(TranslationController translationController) {
         this.translationController = translationController;
+    }
+
+    private String getLanguageCode(String language){
+
+        String languageCode;
+        if (Objects.equals(language, "English")){
+            languageCode = "en-US";
+        }
+        else if (Objects.equals(language, "French")){
+            languageCode = "fr-FR";
+        }
+        else if (Objects.equals(language, "Spanish")){
+            languageCode = "es-ES";
+        }
+        else {
+            languageCode = "zh-CN";
+        }
+        return languageCode;
     }
 }
