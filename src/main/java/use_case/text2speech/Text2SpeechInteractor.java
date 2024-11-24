@@ -23,7 +23,7 @@ public class Text2SpeechInteractor implements Text2SpeechInputBoundary{
     @Override
     public void execute(Text2SpeechInputData Text2SpeechInputData) throws IOException, LineUnavailableException {
         GoogleCredentials credentials = GoogleCredentials.fromStream(
-                new FileInputStream("C:/Users/Lenovo/Desktop/summer-ranger-441414-f8-0a863841dab9.json"));
+                new FileInputStream("/Users/yibinwang/Desktop/summer-ranger-441414-f8-0a863841dab9.json"));
 
         TextToSpeechSettings settings = TextToSpeechSettings.newBuilder()
                 .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
@@ -31,7 +31,7 @@ public class Text2SpeechInteractor implements Text2SpeechInputBoundary{
 
         // Instantiates a client
         ByteString audioContents;
-        try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
+        try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create(settings)) {
             // Set the text input to be synthesized
             SynthesisInput input = SynthesisInput.newBuilder().setText(Text2SpeechInputData.getText()).build();
             // Get the required gender
