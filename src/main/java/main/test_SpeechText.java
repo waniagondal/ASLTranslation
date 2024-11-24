@@ -1,8 +1,8 @@
 package main;
 
-import controllers.SpeechtoTextController;
-import frameworks_and_drivers.GoogleSpeechRecognizer;
-import use_case.ProcessSpeechInputUseCase;
+import controller.SpeechtoTextController;
+import frameworks_and_drivers.Speech2Text.GoogleSpeechRecognizer;
+import use_case.Speech2Text.ProcessSpeechInputUseCase;
 import view.SpeechTextUItest;
 
 
