@@ -1,4 +1,4 @@
-package interface_adapter.customize_voice;
+package data_access;
 
 import entity.AudioParam;
 
@@ -12,4 +12,6 @@ public interface CustomizeVoiceDataAccessInterface {
      * @param audioParam the audio parameters to be updated
      */
     void changeParam(AudioParam audioParam);
+
+    AudioParam get();
 }
