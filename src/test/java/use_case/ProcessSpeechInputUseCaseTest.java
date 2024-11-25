@@ -1,78 +1,83 @@
 package use_case;
 
-import entity.AudioTranscription;
-import interface_adapter.Speech2Text.SpeechInputBoundary;
-import interface_adapter.Speech2Text.SpeechRecognizer;
+import interface_adapter.PredictionInterface;
+import presenter.SignLanguagePresenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import use_case.Speech2Text.ProcessSpeechInputUseCase;
+
+import static org.mockito.Mockito.*;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ProcessSpeechInputUseCaseTest {
+/**
+ * Unit tests for the SignLanguageRecognitionUseCase.
+ */
+public class SignLanguageRecognitionUseCaseTest {
 
-    private SpeechRecognizer mockSpeechRecognizer;
-    private SpeechInputBoundary useCase;
+    private SignLanguageRecognitionUseCase useCase;
+    private PredictionInterface mockPredictor;
+    private SignLanguagePresenter mockPresenter;
 
     @BeforeEach
     public void setUp() {
-        mockSpeechRecognizer = new SpeechRecognizer() {
-            @Override
-            public String recognize(byte[] audioData) throws Exception {
-                if (audioData == null) {
-                    throw new IllegalArgumentException("audioData is null");
-                }
-                return "demo transcribed text";
-            }
-        };
+        // Mock PredictionInterface
+        mockPredictor = mock(PredictionInterface.class);
 
-        useCase = new ProcessSpeechInputUseCase(mockSpeechRecognizer);
+        // Mock SignLanguagePresenter
+        mockPresenter = mock(SignLanguagePresenter.class);
+
+        // Initialize the SignLanguageRecognitionUseCase with mocked dependencies
+        useCase = new SignLanguageRecognitionUseCase(mockPredictor, mockPresenter);
     }
 
     @Test
-    public void testProcessSpeech_Success() throws Exception {
-        byte[] audioData = new byte[]{1, 2, 3};
+    public void testStartRecognition_Success() throws IOException, InterruptedException {
+        // Arrange: Simulate that the predictor will pass a prediction (e.g., "A")
+        doNothing().when(mockPredictor).startRecognition(any());
 
-        AudioTranscription result = useCase.processSpeech(audioData);
+        // Act: Call startRecognition which should call the presenter with the predicted value
+        useCase.startRecognition();
 
-        assertNotNull(result, "it should not be null");
-        assertEquals("demo transcribed text", result.getText(), "it is same");
+        // Assert: Verify that the presenter was called with the correct prediction ("A")
+        verify(mockPredictor).startRecognition(any());
+        verify(mockPresenter).updateView("A");
     }
 
     @Test
-    public void testProcessSpeech_NullAudioData() {
-        byte[] audioData = null;
+    public void testStartRecognition_ExceptionHandling_IOException() throws IOException, InterruptedException {
+        // Arrange: Simulate the predictor throwing an IOException
+        doThrow(new IOException("Prediction failed")).when(mockPredictor).startRecognition(any());
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            useCase.processSpeech(audioData);
-        });
+        // Act & Assert: Ensure that an IOException is thrown when calling startRecognition
+        IOException exception = assertThrows(IOException.class, () -> useCase.startRecognition());
 
-        String expectedMessage = "audioData is null";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage), "audio cannot be null");
+        // Assert: Verify the exception message
+        assertEquals("Prediction failed", exception.getMessage());
     }
 
     @Test
-    public void testProcessSpeech_RecognizerThrowsException() throws Exception {
-        SpeechRecognizer exceptionThrowingRecognizer = new SpeechRecognizer() {
-            @Override
-            public String recognize(byte[] audioData) throws Exception {
-                throw new Exception("error");
-            }
-        };
+    public void testStartRecognition_ExceptionHandling_InterruptedException() throws IOException, InterruptedException {
+        // Arrange: Simulate the predictor throwing an InterruptedException
+        doThrow(new InterruptedException("Thread interrupted")).when(mockPredictor).startRecognition(any());
 
-        useCase = new ProcessSpeechInputUseCase(exceptionThrowingRecognizer);
+        // Act & Assert: Ensure that an InterruptedException is thrown when calling startRecognition
+        InterruptedException exception = assertThrows(InterruptedException.class, () -> useCase.startRecognition());
 
-        byte[] audioData = new byte[]{1, 2, 3};
+        // Assert: Verify the exception message
+        assertEquals("Thread interrupted", exception.getMessage());
+    }
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            useCase.processSpeech(audioData);
-        });
+    @Test
+    public void testPredictionPassedToPresenter() throws IOException, InterruptedException {
+        // Arrange: Simulate the predictor returning the prediction "B"
+        doNothing().when(mockPredictor).startRecognition(any());
 
-        String expectedMessage = "error";
-        String actualMessage = exception.getMessage();
+        // Act: Call startRecognition to trigger the prediction process
+        useCase.startRecognition();
 
-        assertTrue(actualMessage.contains(expectedMessage), "");
+        // Assert: Verify that the presenter is updated with the correct prediction
+        verify(mockPresenter).updateView("B");
     }
 }
