@@ -168,7 +168,7 @@ public class SignLanguageView extends JPanel implements ActionListener, Property
     }
 
     private JPanel createLogoPanel() {
-        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel logoPanel = new JPanel(new BorderLayout()); // Set the gap between logo + title & buttons
         logoPanel.setBackground(BACKGROUND_COLOR);
 
         ImageIcon logoIcon = new ImageIcon("src/main/python/model/resources/gesture_bridge_logo.png");
@@ -179,9 +179,28 @@ public class SignLanguageView extends JPanel implements ActionListener, Property
         logoTextLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         logoTextLabel.setForeground(PRIMARY_COLOR);
 
-        logoPanel.add(logoImageLabel);
-        logoPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        logoPanel.add(logoTextLabel);
+        // Change UI - add logo + title to a panel, and add "settings" & "logout" button to the other
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        titlePanel.setBackground(BACKGROUND_COLOR);
+        titlePanel.add(logoImageLabel);
+        titlePanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        titlePanel.add(logoTextLabel);
+
+        // Create the panels for the two buttons
+        JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        settingsPanel.setBackground(BACKGROUND_COLOR);
+        JButton settingsButton = new GlowButton("Settings", PRIMARY_COLOR);
+        JButton logoutButton = new GlowButton("Logout", PRIMARY_COLOR);
+        settingsPanel.add(settingsButton);
+        settingsPanel.add(logoutButton);
+
+        // logoPanel pieces those two together
+        logoPanel.add(titlePanel, BorderLayout.CENTER);
+        logoPanel.add(settingsPanel, BorderLayout.EAST);
+
+        // logoPanel.add(logoImageLabel);
+        // logoPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        // logoPanel.add(logoTextLabel);
 
         return logoPanel;
     }
