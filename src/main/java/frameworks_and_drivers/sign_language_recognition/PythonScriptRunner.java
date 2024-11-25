@@ -54,7 +54,7 @@ public class PythonScriptRunner {
      * Runs the Python script continuously and triggers the listener with predictions.
      *
      * @param listener the callback for each line of output (prediction)
-     * @throws IOException          if there is an error with I/O operations
+     * @throws IOException if there is an error with I/O operations
      * @throws InterruptedException if the thread is interrupted
      */
     public void runScriptContinuous(PredictionListener listener) throws IOException, InterruptedException {

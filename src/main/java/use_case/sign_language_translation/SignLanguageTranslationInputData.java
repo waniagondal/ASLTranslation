@@ -2,7 +2,7 @@ package use_case.sign_language_translation;
 
 /**
  * Input Data for the Sign Language Translation Use Case.
- * This class encapsulates the input parameters required to perform a sign language translation,
+ * This class encapsulates the input parameters required to perform a sign language signLanguageTranslationDisplay,
  * including the target language and the text to be translated.
  */
 public class SignLanguageTranslationInputData {
@@ -22,9 +22,9 @@ public class SignLanguageTranslationInputData {
     }
 
     /**
-     * Gets the target language for translation.
+     * Gets the target language for signLanguageTranslationDisplay.
      *
-     * @return The target language for the translation.
+     * @return The target language for the signLanguageTranslationDisplay.
      */
     public String getLanguage() {
         return language;

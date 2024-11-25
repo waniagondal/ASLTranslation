@@ -10,17 +10,17 @@ import java.io.IOException;
 public class TextToSpeechInteractor implements TextToSpeechInputBoundary {
 
     private final TextToSpeechOutputBoundary outputBoundary;
-    private final TextToSpeechInterface textToSpeechInterface;
+    private final TextToSpeechInterface textToSpeechService;
 
     public TextToSpeechInteractor(TextToSpeechOutputBoundary outputBoundary, TextToSpeechInterface textToSpeechInterface) {
         this.outputBoundary = outputBoundary;
-        this.textToSpeechInterface = textToSpeechInterface;
+        this.textToSpeechService = textToSpeechInterface;
     }
 
     @Override
     public void execute(TextToSpeechInputData inputData) throws IOException {
         // Delegating the external call to the gateway (Google Cloud integration)
-        TextToSpeechOutputData outputData = textToSpeechInterface.convertTextToSpeech(inputData);
+        TextToSpeechOutputData outputData = textToSpeechService.convertTextToSpeech(inputData);
         outputBoundary.prepareOutput(outputData);
     }
 }

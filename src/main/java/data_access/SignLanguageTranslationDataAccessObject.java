@@ -10,13 +10,12 @@ import java.util.Map;
 
 /**
  * DAO implementation for the Sign Language Translation use case.
- * This class provides translation functionality using Google Cloud Translation API.
+ * This class provides signLanguageTranslationDisplay functionality using Google Cloud Translation API.
  */
 public class SignLanguageTranslationDataAccessObject implements SignLanguageTranslationDataAccessInterface {
 
     private final String apiKey;
 
-    // Map for language codes to avoid repeated if-else statements.
     private static final Map<String, String> LANGUAGE_CODES = new HashMap<>();
 
     static {
@@ -36,7 +35,7 @@ public class SignLanguageTranslationDataAccessObject implements SignLanguageTran
     /**
      * Translates the given text into the specified language.
      *
-     * @param language the target language for translation
+     * @param language the target language for signLanguageTranslationDisplay
      * @param text     the text to be translated
      * @return the translated version of the text
      */
@@ -50,7 +49,7 @@ public class SignLanguageTranslationDataAccessObject implements SignLanguageTran
         // Set up the Google Cloud Translate service
         Translate translate = TranslateOptions.newBuilder().setApiKey(apiKey).build().getService();
 
-        // Perform the translation
+        // Perform the signLanguageTranslationDisplay
         Translation translation = translate.translate(
                 text,
                 Translate.TranslateOption.targetLanguage(languageCode)

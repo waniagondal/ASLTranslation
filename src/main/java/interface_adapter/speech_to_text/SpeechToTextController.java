@@ -52,15 +52,15 @@ import use_case.speech_to_text.SpeechToTextInputData;
  */
 public class SpeechToTextController {
 
-    private final SpeechToTextInputBoundary speechToTextInputBoundary;  // Input Boundary
+    private final SpeechToTextInputBoundary speechToTextInputInteractor;  // Input Boundary
 
     /**
      * Constructs a SpeechToTextController with the given input and output boundaries.
      *
-     * @param speechToTextInputBoundary  The boundary for processing the speech input.
+     * @param speechToTextInputInteractor  The boundary for processing the speech input.
      */
-    public SpeechToTextController(SpeechToTextInputBoundary speechToTextInputBoundary) {
-        this.speechToTextInputBoundary = speechToTextInputBoundary;
+    public SpeechToTextController(SpeechToTextInputBoundary speechToTextInputInteractor) {
+        this.speechToTextInputInteractor = speechToTextInputInteractor;
     }
 
     /**
@@ -70,6 +70,6 @@ public class SpeechToTextController {
      */
     public void processSpeech(byte[] audioData) throws Exception {
         SpeechToTextInputData inputData = new SpeechToTextInputData(audioData);
-        speechToTextInputBoundary.processSpeech(inputData);
+        speechToTextInputInteractor.processSpeech(inputData);
     }
 }

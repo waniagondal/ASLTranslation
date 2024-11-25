@@ -2,7 +2,7 @@ package interface_adapter.sign_language_recognition;
 
 import use_case.sign_language_recognition.SignLanguageRecognitionOutputBoundary;
 import use_case.sign_language_recognition.SignLanguageRecognitionOutputData;
-import view.SignLanguageView;
+import view.GestureBridgeView;
 
 /**
  * Presenter for handling the presentation logic of the sign language recognition.
@@ -10,14 +10,14 @@ import view.SignLanguageView;
  */
 public class SignLanguagePresenter implements SignLanguageRecognitionOutputBoundary {
 
-    private final SignLanguageView view;
+    private final GestureBridgeView view;
 
     /**
      * Constructor for the SignLanguagePresenter.
      *
      * @param view the view that will display the recognition results
      */
-    public SignLanguagePresenter(SignLanguageView view) {
+    public SignLanguagePresenter(GestureBridgeView view) {
         this.view = view;
     }
 
@@ -29,6 +29,6 @@ public class SignLanguagePresenter implements SignLanguageRecognitionOutputBound
      */
     @Override
     public void updateView(SignLanguageRecognitionOutputData outputData) {
-        view.updateDisplay(outputData.getPrediction());
+        view.signLanguageRecognitionDisplay(outputData.getPrediction());
     }
 }
