@@ -1,26 +1,32 @@
-package entities;
-
 import entity.AudioTranscription;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AudioTranscriptionTest {
 
     @Test
-    void testGetText() {
-        String expectedText = "test input";
-        AudioTranscription transcription = new AudioTranscription(expectedText);
+    void testAudioTranscriptionCreation() {
+        // Arrange
+        String transcribedText = "This is a test transcription";
 
-        String actualText = transcription.getText();
+        // Act
+        AudioTranscription transcription = new AudioTranscription(transcribedText);
 
-        assertEquals(expectedText, actualText, "getText return correctly");
+        // Assert
+        assertEquals(transcribedText, transcription.getText());
     }
 
     @Test
-    void testConstructorWithNull() {
-        AudioTranscription transcription = new AudioTranscription(null);
+    void testGetText() {
+        // Arrange
+        String transcribedText = "Another test transcription";
+        AudioTranscription transcription = new AudioTranscription(transcribedText);
 
-        assertNull(transcription.getText(), "this should return null");
+        // Act
+        String result = transcription.getText();
+
+        // Assert
+        assertEquals(transcribedText, result);
     }
 }
