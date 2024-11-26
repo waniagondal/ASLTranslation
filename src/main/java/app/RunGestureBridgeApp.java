@@ -1,10 +1,16 @@
 package app;
 
 import data_access.SignLanguageTranslationDataAccessObject;
+import data_access.VoiceDataAccessObject;
+import entity.AudioSettings;
+import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.GoogleSpeechRecognizer;
 import frameworks_and_drivers.text_to_speech.AudioPlayer;
 import frameworks_and_drivers.text_to_speech.GoogleTextToSpeechGateway;
 import frameworks_and_drivers.text_to_speech.TextToSpeechInterface;
+import interface_adapter.customize_voice.CustomizeVoiceController;
+import interface_adapter.customize_voice.CustomizeVoiceDataAccessInterface;
+import interface_adapter.customize_voice.CustomizeVoicePresenter;
 import interface_adapter.sign_language_recognition.SignLanguageController;
 import interface_adapter.sign_language_recognition.SignLanguagePresenter;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
@@ -13,6 +19,9 @@ import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.speech_to_text.SpeechToTextPresenter;
 import interface_adapter.text_to_speech.TextToSpeechController;
 import interface_adapter.text_to_speech.TextToSpeechPresenter;
+import use_case.customize_voice.CustomizeVoiceInputBoundary;
+import use_case.customize_voice.CustomizeVoiceInteractor;
+import use_case.customize_voice.CustomizeVoiceOutputBoundary;
 import use_case.sign_language_recognition.PredictionService;
 import use_case.sign_language_recognition.SignLanguageRecognitionInteractor;
 import use_case.sign_language_translation.SignLanguageTranslationInputBoundary;
@@ -48,9 +57,11 @@ public class RunGestureBridgeApp {
         SpeechToTextController speechToTextController = initializeSpeechToText(gestureBridgeView);
         SignLanguageTranslationController translationController = initializeTranslation(gestureBridgeView);
         SignLanguageController signLanguageController = initializeSignLanguageRecognition(gestureBridgeView);
+        CustomizeVoiceController customizeVoiceController = intializeVoiceCustomization(gestureBridgeView);
 
         // Set controllers in the view
-        setControllers(gestureBridgeView, textToSpeechController, speechToTextController, translationController);
+        setControllers(gestureBridgeView, textToSpeechController, speechToTextController, translationController,
+                        customizeVoiceController);
 
         // Start Sign Language Recognition
         signLanguageController.startRecognition();
@@ -121,6 +132,21 @@ public class RunGestureBridgeApp {
     }
 
     /**
+     * Initializes the Voice Customization module.
+     *
+     * @param gestureBridgeView the main application view for communication with presenters.
+     * @return the CustomVoiceController instance.
+     */
+    private static CustomizeVoiceController intializeVoiceCustomization(GestureBridgeView gestureBridgeView) {
+        AudioSettingsFactory audioSettingsFactory = new AudioSettingsFactory();
+        CustomizeVoiceDataAccessInterface dataAccessObject = new VoiceDataAccessObject();
+        CustomizeVoiceOutputBoundary outputBoundary = new CustomizeVoicePresenter(gestureBridgeView);
+        CustomizeVoiceInputBoundary interactor = new CustomizeVoiceInteractor(dataAccessObject, outputBoundary,
+                                                                                audioSettingsFactory);
+        return new CustomizeVoiceController(interactor);
+    }
+
+    /**
      * Sets the controllers in the main application view.
      *
      * @param view the main application view.
@@ -132,10 +158,12 @@ public class RunGestureBridgeApp {
             GestureBridgeView view,
             TextToSpeechController textToSpeechController,
             SpeechToTextController speechToTextController,
-            SignLanguageTranslationController translationController
+            SignLanguageTranslationController translationController,
+            CustomizeVoiceController customizeVoiceController
     ) {
         view.setTextToSpeechController(textToSpeechController);
         view.setSpeechToTextController(speechToTextController);
         view.setTranslationController(translationController);
+        view.setCustomizeVoiceController(customizeVoiceController);
     }
 }

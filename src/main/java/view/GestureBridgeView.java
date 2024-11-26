@@ -12,6 +12,7 @@ import entity.AudioSettings;
 import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
 import frameworks_and_drivers.text_to_speech.LanguageCodeMapper;
+import interface_adapter.customize_voice.CustomizeVoiceController;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
 import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.text_to_speech.TextToSpeechController;
@@ -33,6 +34,8 @@ public class GestureBridgeView extends JPanel {
     private SpeechToTextController speechToTextController;
     private MicrophoneAudioRecorder audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
+    private CustomizeVoiceController customizeVoiceController;
+    private AudioSettings audioSettings;
 
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
@@ -70,6 +73,14 @@ public class GestureBridgeView extends JPanel {
     public void setTextToSpeechController(TextToSpeechController textToSpeechController) {
         this.textToSpeechController = textToSpeechController;
 
+    }
+
+    public void setCustomizeVoiceController(CustomizeVoiceController customizeVoiceController) {
+        this.customizeVoiceController = customizeVoiceController;
+    }
+
+    public void setAudioSettings(AudioSettings audioSettings) {
+        this.audioSettings = audioSettings;
     }
 
     /**
@@ -372,8 +383,7 @@ public class GestureBridgeView extends JPanel {
         String inputText = signLanguageTextArea.getText();
         String language = (String) languageBox.getSelectedItem();
         String languageCode = LanguageCodeMapper.getLanguageCode(language);
-        AudioSettingsFactory audioSettingsFactory = new AudioSettingsFactory();
-        AudioSettings audioSettings = audioSettingsFactory.create(1.5, 2.0, false, 6.0); // Example settings
+        AudioSettings audioSettings = this.audioSettings;
         textToSpeechController.execute(inputText, languageCode, audioSettings);
 
     }
