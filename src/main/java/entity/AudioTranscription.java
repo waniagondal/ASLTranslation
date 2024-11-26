@@ -10,7 +10,7 @@ public class AudioTranscription {
     private final String text;
 
     /**
-     * Constructs an AudioTranscription with the given transcribed text.
+     * Constructor to create an AudioTranscription object with the given transcribed text.
      *
      * @param text The transcribed text of the audio input.
      */
