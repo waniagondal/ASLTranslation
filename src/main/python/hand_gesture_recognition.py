@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import torch
 import numpy as np
+import time
 from model.train_model import SignLanguageModel
 
 class HandDetector:
@@ -51,6 +52,9 @@ class SignLanguageApp:
         self.hand_detector = HandDetector()
         self.gesture_recognizer = GestureRecognizer(model_filepath)
         self.cap = cv2.VideoCapture(webcam_index)
+        self.previous_label = None
+        self.start_time = None
+        self.hold_threshold = 1.0  # seconds
 
     def run(self):
         """Run the webcam loop for sign language recognition."""
@@ -68,6 +72,19 @@ class SignLanguageApp:
             landmarks_array = self.hand_detector.extract_hand_landmarks(frame)
             if landmarks_array is not None:
                 predicted_label = self.gesture_recognizer.predict(landmarks_array)
+
+                # Check if the gesture is held for the required duration
+                current_time = time.time()
+                if predicted_label == self.previous_label:
+                    if self.start_time is None:
+                        self.start_time = current_time
+                    elif current_time - self.start_time >= self.hold_threshold:
+                        print(predicted_label, flush=True)
+                        self.start_time = None  # Reset after printing
+                else:
+                    # Reset if the gesture changes
+                    self.previous_label = predicted_label
+                    self.start_time = current_time
 
                 cv2.putText(frame, f'Predicted: {predicted_label}', (12, 60),
                             cv2.FONT_HERSHEY_COMPLEX, 2, (0, 0, 0), 4, cv2.LINE_AA)
@@ -87,3 +104,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
