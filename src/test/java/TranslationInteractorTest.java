@@ -4,6 +4,7 @@ import use_case.translation.*;
 
 import static org.junit.jupiter.api.Assertions. *;
 
+// The test needs to be rewritten to fit the structure of the current interactor (and names)
 class TranslationInteractorTest {
     @Test
     void successTest() {
@@ -17,9 +18,6 @@ class TranslationInteractorTest {
         TranslationInputData inputData = new TranslationInputData("Mandarin", "Hello World");
         // Create the DAO
         TranslationDataAccessInterface translate = new TranslationDataAccessObject();
-
-        // In the interactor - Creates the translation object that needs to be processed. Then process it by calling API
-
 
         //Creates the presenter for the successful case
         TranslationOutputBoundary successPresenter = new TranslationOutputBoundary() {
