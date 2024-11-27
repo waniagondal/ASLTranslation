@@ -24,6 +24,7 @@ import interface_adapter.text_to_speech.TextToSpeechController;
  */
 public class GestureBridgeView extends JPanel implements ViewInterface {
 
+    private JFrame frame;
     private JTextArea signLanguageTextArea;
     private JTextArea transcriptionTextArea;
     private JComboBox<String> languageBox;
@@ -31,7 +32,6 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
 
     private SignLanguageTranslationController signLanguageTranslationController;
     private SpeechToTextController speechToTextController;
-    // Is it okay for the microphone to be generated within the view?
     private MicrophoneAudioRecorder audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
 
@@ -83,7 +83,7 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
      * for defining the structure and appearance of the application's graphical interface.
      */
     private void initializeUI() {
-        JFrame frame = new JFrame("GestureBridge");
+        frame = new JFrame("GestureBridge");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1280, 800);
         frame.setLocationRelativeTo(null);
@@ -154,14 +154,29 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
      * @return a JPanel containing the application's logo or title.
      */
     private JPanel createLogoPanel() {
-        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel logoPanel = new JPanel(new BorderLayout());
         logoPanel.setBackground(BACKGROUND_COLOR);
 
         JLabel logoTextLabel = new JLabel("GestureBridge");
         logoTextLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         logoTextLabel.setForeground(PRIMARY_COLOR);
 
-        logoPanel.add(logoTextLabel);
+        // Add title panel to add the logo
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        titlePanel.setBackground(BACKGROUND_COLOR);
+        titlePanel.add(logoTextLabel);
+
+        // Create the panel for the settings button
+        JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        settingsPanel.setBackground(BACKGROUND_COLOR);
+        JButton settingsButton = new GlowButton("Settings", PRIMARY_COLOR);
+        settingsPanel.add(settingsButton);
+
+        // Format the title and button panel on the logo panel
+        logoPanel.add(titlePanel, BorderLayout.CENTER);
+        logoPanel.add(settingsPanel, BorderLayout.EAST);
+
+        // Add action listener for the settings panel
 
         return logoPanel;
     }
