@@ -38,6 +38,4 @@ class TranslationInteractorTest {
         SignLanguageTranslationInputBoundary interactor = new SignLanguageTranslationInteractor(translate, successPresenter);
         interactor.execute(inputData);
     }
-    // For some reason, even though I didn't finish implementing the execute method, this test still passes?
-    // If it's not failing, how am I to test if the execution is correct?
 }
