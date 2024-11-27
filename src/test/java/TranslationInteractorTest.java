@@ -1,6 +1,7 @@
-import data_access.TranslationDataAccessObject;
+import data_access.SignLanguageTranslationDataAccessObject;
+import interface_adapter.sign_language_translation.SignLanguageTranslationDataAccessInterface;
 import org.junit.jupiter.api.Test;
-import use_case.translation.*;
+import use_case.sign_language_translation.*;
 
 import static org.junit.jupiter.api.Assertions. *;
 
@@ -15,16 +16,16 @@ class TranslationInteractorTest {
         // Translation translation = factory.create("Hello World", "Mandarin", empty);
 
         // Create the input data
-        TranslationInputData inputData = new TranslationInputData("Mandarin", "Hello World");
+        SignLanguageTranslationInputData inputData = new SignLanguageTranslationInputData("Mandarin", "Hello World");
         // Create the DAO
-        TranslationDataAccessInterface translate = new TranslationDataAccessObject();
+        SignLanguageTranslationDataAccessInterface translate = new SignLanguageTranslationDataAccessObject();
 
         //Creates the presenter for the successful case
-        TranslationOutputBoundary successPresenter = new TranslationOutputBoundary() {
+        SignLanguageTranslationOutputBoundary successPresenter = new SignLanguageTranslationOutputBoundary() {
             @Override
-            public void prepareSuccessView(TranslationOutputData translatedText) {
+            public void prepareSuccessView(SignLanguageTranslationOutputData outputData) {
                 // Check if the translation matches the desired meaning
-                assertEquals("你好世界", translatedText.getTranslatedText());
+                assertEquals("你好世界", outputData.getTranslatedText());
             }
 
             @Override
@@ -34,7 +35,7 @@ class TranslationInteractorTest {
             }
         };
 
-        TranslationInputBoundary interactor = new TranslationInteractor(translate, successPresenter);
+        SignLanguageTranslationInputBoundary interactor = new SignLanguageTranslationInteractor(translate, successPresenter);
         interactor.execute(inputData);
     }
     // For some reason, even though I didn't finish implementing the execute method, this test still passes?
