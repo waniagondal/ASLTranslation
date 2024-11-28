@@ -10,6 +10,11 @@ public class VoiceDataAccessObject implements CustomizeVoiceDataAccessInterface 
 
     @Override
     public void changeSettings(AudioSettings settings) {
+        System.out.println("Settings Before \n"
+                + "Speed: " + this.settings.getSpeed()
+                + "\nVolume: " + this.settings.getVolume()
+                + "\nVoice Type: " + this.settings.getVoiceType()
+                + "\nPitch: " + this.settings.getPitch());
         this.settings = settings;
     }
 

@@ -59,11 +59,10 @@ public class RunGestureBridgeApp {
         SpeechToTextController speechToTextController = initializeSpeechToText(gestureBridgeView);
         SignLanguageTranslationController translationController = initializeTranslation(gestureBridgeView);
         SignLanguageController signLanguageController = initializeSignLanguageRecognition(gestureBridgeView);
-        CustomizeVoiceController customizeVoiceController = intializeVoiceCustomization(gestureBridgeView);
 
         // Set controllers in the view
-        setControllers(gestureBridgeView, textToSpeechController, speechToTextController, translationController,
-                        customizeVoiceController);
+        setControllers(gestureBridgeView, textToSpeechController, speechToTextController,
+                        translationController);
 
         // Start Sign Language Recognition
         signLanguageController.startRecognition();
@@ -136,21 +135,6 @@ public class RunGestureBridgeApp {
     }
 
     /**
-     * Initializes the Voice Customization module.
-     *
-     * @param gestureBridgeView the main application view for communication with presenters.
-     * @return the CustomVoiceController instance.
-     */
-    private static CustomizeVoiceController intializeVoiceCustomization(GestureBridgeView gestureBridgeView) {
-        AudioSettingsFactory audioSettingsFactory = new AudioSettingsFactory();
-        CustomizeVoiceDataAccessInterface dataAccessObject = new VoiceDataAccessObject();
-        CustomizeVoiceOutputBoundary outputBoundary = new CustomizeVoicePresenter(gestureBridgeView);
-        CustomizeVoiceInputBoundary interactor = new CustomizeVoiceInteractor(dataAccessObject, outputBoundary,
-                                                                                audioSettingsFactory);
-        return new CustomizeVoiceController(interactor);
-    }
-
-    /**
      * Sets the controllers in the main application view.
      *
      * @param view the main application view.
@@ -162,12 +146,10 @@ public class RunGestureBridgeApp {
             GestureBridgeView view,
             TextToSpeechController textToSpeechController,
             SpeechToTextController speechToTextController,
-            SignLanguageTranslationController translationController,
-            CustomizeVoiceController customizeVoiceController
+            SignLanguageTranslationController translationController
     ) {
         view.setTextToSpeechController(textToSpeechController);
         view.setSpeechToTextController(speechToTextController);
         view.setTranslationController(translationController);
-        view.setCustomizeVoiceController(customizeVoiceController);
     }
 }

@@ -4,17 +4,27 @@ import entity.AudioSettings;
 import use_case.customize_voice.CustomizeVoiceOutputBoundary;
 import use_case.customize_voice.CustomizeVoiceOutputData;
 import view.GestureBridgeView;
+import view.VoiceSettingsView;
 
 public class CustomizeVoicePresenter implements CustomizeVoiceOutputBoundary {
     private final GestureBridgeView view;
+    private final VoiceSettingsView settingsView;
 
-    public CustomizeVoicePresenter(GestureBridgeView view) {this.view = view;}
+    public CustomizeVoicePresenter(GestureBridgeView view, VoiceSettingsView settingsView) {
+        this.view = view;
+        this.settingsView = settingsView;
+    }
 
     @Override
     public void prepareSuccessView(CustomizeVoiceOutputData outputData) {
         AudioSettings settings = outputData.getAudioSettings();
         view.setAudioSettings(settings);
-
+        settingsView.setAudioSettings(settings);
+        System.out.println("Settings After \n"
+                + "Speed: " + settings.getSpeed()
+                + "\nVolume: " + settings.getVolume()
+                + "\nVoice Type: " + settings.getVoiceType()
+                + "\nPitch: " + settings.getPitch());
     }
 
     @Override
