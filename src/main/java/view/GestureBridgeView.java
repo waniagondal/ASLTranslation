@@ -12,7 +12,6 @@ import entity.AudioSettings;
 import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
 import frameworks_and_drivers.text_to_speech.LanguageCodeMapper;
-import interface_adapter.customize_voice.CustomizeVoiceController;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
 import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.text_to_speech.TextToSpeechController;
@@ -23,8 +22,9 @@ import interface_adapter.text_to_speech.TextToSpeechController;
  * transcription, signLanguageTranslationDisplay, and speech synthesis. It interacts with controllers for managing
  * sign language signLanguageTranslationDisplay and speech-to-text conversion.
  */
-public class GestureBridgeView extends JPanel {
+public class GestureBridgeView extends JPanel implements ViewInterface {
 
+    private JFrame frame;
     private JTextArea signLanguageTextArea;
     private JTextArea transcriptionTextArea;
     private JComboBox<String> languageBox;
@@ -34,14 +34,15 @@ public class GestureBridgeView extends JPanel {
     private SpeechToTextController speechToTextController;
     private MicrophoneAudioRecorder audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
-    private CustomizeVoiceController customizeVoiceController;
-    private AudioSettings audioSettings;
 
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
     private final Color ACCENT_COLOR = new Color(231, 76, 60);
     private final Color BACKGROUND_COLOR = new Color(236, 240, 241);
     private final Color TEXT_COLOR = new Color(44, 62, 80);
+
+    // We need a view interface containing the methods being called, and pass the view interface into the presenter
+    // To call the corresponding methods (dependency inversion)
 
     /**
      * Constructs a new GestureBridgeView and initializes the user interface.
@@ -75,14 +76,6 @@ public class GestureBridgeView extends JPanel {
 
     }
 
-    public void setCustomizeVoiceController(CustomizeVoiceController customizeVoiceController) {
-        this.customizeVoiceController = customizeVoiceController;
-    }
-
-    public void setAudioSettings(AudioSettings audioSettings) {
-        this.audioSettings = audioSettings;
-    }
-
     /**
      * Initializes the user interface (UI) for the GestureBridge application.
      * Sets up the main JFrame window, layouts, panels, and components including
@@ -90,7 +83,7 @@ public class GestureBridgeView extends JPanel {
      * for defining the structure and appearance of the application's graphical interface.
      */
     private void initializeUI() {
-        JFrame frame = new JFrame("GestureBridge");
+        frame = new JFrame("GestureBridge");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1280, 800);
         frame.setLocationRelativeTo(null);
@@ -161,14 +154,29 @@ public class GestureBridgeView extends JPanel {
      * @return a JPanel containing the application's logo or title.
      */
     private JPanel createLogoPanel() {
-        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel logoPanel = new JPanel(new BorderLayout());
         logoPanel.setBackground(BACKGROUND_COLOR);
 
         JLabel logoTextLabel = new JLabel("GestureBridge");
         logoTextLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         logoTextLabel.setForeground(PRIMARY_COLOR);
 
-        logoPanel.add(logoTextLabel);
+        // Add title panel to add the logo
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        titlePanel.setBackground(BACKGROUND_COLOR);
+        titlePanel.add(logoTextLabel);
+
+        // Create the panel for the settings button
+        JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        settingsPanel.setBackground(BACKGROUND_COLOR);
+        JButton settingsButton = new GlowButton("Settings", PRIMARY_COLOR);
+        settingsPanel.add(settingsButton);
+
+        // Format the title and button panel on the logo panel
+        logoPanel.add(titlePanel, BorderLayout.CENTER);
+        logoPanel.add(settingsPanel, BorderLayout.EAST);
+
+        // Add action listener for the settings panel
 
         return logoPanel;
     }
@@ -291,17 +299,12 @@ public class GestureBridgeView extends JPanel {
     }
 
 
-    /**
-     * Appends the predicted letter from sign language recognition to the display.
-     * This method updates the sign language recognition text area by appending the predicted
-     * signLanguageTranslationDisplay from the sign language recognition process.
-     *
-     * @param prediction is the predicted letter to be appended to the sign language recognition display.
-     */
+    @Override
     public void signLanguageRecognitionDisplay(String prediction) {
         signLanguageTextArea.append(prediction);
     }
 
+    // These 2 methods act as action listeners for the buttons
     /**
      * Initializes and starts the transcription process.
      * This method updates the transcription text area to indicate that the transcription process has begun,
@@ -326,6 +329,8 @@ public class GestureBridgeView extends JPanel {
         endRecordingAndProcess();
     }
 
+
+    // These two buttons respond to the button clicks and collects input data
     /**
      * Starts the audio recording process.
      * Utilizes the audio recorder instance to begin capturing audio input for transcription.
@@ -342,20 +347,19 @@ public class GestureBridgeView extends JPanel {
      */
     private void endRecordingAndProcess() throws Exception {
         audioRecorderForTranscription.stop();
+        // This would be same as the ".getText()" that takes the input data from the view that connects to the controller
         byte[] audioData = audioRecorderForTranscription.getAudioData();
         speechToTextController.processSpeech(audioData);
     }
 
-    /**
-     * Displays the transcription result in the designated text area.
-     * Updates the transcription text area with the provided transcription result.
-     *
-     * @param transcription the transcription result to be displayed in the text area.
-     */
+    // This method is initially called by view in presenter, include it in an interface
+    @Override
     public void signLanguageTranscriptionDisplay(String transcription) {
         transcriptionTextArea.setText("Transcription Result: " + transcription);
     }
 
+
+    // This acts as action listener for the translation button
     /**
      * Initiates the sign language translation process based on the selected language.
      * This method retrieves the selected language from the language selection box and
@@ -368,22 +372,21 @@ public class GestureBridgeView extends JPanel {
         signLanguageTranslationController.execute(language, text);
     }
 
-    /**
-     * Updates the sign language text area with the translated text.
-     * This method replaces the existing content of the sign language text area with
-     * the provided translation, effectively showing the translated version of the input.
-     *
-     * @param translation the translated text to be displayed in the sign language text area
-     */
+
+    // Overrides interface
+    @Override
     public void signLanguageTranslationDisplay(String translation) {
         signLanguageTextArea.setText(translation);
     }
 
+    // This respond to the action listener for the text-to-speech button
     private void beginTextToSpeech() throws LineUnavailableException, IOException {
         String inputText = signLanguageTextArea.getText();
         String language = (String) languageBox.getSelectedItem();
         String languageCode = LanguageCodeMapper.getLanguageCode(language);
-        AudioSettings audioSettings = this.audioSettings;
+        // This factory is generated to be a place-holder for the customization use case
+        AudioSettingsFactory audioSettingsFactory = new AudioSettingsFactory();
+        AudioSettings audioSettings = audioSettingsFactory.create(1.5, 2.0, false, 6.0); // Example settings
         textToSpeechController.execute(inputText, languageCode, audioSettings);
 
     }
