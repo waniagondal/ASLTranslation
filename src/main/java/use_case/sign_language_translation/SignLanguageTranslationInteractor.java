@@ -40,7 +40,7 @@ public class SignLanguageTranslationInteractor implements SignLanguageTranslatio
 
         // Prepare the output data with the translated text
         SignLanguageTranslationOutputData signLanguageTranslationOutputData =
-                new SignLanguageTranslationOutputData(translatedText, false);
+                new SignLanguageTranslationOutputData(translatedText);
 
         // Pass the translated output data to the presenter to update the view
         signLanguageTranslationPresenter.prepareSuccessView(signLanguageTranslationOutputData);
