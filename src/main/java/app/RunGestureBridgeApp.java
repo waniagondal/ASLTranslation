@@ -1,16 +1,10 @@
 package app;
 
 import data_access.SignLanguageTranslationDataAccessObject;
-import data_access.VoiceDataAccessObject;
-import entity.AudioSettings;
-import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.GoogleSpeechRecognizer;
 import frameworks_and_drivers.text_to_speech.AudioPlayer;
 import frameworks_and_drivers.text_to_speech.GoogleTextToSpeechGateway;
 import frameworks_and_drivers.text_to_speech.TextToSpeechInterface;
-import interface_adapter.customize_voice.CustomizeVoiceController;
-import interface_adapter.customize_voice.CustomizeVoiceDataAccessInterface;
-import interface_adapter.customize_voice.CustomizeVoicePresenter;
 import interface_adapter.sign_language_recognition.SignLanguageController;
 import interface_adapter.sign_language_recognition.SignLanguagePresenter;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
@@ -19,9 +13,6 @@ import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.speech_to_text.SpeechToTextPresenter;
 import interface_adapter.text_to_speech.TextToSpeechController;
 import interface_adapter.text_to_speech.TextToSpeechPresenter;
-import use_case.customize_voice.CustomizeVoiceInputBoundary;
-import use_case.customize_voice.CustomizeVoiceInteractor;
-import use_case.customize_voice.CustomizeVoiceOutputBoundary;
 import use_case.sign_language_recognition.PredictionService;
 import use_case.sign_language_recognition.SignLanguageRecognitionInteractor;
 import use_case.sign_language_translation.SignLanguageTranslationInputBoundary;

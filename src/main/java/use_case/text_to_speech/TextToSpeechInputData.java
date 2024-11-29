@@ -12,7 +12,6 @@ public class TextToSpeechInputData {
     private final String languageCode;
     private final boolean gender;
     private final double speakingRate;
-    private final double volume;
     private final double pitch;
 
 
@@ -28,7 +27,6 @@ public class TextToSpeechInputData {
         this.languageCode = languageCode;
         this.gender = audioSettings.getVoiceType();
         this.speakingRate = audioSettings.getSpeed();
-        this.volume = audioSettings.getVolume();
         this.pitch = audioSettings.getPitch();
     }
 
@@ -66,15 +64,6 @@ public class TextToSpeechInputData {
      */
     public double getSpeakingRate() {
         return speakingRate;
-    }
-
-    /**
-     * Gets the volume for speech synthesis.
-     *
-     * @return The volume level as a double.
-     */
-    public double getVolume() {
-        return volume;
     }
 
     /**

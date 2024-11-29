@@ -13,14 +13,12 @@ import java.util.Hashtable;
 public class VoiceSettingsView extends JPanel {
 
     private JLabel speedLabel;
-    private JLabel volumeLabel;
     private JLabel voiceTypeLabel;
     private JLabel pitchLabel;
 
     private GlowButton setButton;
 
     private JSlider speedSlider;
-    private JSlider volumeSlider;
     private JSlider voiceTypeSlider;
     private JSlider pitchSlider;
 
@@ -43,7 +41,6 @@ public class VoiceSettingsView extends JPanel {
 
     public void setAudioSettings(AudioSettings audioSettings) {
         this.SPEED_VALUE = (int) audioSettings.getSpeed();
-        this.VOLUME_VALUE = (int) audioSettings.getVolume();
         this.PITCH_VALUE = (int) audioSettings.getPitch();
 
         if (audioSettings.getVoiceType()) {
@@ -56,7 +53,6 @@ public class VoiceSettingsView extends JPanel {
 
     public VoiceSettingsView(AudioSettings audioSettings) {
         this.SPEED_VALUE = (int) audioSettings.getSpeed();
-        this.VOLUME_VALUE = (int) audioSettings.getVolume();
         this.PITCH_VALUE = (int) audioSettings.getPitch();
 
         if (audioSettings.getVoiceType()) {
@@ -71,7 +67,7 @@ public class VoiceSettingsView extends JPanel {
 
     private void initializeUI() {
         JFrame frame = new JFrame("Text to Speech Settings");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(400, 640);
         frame.setLocationRelativeTo(null);
         frame.setBackground(BACKGROUND_COLOR);
@@ -101,52 +97,43 @@ public class VoiceSettingsView extends JPanel {
         labelTable.put(0, new JLabel("Female"));
         labelTable.put(1, new JLabel("Male"));
 
-        speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 10, SPEED_VALUE);
-        volumeSlider = new JSlider(JSlider.HORIZONTAL, 1, 10, VOLUME_VALUE);
+        speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 4, SPEED_VALUE);
         voiceTypeSlider = new JSlider(JSlider.HORIZONTAL, 0, 1, VOICE_TYPE_VALUE);
-        pitchSlider = new JSlider(JSlider.HORIZONTAL, 1, 10, PITCH_VALUE);
+        pitchSlider = new JSlider(JSlider.HORIZONTAL, -20, 20, PITCH_VALUE);
 
         speedLabel = new JLabel("Voice Speed: " + speedSlider.getValue());
-        volumeLabel = new JLabel("Voice Volume: " + volumeSlider.getValue());
         voiceTypeLabel = new JLabel("Voice Type: " + getVoiceType(voiceTypeSlider.getValue()));
         pitchLabel = new JLabel("Voice Pitch: " + pitchSlider.getValue());
 
         speedSlider.setPaintTicks(true);
-        volumeSlider.setPaintTicks(true);
         voiceTypeSlider.setPaintTicks(true);
         pitchSlider.setPaintTicks(true);
 
         voiceTypeSlider.setLabelTable(labelTable);
 
         speedSlider.setPaintLabels(true);
-        volumeSlider.setPaintLabels(true);
         voiceTypeSlider.setPaintLabels(true);
         pitchSlider.setPaintLabels(true);
 
         speedSlider.setMajorTickSpacing(1);
-        volumeSlider.setMajorTickSpacing(1);
         voiceTypeSlider.setMajorTickSpacing(1);
-        pitchSlider.setMajorTickSpacing(1);
+        pitchSlider.setMajorTickSpacing(10);
 
         voiceTypeSlider.setMinorTickSpacing(1);
         voiceTypeSlider.setSnapToTicks(true);
 
         speedSlider.addChangeListener(e -> {speedLabel.setText("Voice Speed: " +
                 speedSlider.getValue());});
-        volumeSlider.addChangeListener(e -> {volumeLabel.setText("Voice Volume: " +
-                volumeSlider.getValue());});
         voiceTypeSlider.addChangeListener(e -> {voiceTypeLabel.setText("Voice Type: " +
                 getVoiceType(voiceTypeSlider.getValue()));});
         pitchSlider.addChangeListener(e -> {pitchLabel.setText("Voice Pitch: " +
                 pitchSlider.getValue());});
 
         speedSlider.setFont(tickFont);
-        volumeSlider.setFont(tickFont);
         voiceTypeSlider.setFont(tickFont);
         pitchSlider.setFont(tickFont);
 
         speedLabel.setFont(labelFont);
-        volumeLabel.setFont(labelFont);
         voiceTypeLabel.setFont(labelFont);
         pitchLabel.setFont(labelFont);
 
@@ -154,8 +141,6 @@ public class VoiceSettingsView extends JPanel {
         sliderPanel.add(voiceTypeSlider);
         sliderPanel.add(speedLabel);
         sliderPanel.add(speedSlider);
-        sliderPanel.add(volumeLabel);
-        sliderPanel.add(volumeSlider);
         sliderPanel.add(pitchLabel);
         sliderPanel.add(pitchSlider);
 
@@ -175,8 +160,8 @@ public class VoiceSettingsView extends JPanel {
     }
 
     private void customizeVoice() {
-        customizeVoiceController.execute(speedSlider.getValue(), volumeSlider.getValue(),
-                voiceTypeSlider.getValue() != 0, pitchSlider.getValue());
+        customizeVoiceController.execute(speedSlider.getValue(), voiceTypeSlider.getValue() != 0,
+                pitchSlider.getValue());
     }
 
     private String getVoiceType(int voiceNumber) {

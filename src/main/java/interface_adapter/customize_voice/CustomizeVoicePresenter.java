@@ -22,7 +22,6 @@ public class CustomizeVoicePresenter implements CustomizeVoiceOutputBoundary {
         settingsView.setAudioSettings(settings);
         System.out.println("Settings After \n"
                 + "Speed: " + settings.getSpeed()
-                + "\nVolume: " + settings.getVolume()
                 + "\nVoice Type: " + settings.getVoiceType()
                 + "\nPitch: " + settings.getPitch());
     }

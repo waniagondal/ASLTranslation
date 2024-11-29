@@ -19,4 +19,8 @@ public class CustomizeVoiceOutputData {
         return settings;
     }
 
+    public boolean isUseCaseFailed() {
+        return useCaseFailed;
+    }
+
 }

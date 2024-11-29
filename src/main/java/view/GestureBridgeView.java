@@ -41,8 +41,7 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
     private SpeechToTextController speechToTextController;
     private MicrophoneAudioRecorder audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
-    private AudioSettings audioSettings = new AudioSettingsFactory().create(1.5, 2.0,
-            false, 6.0);;
+    private AudioSettings audioSettings = new AudioSettingsFactory().create(1.5, false, 6.0);
 
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);

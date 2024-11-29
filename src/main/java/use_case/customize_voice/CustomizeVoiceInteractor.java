@@ -21,7 +21,7 @@ public class CustomizeVoiceInteractor implements CustomizeVoiceInputBoundary {
     @Override
     public void execute(CustomizeVoiceInputData voiceInputData) {
         final AudioSettings audioSettings = audioSettingsFactory.create(voiceInputData.getSpeed(),
-                voiceInputData.getVolume(), voiceInputData.getVoiceType(), voiceInputData.getPitch());
+                voiceInputData.getVoiceType(), voiceInputData.getPitch());
 
         voiceSettingsDataAccessObject.changeSettings(audioSettings);
 

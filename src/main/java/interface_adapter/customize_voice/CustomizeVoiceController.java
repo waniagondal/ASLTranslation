@@ -18,13 +18,12 @@ public class CustomizeVoiceController {
      * Executes the Customize Voice Use Case.
      *
      * @param speed     the speed of the audio.
-     * @param volume    the volume of the audio.
      * @param voiceType the type of voice (true for male, false for female).
      * @param pitch     the pitch of the audio.
      */
-    public void execute(double speed, double volume, Boolean voiceType, double pitch) {
-        final CustomizeVoiceInputData loginInputData = new CustomizeVoiceInputData(speed, volume, voiceType, pitch);
+    public void execute(double speed, Boolean voiceType, double pitch) {
+        final CustomizeVoiceInputData customizeVoiceInputData = new CustomizeVoiceInputData(speed, voiceType, pitch);
 
-        customizeVoiceInteractor.execute(loginInputData);
+        customizeVoiceInteractor.execute(customizeVoiceInputData);
     }
 }
