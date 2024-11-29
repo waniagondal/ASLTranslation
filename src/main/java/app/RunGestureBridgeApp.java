@@ -52,7 +52,8 @@ public class RunGestureBridgeApp {
         SignLanguageController signLanguageController = initializeSignLanguageRecognition(gestureBridgeView);
 
         // Set controllers in the view
-        setControllers(gestureBridgeView, textToSpeechController, speechToTextController, translationController);
+        setControllers(gestureBridgeView, textToSpeechController, speechToTextController,
+                        translationController);
 
         // Start Sign Language Recognition
         signLanguageController.startRecognition();

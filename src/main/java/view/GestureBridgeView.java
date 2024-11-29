@@ -8,13 +8,20 @@ import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import javax.swing.border.EmptyBorder;
 
+import data_access.VoiceDataAccessObject;
 import entity.AudioSettings;
 import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
 import frameworks_and_drivers.text_to_speech.LanguageCodeMapper;
+import interface_adapter.customize_voice.CustomizeVoiceController;
+import interface_adapter.customize_voice.CustomizeVoiceDataAccessInterface;
+import interface_adapter.customize_voice.CustomizeVoicePresenter;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
 import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.text_to_speech.TextToSpeechController;
+import use_case.customize_voice.CustomizeVoiceInputBoundary;
+import use_case.customize_voice.CustomizeVoiceInteractor;
+import use_case.customize_voice.CustomizeVoiceOutputBoundary;
 
 /**
  * GestureBridgeView is a JPanel that represents the graphical user interface (GUI)
@@ -34,6 +41,7 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
     private SpeechToTextController speechToTextController;
     private MicrophoneAudioRecorder audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
+    private AudioSettings audioSettings = new AudioSettingsFactory().create(1.5, false, 6.0);
 
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
@@ -74,6 +82,10 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
     public void setTextToSpeechController(TextToSpeechController textToSpeechController) {
         this.textToSpeechController = textToSpeechController;
 
+    }
+
+    public void setAudioSettings(AudioSettings audioSettings) {
+        this.audioSettings = audioSettings;
     }
 
     /**
@@ -170,6 +182,7 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         settingsPanel.setBackground(BACKGROUND_COLOR);
         JButton settingsButton = new GlowButton("Settings", PRIMARY_COLOR);
+        settingsButton.addActionListener(e -> openSettings());
         settingsPanel.add(settingsButton);
 
         // Format the title and button panel on the logo panel
@@ -384,11 +397,39 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         String inputText = signLanguageTextArea.getText();
         String language = (String) languageBox.getSelectedItem();
         String languageCode = LanguageCodeMapper.getLanguageCode(language);
-        // This factory is generated to be a place-holder for the customization use case
-        AudioSettingsFactory audioSettingsFactory = new AudioSettingsFactory();
-        AudioSettings audioSettings = audioSettingsFactory.create(1.5, 2.0, false, 6.0); // Example settings
+        AudioSettings audioSettings = this.audioSettings;
         textToSpeechController.execute(inputText, languageCode, audioSettings);
 
+    }
+
+    private VoiceSettingsView initializeSettingsView() {
+        return new VoiceSettingsView(this.audioSettings);
+    }
+
+    private void openSettings() {
+        VoiceSettingsView settingsView = initializeSettingsView();
+
+        CustomizeVoiceController customizeVoiceController = intializeVoiceCustomization(this,
+                settingsView);
+
+        settingsView.setCustomizeVoiceController(customizeVoiceController);
+
+    }
+
+    /**
+     * Initializes the Voice Customization module.
+     *
+     * @param gestureBridgeView the main application view for communication with presenters.
+     * @param settingsView the text to speech settings view for communication with presenters.
+     * @return the CustomVoiceController instance.
+     */
+    private static CustomizeVoiceController intializeVoiceCustomization(GestureBridgeView gestureBridgeView, VoiceSettingsView settingsView) {
+        AudioSettingsFactory audioSettingsFactory = new AudioSettingsFactory();
+        CustomizeVoiceDataAccessInterface dataAccessObject = new VoiceDataAccessObject();
+        CustomizeVoiceOutputBoundary outputBoundary = new CustomizeVoicePresenter(gestureBridgeView, settingsView);
+        CustomizeVoiceInputBoundary interactor = new CustomizeVoiceInteractor(dataAccessObject, outputBoundary,
+                                                                                audioSettingsFactory);
+        return new CustomizeVoiceController(interactor);
     }
 
     private static class GlowButton extends JButton {
