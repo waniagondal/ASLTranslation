@@ -7,17 +7,14 @@ package use_case.sign_language_translation;
 public class SignLanguageTranslationOutputData {
 
     private final String translatedText;
-    private final boolean useCaseFailed;
 
     /**
      * Constructor to initialize the output data with translated text and signLanguageTranslationDisplay status.
      *
      * @param translatedText The translated text.
-     * @param useCaseFailed The status of the signLanguageTranslationDisplay (e.g., success or failure).
      */
-    public SignLanguageTranslationOutputData(String translatedText, boolean useCaseFailed) {
+    public SignLanguageTranslationOutputData(String translatedText) {
         this.translatedText = translatedText;
-        this.useCaseFailed = useCaseFailed;
     }
 
     /**
@@ -28,14 +25,5 @@ public class SignLanguageTranslationOutputData {
     public String getTranslatedText() {
         return translatedText;
     }
-
-    /**
-     * Gets the signLanguageTranslationDisplay status.
-     *
-     * @return The status of the signLanguageTranslationDisplay.
-     */
-    public boolean useCaseFailed() {
-        return useCaseFailed;
-    }
-
 }
+
