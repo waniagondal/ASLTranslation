@@ -44,7 +44,7 @@ public class TextToSpeechInteractorTest {
     @Test
     public void successTest() throws IOException {
         // Prepare input data for the test
-        AudioSettings audioSettings = new AudioSettings(1.0, 1.0, false, 0.0);
+        AudioSettings audioSettings = new AudioSettings(1.0, false, 0.0);
         TextToSpeechInputData inputData = new TextToSpeechInputData("Good Morning", "en-US", audioSettings);
 
         // Import Expected Output
