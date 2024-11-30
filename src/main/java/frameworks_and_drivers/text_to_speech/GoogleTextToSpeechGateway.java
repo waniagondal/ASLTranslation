@@ -44,7 +44,7 @@ public class GoogleTextToSpeechGateway implements TextToSpeechInterface {
                     .setPitch(inputData.getPitch())
                     .setAudioEncoding(AudioEncoding.LINEAR16)
                     .setSpeakingRate(inputData.getSpeakingRate())
-                    .setVolumeGainDb(inputData.getVolume())
+                    .setVolumeGainDb(1.0)
                     .build();
 
             SynthesizeSpeechResponse response = client.synthesizeSpeech(input, voice, audioConfig);
