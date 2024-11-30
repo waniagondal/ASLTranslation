@@ -48,7 +48,7 @@ To run this project successfully, you will need to install the following:
 - Pytorch (version 2.5.1)
 - TorchVision (version 0.20.1)
 - Google Cloud Libraries (version 26.49.0): Cloud Translation API, Cloud Speech-to-Text API, Cloud Text-to-Speech API
-- Google CheckStyle
+- CSC207 CheckStyle
 
 #### Installing Python
 To install Python (version 3.7 or higher), click this link and follow the instructions:  
@@ -65,30 +65,14 @@ To install the Google Cloud APIs, please follow the instructions provided in the
 - Google Cloud Text-to-Speech API (link here)
 - Google Cloud Speech-to-Text API (link here)
 
-#### Installing Google Checkstyle
-- If you are using IDEs (e.g., IntelliJ IDEA, Eclipse), follow corresponding instructions to
-install Google Checkstyle as a plugin.
-- For Maven projects, you can also install Google Checkstyle by adding the following code to
-your pom.xml file:
+#### Installing Checkstyle
+- We recommend using IDEs for this project (e.g., IntelliJ IDEA, Eclipse). To install the CSC207 checkstyle, make sure the file
+mystyle.xml is included in your repository, then paste the following code to checkstyle.xml file
 ```
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-checkstyle-plugin</artifactId>
-    <version>3.2.2</version>
-    <configuration>
-        <configLocation>google_checks.xml</configLocation>
-        <encoding>UTF-8</encoding>
-    </configuration>
-    <executions>
-        <execution>
-            <phase>verify</phase>
-            <goals>
-                <goal>check</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+<ConfigurationLocation id="a12e12d0-c511-43fb-8087-db6b548f5394" type="PROJECT_RELATIVE" scope="All" description="207 Checks">$PROJECT_DIR$/mystyle.xml</ConfigurationLocation>
 ```
+- Set the checkstyle as default to check your code any time.
+
 #### Common Issues
 (need more content here)
 
@@ -122,7 +106,7 @@ speak into the microphone, then click “End Transcription”. Words will appear
 the transcription area.
 
 ### License
-This code is intended to be accessible for all users as long as the original source is cited.
+This code is licensed under the terms of the Creative Commons license.
 
 ### Feedback and Contributions
 We welcome feedback and contributions to help us improve this project! If you wish to get 
@@ -136,15 +120,10 @@ Issues Section on GitHub.
 If you want to contribute to the project:
 1. Fork the repository
 2. Create your own branch
-3. Follow Google Checkstyle and code your changes
+3. Follow CSC207 Checkstyle (installation instructions above) and code your changes
 4. Push your commits to your forked repository
 5. Create a pull request and describe the changes you made
 
 #### Provide Feedback
 If you want to provide suggestion and feedback, or ask questions, please contact us 
 at (email here)
-
-
-
-
-
