@@ -1,10 +1,16 @@
 package app;
 
 import data_access.SignLanguageTranslationDataAccessObject;
+import data_access.VoiceDataAccessObject;
+import entity.AudioSettings;
+import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.GoogleSpeechRecognizer;
 import frameworks_and_drivers.text_to_speech.AudioPlayer;
 import frameworks_and_drivers.text_to_speech.GoogleTextToSpeechGateway;
 import frameworks_and_drivers.text_to_speech.TextToSpeechInterface;
+import interface_adapter.customize_voice.CustomizeVoiceController;
+import interface_adapter.customize_voice.CustomizeVoiceDataAccessInterface;
+import interface_adapter.customize_voice.CustomizeVoicePresenter;
 import interface_adapter.sign_language_recognition.SignLanguageController;
 import interface_adapter.sign_language_recognition.SignLanguagePresenter;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
@@ -13,6 +19,9 @@ import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.speech_to_text.SpeechToTextPresenter;
 import interface_adapter.text_to_speech.TextToSpeechController;
 import interface_adapter.text_to_speech.TextToSpeechPresenter;
+import use_case.customize_voice.CustomizeVoiceInputBoundary;
+import use_case.customize_voice.CustomizeVoiceInteractor;
+import use_case.customize_voice.CustomizeVoiceOutputBoundary;
 import use_case.sign_language_recognition.PredictionService;
 import use_case.sign_language_recognition.SignLanguageRecognitionInteractor;
 import use_case.sign_language_translation.SignLanguageTranslationInputBoundary;
@@ -24,6 +33,7 @@ import use_case.text_to_speech.TextToSpeechInteractor;
 import use_case.text_to_speech.TextToSpeechOutputBoundary;
 import view.GestureBridgeView;
 import view.ViewInterface;
+import view.VoiceSettingsView;
 
 import java.io.IOException;
 
@@ -32,6 +42,8 @@ import java.io.IOException;
  * Initializes all components and starts the application workflow.
  */
 public class RunGestureBridgeApp {
+    private static GestureBridgeView gestureBridgeView;
+    private static VoiceSettingsView voiceSettingsView;
 
     /**
      * Main method to initialize and start the Gesture Bridge application.
@@ -40,10 +52,12 @@ public class RunGestureBridgeApp {
      * @throws IOException if there is an I/O error during initialization.
      * @throws InterruptedException if interrupted during execution.
      */
-    // If possible, this here needs a bit more refactoring to separate into main and builder
     public static void main(String[] args) throws IOException, InterruptedException {
         // Initialize the view
-        GestureBridgeView gestureBridgeView = initializeView();
+        gestureBridgeView = initializeView();
+
+        // Initialize the settings view here along with the main view, except set to invisible
+        voiceSettingsView = initializeSettings();
 
         // Initialize components for various modules
         TextToSpeechController textToSpeechController = initializeTextToSpeech(gestureBridgeView);
@@ -51,9 +65,15 @@ public class RunGestureBridgeApp {
         SignLanguageTranslationController translationController = initializeTranslation(gestureBridgeView);
         SignLanguageController signLanguageController = initializeSignLanguageRecognition(gestureBridgeView);
 
+        // Set the customize voice controller here as well
+        CustomizeVoiceController customizeVoiceController = initializeVoiceCustomization(gestureBridgeView, voiceSettingsView);
+
         // Set controllers in the view
-        setControllers(gestureBridgeView, textToSpeechController, speechToTextController,
-                        translationController);
+        setControllers(gestureBridgeView, voiceSettingsView, textToSpeechController, speechToTextController,
+                        translationController, customizeVoiceController);
+
+        // Create the relationship between main view and settings view
+        gestureBridgeView.setOnSettingsButtonClicked(() -> voiceSettingsView.openSettings());
 
         // Start Sign Language Recognition
         signLanguageController.startRecognition();
@@ -69,12 +89,20 @@ public class RunGestureBridgeApp {
     }
 
     /**
+     * Initializes the settings view for the application.
+     * @return the initialized VoiceSettingsView instance.
+     */
+    private static VoiceSettingsView initializeSettings() {
+        AudioSettings audioSettings = new AudioSettingsFactory().create(1.5, false, 6.0);
+        return new VoiceSettingsView(audioSettings);
+    }
+
+    /**
      * Initializes the Text-to-Speech module.
      *
      * @param gestureBridgeView the main application view for communication with presenters.
      * @return the TextToSpeechController instance.
      */
-    // The view here is never used
     private static TextToSpeechController initializeTextToSpeech(ViewInterface gestureBridgeView) {
         AudioPlayer audioPlayer = new AudioPlayer();
         TextToSpeechInterface textToSpeechService = new GoogleTextToSpeechGateway();
@@ -89,7 +117,6 @@ public class RunGestureBridgeApp {
      * @param gestureBridgeView the view interface that is implemented by the main view to interact with presenter.
      * @return the SpeechToTextController instance.
      */
-    // Changed the input the view interface to remove dependencies
     private static SpeechToTextController initializeSpeechToText(ViewInterface gestureBridgeView) {
         GoogleSpeechRecognizer speechRecognizer = new GoogleSpeechRecognizer();
         SpeechToTextPresenter presenter = new SpeechToTextPresenter(gestureBridgeView);
@@ -126,6 +153,23 @@ public class RunGestureBridgeApp {
     }
 
     /**
+     * Initializes the Voice Customization module.
+     *
+     * @param gestureBridgeView the main application view for communication with presenters.
+     * @param settingsView the text to speech settings view for communication with presenters.
+     * @return the CustomVoiceController instance.
+     */
+    private static CustomizeVoiceController initializeVoiceCustomization(GestureBridgeView gestureBridgeView, VoiceSettingsView settingsView) {
+        AudioSettingsFactory audioSettingsFactory = new AudioSettingsFactory();
+        CustomizeVoiceDataAccessInterface dataAccessObject = new VoiceDataAccessObject();
+        CustomizeVoiceOutputBoundary outputBoundary = new CustomizeVoicePresenter(gestureBridgeView, settingsView);
+        CustomizeVoiceInputBoundary interactor = new CustomizeVoiceInteractor(dataAccessObject, outputBoundary,
+                audioSettingsFactory);
+        return new CustomizeVoiceController(interactor);
+    }
+
+
+    /**
      * Sets the controllers in the main application view.
      *
      * @param view the main application view.
@@ -135,12 +179,15 @@ public class RunGestureBridgeApp {
      */
     private static void setControllers(
             GestureBridgeView view,
+            VoiceSettingsView voiceSettingsView,
             TextToSpeechController textToSpeechController,
             SpeechToTextController speechToTextController,
-            SignLanguageTranslationController translationController
+            SignLanguageTranslationController translationController,
+            CustomizeVoiceController customizeVoiceController
     ) {
         view.setTextToSpeechController(textToSpeechController);
         view.setSpeechToTextController(speechToTextController);
         view.setTranslationController(translationController);
+        voiceSettingsView.setCustomizeVoiceController(customizeVoiceController);
     }
 }
