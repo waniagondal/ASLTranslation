@@ -173,9 +173,11 @@ public class RunGestureBridgeApp {
      * Sets the controllers in the main application view.
      *
      * @param view the main application view.
+     * @param voiceSettingsView the settings view.
      * @param textToSpeechController the controller for the Text-to-Speech module.
      * @param speechToTextController the controller for the Speech-to-Text module.
      * @param translationController the controller for the Sign Language Translation module.
+     * @param customizeVoiceController the controller for the Voice Customization module.
      */
     private static void setControllers(
             GestureBridgeView view,
