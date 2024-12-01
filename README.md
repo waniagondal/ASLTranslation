@@ -118,13 +118,15 @@ Recognition” text box below.
 individuals, select a language from the drop-down menu below the text box and click on 
 the “Translate” button.
 
-https://github.com/gavinsong45/CSC207-Project/blob/main/videos/translation_video.mp4
-
 
 - To convert the recognized sign language from text to speech, click on the “Text to 
 Speech” button, and the speech output will be generated. If you wish for the speech output
 to be in a different language, please ensure you have translated the text into the desired 
 language before using this function.
+
+
+https://github.com/user-attachments/assets/37e8b37f-a193-4403-89a9-3fb0fe910e8a
+
 
 
 - To modify the voice of the speech output, click on “Settings”. A pop-up page will appear 
