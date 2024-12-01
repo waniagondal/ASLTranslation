@@ -1,5 +1,9 @@
 package view;
 
+import com.google.protobuf.ByteString;
+
+import javax.sound.sampled.LineUnavailableException;
+import java.io.IOException;
 import entity.AudioSettings;
 
 /**
@@ -26,6 +30,12 @@ public interface ViewInterface {
      */
     void signLanguageRecognitionDisplay(String prediction);
 
+    /**
+     * Plays the audio of the given text
+     * @param audioContents the byte string of the audio
+     */
+    void playAudio(ByteString audioContents) throws LineUnavailableException, IOException;
+  
     /**
      * Update the text to speech audio settings to the user-customized settings
      * @param settings the audio settings data to be set

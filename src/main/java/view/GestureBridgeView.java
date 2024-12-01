@@ -1,15 +1,18 @@
 package view;
 
-import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import javax.swing.border.EmptyBorder;
 
+import com.google.protobuf.ByteString;
 import entity.AudioSettings;
 import entity.AudioSettingsFactory;
+import frameworks_and_drivers.speech_to_text.AudioRecorder;
 import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
 import frameworks_and_drivers.text_to_speech.LanguageCodeMapper;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
@@ -32,7 +35,7 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
 
     private SignLanguageTranslationController signLanguageTranslationController;
     private SpeechToTextController speechToTextController;
-    private MicrophoneAudioRecorder audioRecorderForTranscription;
+    private AudioRecorder audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
     private AudioSettings audioSettings = new AudioSettingsFactory().create(1.5, false, 6.0);
     private Runnable onSettingsButtonClicked;
@@ -66,9 +69,9 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
      *
      * @param speechToTextController the controller that handles speech-to-text conversion.
      */
-    public void setSpeechToTextController(SpeechToTextController speechToTextController) {
+    public void setSpeechToTextController(SpeechToTextController speechToTextController, AudioRecorder audioRecorder) {
         this.speechToTextController = speechToTextController;
-        this.audioRecorderForTranscription = new MicrophoneAudioRecorder();
+        this.audioRecorderForTranscription = audioRecorder;
     }
 
     public void setTextToSpeechController(TextToSpeechController textToSpeechController) {
@@ -392,7 +395,20 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         String languageCode = LanguageCodeMapper.getLanguageCode(language);
         AudioSettings audioSettings = this.audioSettings;
         textToSpeechController.execute(inputText, languageCode, audioSettings);
+    }
 
+    @Override
+    public void playAudio(ByteString audioContents) throws LineUnavailableException, IOException {
+        // Convert ByteString to AudioInputStream
+        AudioInputStream audioStream = new AudioInputStream(
+                new ByteArrayInputStream(audioContents.toByteArray()),
+                new AudioFormat(16000, 16, 1, true, false),
+                audioContents.size());
+
+        // Get the system's default clip to play the audio
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream); // Open the audio stream
+        clip.start();  // Start playback
     }
 
     private static class GlowButton extends JButton {

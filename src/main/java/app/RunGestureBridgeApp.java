@@ -5,7 +5,7 @@ import data_access.VoiceDataAccessObject;
 import entity.AudioSettings;
 import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.GoogleSpeechRecognizer;
-import frameworks_and_drivers.text_to_speech.AudioPlayer;
+import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
 import frameworks_and_drivers.text_to_speech.GoogleTextToSpeechGateway;
 import frameworks_and_drivers.text_to_speech.TextToSpeechInterface;
 import interface_adapter.customize_voice.CustomizeVoiceController;
@@ -44,6 +44,7 @@ import java.io.IOException;
 public class RunGestureBridgeApp {
     private static GestureBridgeView gestureBridgeView;
     private static VoiceSettingsView voiceSettingsView;
+    private static MicrophoneAudioRecorder audioRecorder = new MicrophoneAudioRecorder();
 
     /**
      * Main method to initialize and start the Gesture Bridge application.
@@ -104,9 +105,8 @@ public class RunGestureBridgeApp {
      * @return the TextToSpeechController instance.
      */
     private static TextToSpeechController initializeTextToSpeech(ViewInterface gestureBridgeView) {
-        AudioPlayer audioPlayer = new AudioPlayer();
         TextToSpeechInterface textToSpeechService = new GoogleTextToSpeechGateway();
-        TextToSpeechOutputBoundary outputBoundary = new TextToSpeechPresenter(audioPlayer);
+        TextToSpeechOutputBoundary outputBoundary = new TextToSpeechPresenter(gestureBridgeView);
         TextToSpeechInputBoundary interactor = new TextToSpeechInteractor(outputBoundary, textToSpeechService);
         return new TextToSpeechController(interactor);
     }
@@ -188,7 +188,7 @@ public class RunGestureBridgeApp {
             CustomizeVoiceController customizeVoiceController
     ) {
         view.setTextToSpeechController(textToSpeechController);
-        view.setSpeechToTextController(speechToTextController);
+        view.setSpeechToTextController(speechToTextController, audioRecorder);
         view.setTranslationController(translationController);
         voiceSettingsView.setCustomizeVoiceController(customizeVoiceController);
     }
