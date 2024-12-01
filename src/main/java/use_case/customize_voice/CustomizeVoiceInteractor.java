@@ -25,8 +25,7 @@ public class CustomizeVoiceInteractor implements CustomizeVoiceInputBoundary {
 
         voiceSettingsDataAccessObject.changeSettings(audioSettings);
 
-        final CustomizeVoiceOutputData customizeVoiceOutputData = new CustomizeVoiceOutputData(audioSettings,
-                false);
+        final CustomizeVoiceOutputData customizeVoiceOutputData = new CustomizeVoiceOutputData(audioSettings);
         voiceSettingsPresenter.prepareSuccessView(customizeVoiceOutputData);
     }
 }

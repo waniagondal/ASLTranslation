@@ -51,7 +51,7 @@ public class CustomizeVoiceInteractorTest {
         CustomizeVoiceOutputBoundary successPresenter = new CustomizeVoiceOutputBoundary() {
             @Override
             public void prepareSuccessView(CustomizeVoiceOutputData outputData) {
-                assertEquals(2, voiceSettingsRepo.getCurrentAudioSettings().getSpeed());
+                assertEquals(2, outputData.getAudioSettings().getSpeed());
             }
 
             @Override
