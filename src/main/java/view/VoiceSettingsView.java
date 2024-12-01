@@ -199,6 +199,7 @@ public class VoiceSettingsView extends JPanel {
         femaleButton.setForeground(VOICE_TYPE_VALUE == 0 ? Color.WHITE : TEXT_COLOR);
         maleButton.setBackground(VOICE_TYPE_VALUE == 1 ? PRIMARY_COLOR : BACKGROUND_COLOR);
         maleButton.setForeground(VOICE_TYPE_VALUE == 1 ? Color.WHITE : TEXT_COLOR);
+    }
 
     // The method that is called to open the settings view
     public void openSettings() {
