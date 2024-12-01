@@ -20,7 +20,8 @@ public class VoiceSettingsView extends JPanel {
     private GlowButton setButton;
 
     private JSlider speedSlider;
-    private JSlider voiceTypeSlider;
+    private JButton femaleButton;
+    private JButton maleButton;
     private JSlider pitchSlider;
 
     private int SPEED_VALUE;
@@ -71,7 +72,7 @@ public class VoiceSettingsView extends JPanel {
     private void initializeUI() {
         this.frame = new JFrame("Text to Speech Settings");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(400, 640);
+        frame.setSize(400, 500);
         frame.setLocationRelativeTo(null);
         frame.setBackground(BACKGROUND_COLOR);
 
@@ -91,7 +92,7 @@ public class VoiceSettingsView extends JPanel {
     }
 
     private JPanel createSliderPanel() {
-        JPanel sliderPanel = new JPanel(new GridLayout(8, 1, 0, 2));
+        JPanel sliderPanel = new JPanel(new GridLayout(7, 1, 0, 2));
         sliderPanel.setBackground(BACKGROUND_COLOR);
 
         Font labelFont = new Font("Segoe UI", Font.BOLD, 17);
@@ -102,47 +103,59 @@ public class VoiceSettingsView extends JPanel {
         labelTable.put(1, new JLabel("Male"));
 
         speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 4, SPEED_VALUE);
-        voiceTypeSlider = new JSlider(JSlider.HORIZONTAL, 0, 1, VOICE_TYPE_VALUE);
+        femaleButton = new JButton("Female");
+        maleButton = new JButton("Male");
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 0));
         pitchSlider = new JSlider(JSlider.HORIZONTAL, -20, 20, PITCH_VALUE);
 
         speedLabel = new JLabel("Voice Speed: " + speedSlider.getValue());
-        voiceTypeLabel = new JLabel("Voice Type: " + getVoiceType(voiceTypeSlider.getValue()));
         pitchLabel = new JLabel("Voice Pitch: " + pitchSlider.getValue());
+        voiceTypeLabel = new JLabel("Voice Type: " + getVoiceType(VOICE_TYPE_VALUE));
 
         speedSlider.setPaintTicks(true);
-        voiceTypeSlider.setPaintTicks(true);
         pitchSlider.setPaintTicks(true);
 
-        voiceTypeSlider.setLabelTable(labelTable);
-
         speedSlider.setPaintLabels(true);
-        voiceTypeSlider.setPaintLabels(true);
         pitchSlider.setPaintLabels(true);
 
         speedSlider.setMajorTickSpacing(1);
-        voiceTypeSlider.setMajorTickSpacing(1);
         pitchSlider.setMajorTickSpacing(10);
 
-        voiceTypeSlider.setMinorTickSpacing(1);
-        voiceTypeSlider.setSnapToTicks(true);
+        updateVoiceTypeButtonStyle(femaleButton, maleButton);
 
         speedSlider.addChangeListener(e -> {speedLabel.setText("Voice Speed: " +
                 speedSlider.getValue());});
-        voiceTypeSlider.addChangeListener(e -> {voiceTypeLabel.setText("Voice Type: " +
-                getVoiceType(voiceTypeSlider.getValue()));});
+
+        // Button for female voice type
+        femaleButton.addActionListener(e -> {
+            VOICE_TYPE_VALUE = 0;
+            voiceTypeLabel.setText("Voice Type: Female");
+            updateVoiceTypeButtonStyle(femaleButton, maleButton);
+        });
+
+        // Button for male voice type
+        maleButton.addActionListener(e -> {
+            VOICE_TYPE_VALUE = 1;
+            voiceTypeLabel.setText("Voice Type: Male");
+            updateVoiceTypeButtonStyle(femaleButton, maleButton);
+        });
+
         pitchSlider.addChangeListener(e -> {pitchLabel.setText("Voice Pitch: " +
                 pitchSlider.getValue());});
 
         speedSlider.setFont(tickFont);
-        voiceTypeSlider.setFont(tickFont);
         pitchSlider.setFont(tickFont);
 
         speedLabel.setFont(labelFont);
         voiceTypeLabel.setFont(labelFont);
         pitchLabel.setFont(labelFont);
 
+        buttonPanel.setBackground(BACKGROUND_COLOR);
+        buttonPanel.add(femaleButton);
+        buttonPanel.add(maleButton);
+
         sliderPanel.add(voiceTypeLabel);
-        sliderPanel.add(voiceTypeSlider);
+        sliderPanel.add(buttonPanel);
         sliderPanel.add(speedLabel);
         sliderPanel.add(speedSlider);
         sliderPanel.add(pitchLabel);
@@ -166,7 +179,7 @@ public class VoiceSettingsView extends JPanel {
     }
 
     private void customizeVoice() {
-        customizeVoiceController.execute(speedSlider.getValue(), voiceTypeSlider.getValue() != 0,
+        customizeVoiceController.execute(speedSlider.getValue(), VOICE_TYPE_VALUE == 1,
                 pitchSlider.getValue());
         // Automatically shuts down the settings view when the settings are saved
         frame.setVisible(false);
@@ -179,6 +192,13 @@ public class VoiceSettingsView extends JPanel {
         else {
             return "Male";
         }
+    }
+
+    private void updateVoiceTypeButtonStyle(JButton femaleButton, JButton maleButton) {
+        femaleButton.setBackground(VOICE_TYPE_VALUE == 0 ? PRIMARY_COLOR : BACKGROUND_COLOR);
+        femaleButton.setForeground(VOICE_TYPE_VALUE == 0 ? Color.WHITE : TEXT_COLOR);
+        maleButton.setBackground(VOICE_TYPE_VALUE == 1 ? PRIMARY_COLOR : BACKGROUND_COLOR);
+        maleButton.setForeground(VOICE_TYPE_VALUE == 1 ? Color.WHITE : TEXT_COLOR);
     }
 
     // The method that is called to open the settings view
