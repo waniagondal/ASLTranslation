@@ -130,7 +130,11 @@ https://github.com/user-attachments/assets/1fb94de8-56ec-4cf3-808c-aa642d2d0cf1
 Speech” button, and the speech output will be generated. If you wish for the speech output
 to be in a different language, please ensure you have translated the text into the desired 
 language before using this function.
-https://github.com/user-attachments/assets/37e8b37f-a193-4403-89a9-3fb0fe910e8a
+
+
+https://github.com/user-attachments/assets/98782227-67ba-4af5-92a1-0d3fb0cc90cf
+
+
 
 
 
@@ -139,7 +143,10 @@ https://github.com/user-attachments/assets/37e8b37f-a193-4403-89a9-3fb0fe910e8a
 with a series of sliders to help you adjust the voice type (male/female), pitch, speed 
 (and volume) of the speech output.
 
-https://github.com/user-attachments/assets/1f0b6f06-6dfa-4c39-a91c-bdda1349adf1
+
+
+https://github.com/user-attachments/assets/1e16e11c-c808-40c7-af77-c3f6855e25c7
+
 
 
 
@@ -147,7 +154,11 @@ https://github.com/user-attachments/assets/1f0b6f06-6dfa-4c39-a91c-bdda1349adf1
 -  To transcribe spoken language to text, click on the “Begin Transcription” button and 
 speak into the microphone, then click “End Transcription”. Words will appear in 
 the transcription area.
-https://github.com/user-attachments/assets/a5332f64-4769-4b95-8fbf-191961ca179a
+
+
+https://github.com/user-attachments/assets/2aa36b9e-4560-4695-8f43-04b9d3be390e
+
+
 
 
 
