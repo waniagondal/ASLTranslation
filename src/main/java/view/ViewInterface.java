@@ -1,5 +1,10 @@
 package view;
 
+import com.google.protobuf.ByteString;
+
+import javax.sound.sampled.LineUnavailableException;
+import java.io.IOException;
+
 /**
  * An interface for the GestureBridgeView that is for dependency inversion (will be passed into the presenter
  * in place of the view model.
@@ -23,4 +28,10 @@ public interface ViewInterface {
      * @param prediction the output data containing the result (prediction)
      */
     void signLanguageRecognitionDisplay(String prediction);
+
+    /**
+     * Plays the audio of the given text
+     * @param audioContents the byte string of the audio
+     */
+    void playAudio(ByteString audioContents) throws LineUnavailableException, IOException;
 }
