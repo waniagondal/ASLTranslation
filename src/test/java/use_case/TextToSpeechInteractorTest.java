@@ -1,7 +1,5 @@
 package use_case;
 
-import frameworks_and_drivers.text_to_speech.AudioPlayer;
-import interface_adapter.text_to_speech.TextToSpeechPresenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import use_case.text_to_speech.TextToSpeechInputData;
