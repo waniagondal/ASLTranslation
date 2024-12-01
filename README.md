@@ -14,13 +14,13 @@ family, friends, and colleagues who wish to communicate seamlessly with them.
 Wania Sikandar Gondal, Fang (Trent) Sheng, Yibin Wang, Shuxiao Song, Gavin Jiawei Song
 
 ### Table of Contents
-- [**Features**](#features-)
-- [**Installation Instructions**](#installation-instructions-)
+- [**Features**](#features)
+- [**Installation Instructions**](#installation-instructions)
 - [**Usage Guide**](#usage-guide)
 - [**License**](#license)
 - [**Feedback and Contributions**](#feedback-and-contributions)
 
-### Features  
+### Features
 - **Real-Time Sign Language Recognition**: Recognized sign language through webcam feed and translates them instantly.
 The project currently supports fingerspelling only, but more vocabulary will be added in the future.
 ```
@@ -58,7 +58,6 @@ with a wider range of people.
     voiceSettingsPresenter.prepareSuccessView(customizeVoiceOutputData);
 ```
 
-
 - **Speech-to-Text Transcription**: Transcribes voice input from the other individual into text displayed for the deaf
 or hard of hearing.
 ```
@@ -69,7 +68,7 @@ or hard of hearing.
     }
 ```
 
-### Installation Instructions  
+### Installation Instructions
 #### Requirements
 To run this project successfully, you will need to install the following:
 - Python (version 3.7 or higher)
@@ -119,9 +118,7 @@ Recognition” text box below.
 individuals, select a language from the drop-down menu below the text box and click on 
 the “Translate” button.
 
-  <video width="320" height="240" controls>
-  <source src="videos/translation_video.mp4" type="video/mp4">
-</video>
+https://github.com/gavinsong45/CSC207-Project/blob/main/videos/translation_video.mp4
 
 
 - To convert the recognized sign language from text to speech, click on the “Text to 
