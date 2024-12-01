@@ -76,6 +76,7 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
 
     }
 
+    @Override
     public void setAudioSettings(AudioSettings audioSettings) {
         this.audioSettings = audioSettings;
     }

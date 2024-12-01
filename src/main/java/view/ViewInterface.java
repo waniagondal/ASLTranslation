@@ -1,5 +1,7 @@
 package view;
 
+import entity.AudioSettings;
+
 /**
  * An interface for the GestureBridgeView that is for dependency inversion (will be passed into the presenter
  * in place of the view model.
@@ -23,4 +25,10 @@ public interface ViewInterface {
      * @param prediction the output data containing the result (prediction)
      */
     void signLanguageRecognitionDisplay(String prediction);
+
+    /**
+     * Update the text to speech audio settings to the user-customized settings
+     * @param settings the audio settings data to be set
+     */
+    void setAudioSettings(AudioSettings settings);
 }

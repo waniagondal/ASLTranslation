@@ -10,7 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Hashtable;
 
-public class VoiceSettingsView extends JPanel {
+public class VoiceSettingsView extends JPanel implements VoiceSettingsViewInterface {
 
     private JFrame frame;
     private JLabel speedLabel;
@@ -42,7 +42,7 @@ public class VoiceSettingsView extends JPanel {
         this.customizeVoiceController = customizeVoiceController;
     }
 
-
+    @Override
     public void setAudioSettings(AudioSettings audioSettings) {
         this.SPEED_VALUE = (int) audioSettings.getSpeed();
         this.PITCH_VALUE = (int) audioSettings.getPitch();

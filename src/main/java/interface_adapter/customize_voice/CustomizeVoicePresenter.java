@@ -4,10 +4,11 @@ import entity.AudioSettings;
 import use_case.customize_voice.CustomizeVoiceOutputBoundary;
 import use_case.customize_voice.CustomizeVoiceOutputData;
 import view.GestureBridgeView;
+import view.ViewInterface;
 import view.VoiceSettingsView;
 
 public class CustomizeVoicePresenter implements CustomizeVoiceOutputBoundary {
-    private final GestureBridgeView view;
+    private final ViewInterface view;
     private final VoiceSettingsView settingsView;
 
     public CustomizeVoicePresenter(GestureBridgeView view, VoiceSettingsView settingsView) {
