@@ -33,6 +33,7 @@ The project currently supports fingerspelling only, but more vocabulary will be 
     }
 ```
 
+
 - **Language Translation**: Translates recognized language into multiple languages, allowing the user to communicate
 with a wider range of people.
 ```
@@ -57,6 +58,7 @@ with a wider range of people.
     final CustomizeVoiceOutputData customizeVoiceOutputData = new CustomizeVoiceOutputData(audioSettings, false);
     voiceSettingsPresenter.prepareSuccessView(customizeVoiceOutputData);
 ```
+
 
 - **Speech-to-Text Transcription**: Transcribes voice input from the other individual into text displayed for the deaf
 or hard of hearing.
@@ -117,15 +119,15 @@ Recognition” text box below.
 - To translate the recognized into different languages to communicate with different 
 individuals, select a language from the drop-down menu below the text box and click on 
 the “Translate” button.
+https://github.com/user-attachments/assets/df95d99c-18f2-4010-a3c3-1ab475c9f77f
 
 
 - To convert the recognized sign language from text to speech, click on the “Text to 
 Speech” button, and the speech output will be generated. If you wish for the speech output
 to be in a different language, please ensure you have translated the text into the desired 
 language before using this function.
-
-
 https://github.com/user-attachments/assets/37e8b37f-a193-4403-89a9-3fb0fe910e8a
+
 
 
 
@@ -133,10 +135,17 @@ https://github.com/user-attachments/assets/37e8b37f-a193-4403-89a9-3fb0fe910e8a
 with a series of sliders to help you adjust the voice type (male/female), pitch, speed 
 (and volume) of the speech output.
 
+https://github.com/user-attachments/assets/1f0b6f06-6dfa-4c39-a91c-bdda1349adf1
+
+
+
 
 -  To transcribe spoken language to text, click on the “Begin Transcription” button and 
 speak into the microphone, then click “End Transcription”. Words will appear in 
 the transcription area.
+https://github.com/user-attachments/assets/a5332f64-4769-4b95-8fbf-191961ca179a
+
+
 
 ### License
 This code is licensed under the terms of the Creative Commons license.
