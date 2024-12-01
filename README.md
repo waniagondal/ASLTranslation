@@ -23,20 +23,51 @@ Wania Sikandar Gondal, Fang (Trent) Sheng, Yibin Wang, Shuxiao Song, Gavin Jiawe
 ### Features  
 - **Real-Time Sign Language Recognition**: Recognized sign language through webcam feed and translates them instantly.
 The project currently supports fingerspelling only, but more vocabulary will be added in the future.
-
+```
+    public void startRecognition() throws IOException, InterruptedException {
+        predictor.startRecognition(this::predictionToPresenter);
+    }
+    private void predictionToPresenter(String prediction) {
+        SignLanguageRecognitionOutputData outputData = new SignLanguageRecognitionOutputData(prediction);
+        signLanguagePresenter.updateView(outputData);
+    }
+```
 
 - **Language Translation**: Translates recognized language into multiple languages, allowing the user to communicate
 with a wider range of people.
+```
+    String translatedText = languageDataAccessObject.translate(language, text);
+    SignLanguageTranslationOutputData signLanguageTranslationOutputData =
+        new SignLanguageTranslationOutputData(translatedText);
+    signLanguageTranslationPresenter.prepareSuccessView(signLanguageTranslationOutputData);
+```
 
 
 - **Text-to-Speech Conversion**: Vocalizes the recognized text for real-time communication.
+```
+    TextToSpeechOutputData outputData = textToSpeechService.convertTextToSpeech(inputData);
+    outputBoundary.prepareOutput(outputData);
+```
 
 
 - **Voice Customization**: Allows the user to customize the speech output by modifying voice type, pitch, and speed.
+```
+    voiceSettingsDataAccessObject.changeSettings(audioSettings);
+
+    final CustomizeVoiceOutputData customizeVoiceOutputData = new CustomizeVoiceOutputData(audioSettings, false);
+    voiceSettingsPresenter.prepareSuccessView(customizeVoiceOutputData);
+```
 
 
 - **Speech-to-Text Transcription**: Transcribes voice input from the other individual into text displayed for the deaf
 or hard of hearing.
+```
+    public void processSpeech(SpeechToTextInputData inputData) throws Exception {
+        String onSpeechRecognition = speechRecognizer.recognize(inputData.getAudioData());
+        SpeechToTextOutputData outputData = new SpeechToTextOutputData(onSpeechRecognition);
+        speechToTextPresenter.deliverTranscription(outputData);
+    }
+```
 
 ### Installation Instructions  
 #### Requirements
@@ -51,19 +82,18 @@ To run this project successfully, you will need to install the following:
 - CSC207 CheckStyle
 
 #### Installing Python
-To install Python (version 3.7 or higher), click this link and follow the instructions:  
-(link here)
+To install Python (version 3.7 or higher), click this link and follow the instructions: [Download Python](https://www.python.org/downloads/)
 
-#### Installing Dependencies
+#### Installing Python Model Dependencies
 To install Python and MediaPipe dependencies, you can download them using the
 model_requirements.txt file in the src folder (this should be performed in Python):
 ```
 pip install -r model_requirements.txt
 ```
 To install the Google Cloud APIs, please follow the instructions provided in the links below:
-- Google Cloud Translation API (link here)
-- Google Cloud Text-to-Speech API (link here)
-- Google Cloud Speech-to-Text API (link here)
+- [Google Cloud Translation API](https://cloud.google.com/translate/docs/setup)
+- [Google Cloud Text-to-Speech API](https://cloud.google.com/text-to-speech/docs/before-you-begin)
+- [Google Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/docs/before-you-begin)
 
 #### Installing Checkstyle
 - We recommend using IDEs for this project (e.g., IntelliJ IDEA, Eclipse). To install the CSC207 checkstyle, make sure the file
@@ -88,6 +118,10 @@ Recognition” text box below.
 - To translate the recognized into different languages to communicate with different 
 individuals, select a language from the drop-down menu below the text box and click on 
 the “Translate” button.
+
+  <video width="320" height="240" controls>
+  <source src="videos/translation_video.mp4" type="video/mp4">
+</video>
 
 
 - To convert the recognized sign language from text to speech, click on the “Text to 
