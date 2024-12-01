@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import com.google.protobuf.ByteString;
 import entity.AudioSettings;
 import entity.AudioSettingsFactory;
+import frameworks_and_drivers.speech_to_text.AudioRecorder;
 import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
 import frameworks_and_drivers.text_to_speech.LanguageCodeMapper;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
@@ -34,7 +35,7 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
 
     private SignLanguageTranslationController signLanguageTranslationController;
     private SpeechToTextController speechToTextController;
-    private MicrophoneAudioRecorder audioRecorderForTranscription;
+    private AudioRecorder audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
     private AudioSettings audioSettings = new AudioSettingsFactory().create(1.5, false, 6.0);
     private Runnable onSettingsButtonClicked;
@@ -68,9 +69,9 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
      *
      * @param speechToTextController the controller that handles speech-to-text conversion.
      */
-    public void setSpeechToTextController(SpeechToTextController speechToTextController) {
+    public void setSpeechToTextController(SpeechToTextController speechToTextController, AudioRecorder audioRecorder) {
         this.speechToTextController = speechToTextController;
-        this.audioRecorderForTranscription = new MicrophoneAudioRecorder();
+        this.audioRecorderForTranscription = audioRecorder;
     }
 
     public void setTextToSpeechController(TextToSpeechController textToSpeechController) {
