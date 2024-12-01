@@ -19,7 +19,7 @@ public class CustomizeVoiceInteractorTest {
         CustomizeVoiceDataAccessInterface voiceSettingsRepo = new VoiceDataAccessObject();
 
         AudioSettingsFactory factory = new AudioSettingsFactory();
-        AudioSettings settings = factory.create(2, false, 10);
+        final AudioSettings settings = factory.create(2, false, 10);
         voiceSettingsRepo.changeSettings(settings);
 
         CustomizeVoiceOutputBoundary successPresenter = new CustomizeVoiceOutputBoundary() {
