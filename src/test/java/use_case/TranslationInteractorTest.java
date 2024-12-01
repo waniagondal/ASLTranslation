@@ -1,3 +1,5 @@
+package use_case;
+
 import data_access.SignLanguageTranslationDataAccessObject;
 import interface_adapter.sign_language_translation.SignLanguageTranslationDataAccessInterface;
 import org.junit.jupiter.api.Test;
