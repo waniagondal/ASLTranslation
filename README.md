@@ -119,7 +119,11 @@ Recognition” text box below.
 - To translate the recognized into different languages to communicate with different 
 individuals, select a language from the drop-down menu below the text box and click on 
 the “Translate” button.
-https://github.com/user-attachments/assets/df95d99c-18f2-4010-a3c3-1ab475c9f77f
+
+
+https://github.com/user-attachments/assets/1fb94de8-56ec-4cf3-808c-aa642d2d0cf1
+
+
 
 
 - To convert the recognized sign language from text to speech, click on the “Text to 
