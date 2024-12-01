@@ -12,6 +12,7 @@ import java.util.Hashtable;
 
 public class VoiceSettingsView extends JPanel {
 
+    private JFrame frame;
     private JLabel speedLabel;
     private JLabel voiceTypeLabel;
     private JLabel pitchLabel;
@@ -24,9 +25,10 @@ public class VoiceSettingsView extends JPanel {
     private JSlider pitchSlider;
 
     private int SPEED_VALUE;
-    private int VOLUME_VALUE;
+//    private int VOLUME_VALUE;
     private int VOICE_TYPE_VALUE;
     private int PITCH_VALUE;
+
 
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
@@ -39,6 +41,7 @@ public class VoiceSettingsView extends JPanel {
     public void setCustomizeVoiceController(CustomizeVoiceController customizeVoiceController) {
         this.customizeVoiceController = customizeVoiceController;
     }
+
 
     public void setAudioSettings(AudioSettings audioSettings) {
         this.SPEED_VALUE = (int) audioSettings.getSpeed();
@@ -67,7 +70,7 @@ public class VoiceSettingsView extends JPanel {
     }
 
     private void initializeUI() {
-        JFrame frame = new JFrame("Text to Speech Settings");
+        this.frame = new JFrame("Text to Speech Settings");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(400, 500);
         frame.setLocationRelativeTo(null);
@@ -84,7 +87,8 @@ public class VoiceSettingsView extends JPanel {
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         frame.add(mainPanel);
-        frame.setVisible(true);
+        // hide the settings view initially to prevent wrong interaction
+        frame.setVisible(false);
     }
 
     private JPanel createSliderPanel() {
@@ -165,7 +169,9 @@ public class VoiceSettingsView extends JPanel {
         buttonPanel.setBackground(BACKGROUND_COLOR);
 
         setButton = new GlowButton("Save Settings", PRIMARY_COLOR);
-        setButton.addActionListener(e -> customizeVoice());
+        setButton.addActionListener(e ->
+                customizeVoice()
+        );
 
         buttonPanel.add(setButton);
 
@@ -175,6 +181,8 @@ public class VoiceSettingsView extends JPanel {
     private void customizeVoice() {
         customizeVoiceController.execute(speedSlider.getValue(), VOICE_TYPE_VALUE == 1,
                 pitchSlider.getValue());
+        // Automatically shuts down the settings view when the settings are saved
+        frame.setVisible(false);
     }
 
     private String getVoiceType(int voiceNumber) {
@@ -191,6 +199,10 @@ public class VoiceSettingsView extends JPanel {
         femaleButton.setForeground(VOICE_TYPE_VALUE == 0 ? Color.WHITE : TEXT_COLOR);
         maleButton.setBackground(VOICE_TYPE_VALUE == 1 ? PRIMARY_COLOR : BACKGROUND_COLOR);
         maleButton.setForeground(VOICE_TYPE_VALUE == 1 ? Color.WHITE : TEXT_COLOR);
+
+    // The method that is called to open the settings view
+    public void openSettings() {
+        frame.setVisible(true);
     }
 
     private static class GlowButton extends JButton {

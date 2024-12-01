@@ -8,20 +8,13 @@ import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import javax.swing.border.EmptyBorder;
 
-import data_access.VoiceDataAccessObject;
 import entity.AudioSettings;
 import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
 import frameworks_and_drivers.text_to_speech.LanguageCodeMapper;
-import interface_adapter.customize_voice.CustomizeVoiceController;
-import interface_adapter.customize_voice.CustomizeVoiceDataAccessInterface;
-import interface_adapter.customize_voice.CustomizeVoicePresenter;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
 import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.text_to_speech.TextToSpeechController;
-import use_case.customize_voice.CustomizeVoiceInputBoundary;
-import use_case.customize_voice.CustomizeVoiceInteractor;
-import use_case.customize_voice.CustomizeVoiceOutputBoundary;
 
 /**
  * GestureBridgeView is a JPanel that represents the graphical user interface (GUI)
@@ -42,6 +35,7 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
     private MicrophoneAudioRecorder audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
     private AudioSettings audioSettings = new AudioSettingsFactory().create(1.5, false, 6.0);
+    private Runnable onSettingsButtonClicked;
 
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
@@ -49,8 +43,6 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
     private final Color BACKGROUND_COLOR = new Color(236, 240, 241);
     private final Color TEXT_COLOR = new Color(44, 62, 80);
 
-    // We need a view interface containing the methods being called, and pass the view interface into the presenter
-    // To call the corresponding methods (dependency inversion)
 
     /**
      * Constructs a new GestureBridgeView and initializes the user interface.
@@ -86,6 +78,10 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
 
     public void setAudioSettings(AudioSettings audioSettings) {
         this.audioSettings = audioSettings;
+    }
+
+    public void setOnSettingsButtonClicked(Runnable onSettingsButtonClicked) {
+        this.onSettingsButtonClicked = onSettingsButtonClicked;
     }
 
     /**
@@ -182,14 +178,18 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         settingsPanel.setBackground(BACKGROUND_COLOR);
         JButton settingsButton = new GlowButton("Settings", PRIMARY_COLOR);
-        settingsButton.addActionListener(e -> openSettings());
+
+        // Listens for the button click
+        settingsButton.addActionListener(e -> {
+                if (onSettingsButtonClicked != null) {
+                    onSettingsButtonClicked.run();
+                }
+            });
         settingsPanel.add(settingsButton);
 
         // Format the title and button panel on the logo panel
         logoPanel.add(titlePanel, BorderLayout.CENTER);
         logoPanel.add(settingsPanel, BorderLayout.EAST);
-
-        // Add action listener for the settings panel
 
         return logoPanel;
     }
@@ -317,7 +317,6 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         signLanguageTextArea.append(prediction);
     }
 
-    // These 2 methods act as action listeners for the buttons
     /**
      * Initializes and starts the transcription process.
      * This method updates the transcription text area to indicate that the transcription process has begun,
@@ -342,8 +341,6 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         endRecordingAndProcess();
     }
 
-
-    // These two buttons respond to the button clicks and collects input data
     /**
      * Starts the audio recording process.
      * Utilizes the audio recorder instance to begin capturing audio input for transcription.
@@ -371,8 +368,6 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         transcriptionTextArea.setText("Transcription Result: " + transcription);
     }
 
-
-    // This acts as action listener for the translation button
     /**
      * Initiates the sign language translation process based on the selected language.
      * This method retrieves the selected language from the language selection box and
@@ -385,14 +380,11 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         signLanguageTranslationController.execute(language, text);
     }
 
-
-    // Overrides interface
     @Override
     public void signLanguageTranslationDisplay(String translation) {
         signLanguageTextArea.setText(translation);
     }
 
-    // This respond to the action listener for the text-to-speech button
     private void beginTextToSpeech() throws LineUnavailableException, IOException {
         String inputText = signLanguageTextArea.getText();
         String language = (String) languageBox.getSelectedItem();
@@ -400,36 +392,6 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
         AudioSettings audioSettings = this.audioSettings;
         textToSpeechController.execute(inputText, languageCode, audioSettings);
 
-    }
-
-    private VoiceSettingsView initializeSettingsView() {
-        return new VoiceSettingsView(this.audioSettings);
-    }
-
-    private void openSettings() {
-        VoiceSettingsView settingsView = initializeSettingsView();
-
-        CustomizeVoiceController customizeVoiceController = intializeVoiceCustomization(this,
-                settingsView);
-
-        settingsView.setCustomizeVoiceController(customizeVoiceController);
-
-    }
-
-    /**
-     * Initializes the Voice Customization module.
-     *
-     * @param gestureBridgeView the main application view for communication with presenters.
-     * @param settingsView the text to speech settings view for communication with presenters.
-     * @return the CustomVoiceController instance.
-     */
-    private static CustomizeVoiceController intializeVoiceCustomization(GestureBridgeView gestureBridgeView, VoiceSettingsView settingsView) {
-        AudioSettingsFactory audioSettingsFactory = new AudioSettingsFactory();
-        CustomizeVoiceDataAccessInterface dataAccessObject = new VoiceDataAccessObject();
-        CustomizeVoiceOutputBoundary outputBoundary = new CustomizeVoicePresenter(gestureBridgeView, settingsView);
-        CustomizeVoiceInputBoundary interactor = new CustomizeVoiceInteractor(dataAccessObject, outputBoundary,
-                                                                                audioSettingsFactory);
-        return new CustomizeVoiceController(interactor);
     }
 
     private static class GlowButton extends JButton {
