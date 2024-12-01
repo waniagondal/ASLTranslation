@@ -8,19 +8,13 @@ import entity.AudioSettings;
 public class CustomizeVoiceOutputData {
 
     private final AudioSettings settings;
-    private final boolean useCaseFailed;
 
-    public CustomizeVoiceOutputData(AudioSettings settings, boolean useCaseFailed) {
+    public CustomizeVoiceOutputData(AudioSettings settings) {
         this.settings = settings;
-        this.useCaseFailed = useCaseFailed;
     }
 
     public AudioSettings getAudioSettings() {
         return settings;
-    }
-
-    public boolean isUseCaseFailed() {
-        return useCaseFailed;
     }
 
 }

@@ -10,7 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Hashtable;
 
-public class VoiceSettingsView extends JPanel {
+public class VoiceSettingsView extends JPanel implements VoiceSettingsViewInterface {
 
     private JFrame frame;
     private JLabel speedLabel;
@@ -42,7 +42,7 @@ public class VoiceSettingsView extends JPanel {
         this.customizeVoiceController = customizeVoiceController;
     }
 
-
+    @Override
     public void setAudioSettings(AudioSettings audioSettings) {
         this.SPEED_VALUE = (int) audioSettings.getSpeed();
         this.PITCH_VALUE = (int) audioSettings.getPitch();
@@ -196,9 +196,9 @@ public class VoiceSettingsView extends JPanel {
 
     private void updateVoiceTypeButtonStyle(JButton femaleButton, JButton maleButton) {
         femaleButton.setBackground(VOICE_TYPE_VALUE == 0 ? PRIMARY_COLOR : BACKGROUND_COLOR);
-        femaleButton.setForeground(VOICE_TYPE_VALUE == 0 ? Color.WHITE : TEXT_COLOR);
+        femaleButton.setForeground(VOICE_TYPE_VALUE == 0 ? Color.BLACK : TEXT_COLOR);
         maleButton.setBackground(VOICE_TYPE_VALUE == 1 ? PRIMARY_COLOR : BACKGROUND_COLOR);
-        maleButton.setForeground(VOICE_TYPE_VALUE == 1 ? Color.WHITE : TEXT_COLOR);
+        maleButton.setForeground(VOICE_TYPE_VALUE == 1 ? Color.BLACK : TEXT_COLOR);
     }
 
     // The method that is called to open the settings view

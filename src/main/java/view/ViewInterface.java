@@ -4,6 +4,7 @@ import com.google.protobuf.ByteString;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
+import entity.AudioSettings;
 
 /**
  * An interface for the GestureBridgeView that is for dependency inversion (will be passed into the presenter
@@ -34,4 +35,10 @@ public interface ViewInterface {
      * @param audioContents the byte string of the audio
      */
     void playAudio(ByteString audioContents) throws LineUnavailableException, IOException;
+  
+    /**
+     * Update the text to speech audio settings to the user-customized settings
+     * @param settings the audio settings data to be set
+     */
+    void setAudioSettings(AudioSettings settings);
 }
