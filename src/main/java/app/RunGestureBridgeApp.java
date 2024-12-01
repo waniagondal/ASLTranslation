@@ -5,7 +5,6 @@ import data_access.VoiceDataAccessObject;
 import entity.AudioSettings;
 import entity.AudioSettingsFactory;
 import frameworks_and_drivers.speech_to_text.GoogleSpeechRecognizer;
-import frameworks_and_drivers.text_to_speech.AudioPlayer;
 import frameworks_and_drivers.text_to_speech.GoogleTextToSpeechGateway;
 import frameworks_and_drivers.text_to_speech.TextToSpeechInterface;
 import interface_adapter.customize_voice.CustomizeVoiceController;
@@ -104,9 +103,8 @@ public class RunGestureBridgeApp {
      * @return the TextToSpeechController instance.
      */
     private static TextToSpeechController initializeTextToSpeech(ViewInterface gestureBridgeView) {
-        AudioPlayer audioPlayer = new AudioPlayer();
         TextToSpeechInterface textToSpeechService = new GoogleTextToSpeechGateway();
-        TextToSpeechOutputBoundary outputBoundary = new TextToSpeechPresenter(audioPlayer);
+        TextToSpeechOutputBoundary outputBoundary = new TextToSpeechPresenter(gestureBridgeView);
         TextToSpeechInputBoundary interactor = new TextToSpeechInteractor(outputBoundary, textToSpeechService);
         return new TextToSpeechController(interactor);
     }

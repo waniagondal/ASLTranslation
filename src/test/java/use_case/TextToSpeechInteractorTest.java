@@ -1,5 +1,6 @@
 package use_case;
 
+import interface_adapter.text_to_speech.TextToSpeechPresenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import use_case.text_to_speech.TextToSpeechInputData;
@@ -18,7 +19,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TextToSpeechInteractorTest {
+class TextToSpeechInteractorTest {
 
     private TextToSpeechOutputBoundary outputBoundary;
     private TextToSpeechInteractor interactor;
