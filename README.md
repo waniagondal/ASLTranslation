@@ -166,21 +166,70 @@ https://github.com/user-attachments/assets/2aa36b9e-4560-4695-8f43-04b9d3be390e
 This code is licensed under the terms of the Creative Commons license.
 
 ### Feedback and Contributions
-We welcome feedback and contributions to help us improve this project! If you wish to get 
-involved, follow these instructions:
+#### Feedback
+We value your opinions and suggestions to help us improve the project!
+Here's how you can provide feedback:
 
-#### Report Issues
-If you want to report a bug/error or request more features, please open an issue in the 
-Issues Section on GitHub.
+**How to give feedback**
 
-#### Submit Contributions
-If you want to contribute to the project:
-1. Fork the repository
-2. Create your own branch
-3. Follow CSC207 Checkstyle (installation instructions above) and code your changes
-4. Push your commits to your forked repository
-5. Create a pull request and describe the changes you made
+- Write an email to wania.gondal@mail.utoronto.ca, add "GestureBridge" to the subject.
+- Clearly state the issue or suggestion.
+- For issues and bugs,  please include a screenshot or code snippet if possible; For suggestions,
+ be specific about which feature or part of code you are referring to.
 
-#### Provide Feedback
-If you want to provide suggestion and feedback, or ask questions, please contact us 
-at (email here)
+**What to expect after giving feedback**
+- You will receive an acknowledgement of your feedback within 48 hours.
+- Feedback is viewed weekly by the maintainers.
+- Please check the issue tracker for further updates. If you provided your GitHub username when
+giving feedback, we will notify you when posting new changes.
+
+#### Contributions
+Your contributions will help us greatly enhance the project! Whether it's fixing bugs, adding new
+features, or improving documentation, your efforts make a difference.
+
+**How to Contribute**
+1. Fork the Repository
+   - Go to GestureBridge's GitHub repository
+   - Click on the "Fork" button to create a copy of the repository.
+2. Clone Your Fork
+   - Go to your forked repository and click on the "Code" button on the top right. Copy the URL
+that appears.
+   - Go to your IDE, use "Get from VCS" to create a new project with your URL, or you can 
+use `git clone` in the terminal
+3. Create a New Branch
+   - Select "New Branch" option in your IDE toolbar, or you can use the following git command:
+    ```
+    git checkout -b feature/your-feature-name
+    ```
+4. Code Your Changes
+   - Add code, documentation, or fix a bug mentioned in the "Issues" section. Make sure to
+follow the CSC207 Checkstyle!
+5. Commit Your Changes
+   - If you have GitHub plugin installed, commit through the IDE toolbar, or you can commit
+using the following git command:
+    ```
+    git commit -m "Description of your changes"
+    ```
+   - Make sure to include descriptions in your commits!
+6. Push Your Changes
+   - You can either push through the Git toolbar in your IDE, or use the following git
+command line:
+    ```
+    git push origin feature/your-feature-name
+    ```
+7. Submit a Pull Request
+   - Open a pull request on GitHub, add the maintainer to your reviewers. And congratulations!
+You just helped make a difference to this project!
+
+**Guidelines for a Good Merge Request**
+- Make sure your branch is up to date with the main branch to avoid merge conflicts
+- Include a clear title and detailed description for your pull request
+- Double-check your code before you push to ensure checkstyle errors were reported 
+
+**Review and Merge Protocols**
+- Contributions and pull requests are reviewed weekly by the maintainers
+- Your contribution should be constructive, addressing either an existing issue or 
+help add a new feature
+- Your contribution should pass all checkstyle scans before being pushed
+- Once approved, your pull request will be merged to the main branch, and you will
+be credited as a contributor!
