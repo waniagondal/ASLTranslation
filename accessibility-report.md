@@ -38,3 +38,13 @@ work with a language the app doesn't function with.
 - Buttons stand out clearly from the background, so they are easily visible.
 - Components in the text to speech settings view are close together and easily accessible.
 - Sliders in the text to speech settings can be clicked on to move in increments of one if it's easier for the user.
+
+### 2. Write a paragraph (3-6 sentences) about who you would market your program towards, if you were to sell or license your program to customers.
+Our main demographic would be people with hearing disabilities since GestureBridge is an app designed mainly around sign
+language translation. These people could use this app to communicate with those who don't know sign language. It even
+has the possibility of being used in special education classrooms for kids who have trouble hearing. 
+
+Another demographic we would market ourselves towards would be people who are learning another language. Since 
+GestureBridge includes a translation feature, it could help language-learners learn new vocabulary. The text to speech 
+feature would also be useful for them, since it could help with pronunciation of certain words. Especially since the 
+user is able to set the TTS speed to make it easier to understand for them.
