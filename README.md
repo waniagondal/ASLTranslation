@@ -11,7 +11,11 @@ project’s primary user base will be individuals who are deaf or hard of hearin
 family, friends, and colleagues who wish to communicate seamlessly with them.
 
 ### Contributors
-Wania Sikandar Gondal, Fang (Trent) Sheng, Yibin Wang, Shuxiao Song, Gavin Jiawei Song
+- Wania Sikandar Gondal (waniagondal)
+- Yibin Wang (YIBIN35)
+- Fang (Trent) Sheng (F4NG66)
+- Gavin Jiawei Song (gavinsong45)
+- Shuxiao Song (SSX-song)
 
 ### Table of Contents
 - [**Features**](#features)
