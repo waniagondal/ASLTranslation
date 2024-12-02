@@ -48,3 +48,6 @@ Another demographic we would market ourselves towards would be people who are le
 GestureBridge includes a translation feature, it could help language-learners learn new vocabulary. The text to speech 
 feature would also be useful for them, since it could help with pronunciation of certain words. Especially since the 
 user is able to set the TTS speed to make it easier to understand for them.
+
+### 3. Write a paragraph about whether or not your program is less likely to be used by certain demographics. Your discussion here should be informed by the content of our embedded ethics modules this term.
+The program might be of limited use for deaf or hard of hearing individuals who does not communicate through ASL (American Sign Language). This program is aiming to provide a social model for a wide range of both normal and disabled users. However, since the project currently only supports fingerspelling English letters, users of other sign languages might find it hard to communicate using current sign language recognition. Thus, it might not be able to remove the personal/social limitations on these demographics. Groups of individuals who do not interact with disabled people on a daily basis are also unlikely to use this program since they have no need of it.
