@@ -109,7 +109,17 @@ mystyle.xml is included in your repository, then paste the following code to che
 - Set the checkstyle as default to check your code any time.
 
 #### Common Issues
-(need more content here)
+Q: I added the dependencies in my pom file, but the program still doesn't run, why?
+
+A: Try clicking on the pom file, go to the "Maven" option, and click "Reload Project". If it doesn't work ,try re-installing the dependencies
+and checking if they are in the right version
+
+
+Q: I tried running the program but I'm getting API errors, why?
+
+A: It might be because you haven't added an appropriate API key. For Google Cloud APIs, you need to generate them on the console and use your own
+API to access the functions. For more instructions, click [here](https://cloud.google.com/apis/docs/getting-started)
+   
 
 ### Usage Guide
 - After the project is downloaded, please allow access to your webcam to enable real-time
