@@ -1,12 +1,12 @@
 package use_case.sign_language_translation;
 
 /**
- * Input boundaries for actions related to select_language.
+ * Input boundary for actions related to sign language translation.
  */
 public interface SignLanguageTranslationInputBoundary {
 
     /**
-     * Executed the select_language use-case.
+     * Executed the sign language translation use-case.
      * @param signLanguageTranslationInputData the input data
      */
     void execute(SignLanguageTranslationInputData signLanguageTranslationInputData);

@@ -1,6 +1,6 @@
 package use_case;
 
-import data_access.SignLanguageTranslationDataAccessObject;
+import frameworks_and_drivers.sign_language_translation.SignLanguageTranslationDataAccessObject;
 import interface_adapter.sign_language_translation.SignLanguageTranslationDataAccessInterface;
 import org.junit.jupiter.api.Test;
 import use_case.sign_language_translation.*;
@@ -18,11 +18,18 @@ class TranslationInteractorTest {
         // Translation translation = factory.create("Hello World", "Mandarin", empty);
 
         // Create the input data
-        SignLanguageTranslationInputData inputData = new SignLanguageTranslationInputData("Mandarin", "Hello World");
+        SignLanguageTranslationInputData inputData = new SignLanguageTranslationInputData(
+                "Mandarin", "Hello World");
         // Create the DAO
         SignLanguageTranslationDataAccessInterface translate = new SignLanguageTranslationDataAccessObject();
 
         //Creates the presenter for the successful case
+        SignLanguageTranslationInputBoundary interactor = getSignLanguageTranslationInputBoundary(translate);
+        interactor.execute(inputData);
+    }
+
+    private static SignLanguageTranslationInputBoundary getSignLanguageTranslationInputBoundary(
+            SignLanguageTranslationDataAccessInterface translate) {
         SignLanguageTranslationOutputBoundary successPresenter = new SignLanguageTranslationOutputBoundary() {
             @Override
             public void prepareSuccessView(SignLanguageTranslationOutputData outputData) {
@@ -37,7 +44,6 @@ class TranslationInteractorTest {
             }
         };
 
-        SignLanguageTranslationInputBoundary interactor = new SignLanguageTranslationInteractor(translate, successPresenter);
-        interactor.execute(inputData);
+        return new SignLanguageTranslationInteractor(translate, successPresenter);
     }
 }

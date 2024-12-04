@@ -8,8 +8,6 @@ public interface SignLanguageTranslationDataAccessInterface {
 
     /**
      * Translates the given text into the specified language.
-     * This method focuses on the signLanguageTranslationDisplay functionality only,
-     * with user preferences and default settings handled in other use cases.
      *
      * @param language the target language for the signLanguageTranslationDisplay
      * @param text     the text to be translated

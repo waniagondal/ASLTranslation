@@ -6,11 +6,10 @@ import use_case.speech_to_text.SpeechToTextInputData;
 /**
  * The controller for handling speech input.
  * It coordinates between the user input (audio data) and the use case that converts speech to text.
- * It delegates processing to the use case and passes results to the presenter.
  */
 public class SpeechToTextController {
 
-    private final SpeechToTextInputBoundary speechToTextInputInteractor;  // Input Boundary
+    private final SpeechToTextInputBoundary speechToTextInputInteractor;
 
     /**
      * Constructs a SpeechToTextController with the given input and output boundaries.
@@ -22,12 +21,13 @@ public class SpeechToTextController {
     }
 
     /**
-     * Handles the speech input by processing the given audio data and returning the transcribed text.
+     * Handles the speech input by processing the given audio data, and executes the use case.
      *
      * @param audioData The audio data in byte array format to be processed.
+     * @throws Exception If an error occurs during the speech processing.
      */
     public void processSpeech(byte[] audioData) throws Exception {
-        SpeechToTextInputData inputData = new SpeechToTextInputData(audioData);
+        final SpeechToTextInputData inputData = new SpeechToTextInputData(audioData);
         speechToTextInputInteractor.processSpeech(inputData);
     }
 }

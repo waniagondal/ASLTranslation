@@ -1,8 +1,8 @@
 package interface_adapter.speech_to_text;
 
+import interface_adapter.ViewInterface;
 import use_case.speech_to_text.SpeechToTextOutputBoundary;
 import use_case.speech_to_text.SpeechToTextOutputData;
-import view.ViewInterface;
 
 /**
  * The Presenter that formats and delivers the transcription result to the UI.

@@ -1,13 +1,23 @@
 package frameworks_and_drivers.speech_to_text;
 
-import javax.sound.sampled.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.TargetDataLine;
+
+import interface_adapter.speech_to_text.AudioRecorderInterface;
 
 /**
  * A concrete implementation of the AudioRecorder interface that records audio via the system's microphone.
  */
-public class MicrophoneAudioRecorder implements AudioRecorder {
+public class MicrophoneAudioRecorder implements AudioRecorderInterface {
+
+    private static final int BUFFER_SIZE = 4096;
+
     private TargetDataLine targetDataLine;
     private AudioFormat audioFormat;
     private ByteArrayOutputStream out;
@@ -19,44 +29,34 @@ public class MicrophoneAudioRecorder implements AudioRecorder {
      */
     @Override
     public void start() {
-        if (isRecording) {
-            return;
-        }
-        isRecording = true;
+        // If already recording, do nothing
+        if (!isRecording) {
+            isRecording = true;
 
-        audioFormat = getAudioFormat();
-        DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
+            audioFormat = getAudioFormat();
+            final DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
 
-        if (!AudioSystem.isLineSupported(info)) {
-            System.out.println("Line not supported");
-            return;
-        }
-
-        try {
-            targetDataLine = (TargetDataLine) AudioSystem.getLine(info);
-            targetDataLine.open(audioFormat);
-            targetDataLine.start();
-
-            out = new ByteArrayOutputStream();
-            captureThread = new Thread(() -> {
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-
-                while (isRecording && !Thread.currentThread().isInterrupted()) {
-                    bytesRead = targetDataLine.read(buffer, 0, buffer.length);
-                    out.write(buffer, 0, bytesRead);
-                }
-
+            // Check if the system supports the audio format
+            if (AudioSystem.isLineSupported(info)) {
                 try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    // Set up the TargetDataLine for recording
+                    targetDataLine = (TargetDataLine) AudioSystem.getLine(info);
+                    targetDataLine.open(audioFormat);
+                    targetDataLine.start();
+
+                    // Prepare to capture the audio data in the background
+                    out = new ByteArrayOutputStream();
+                    captureThread = new Thread(this::captureAudioData);
+                    captureThread.start();
+                    System.out.println("Recording started...");
                 }
-            });
-            captureThread.start();
-            System.out.println("Recording started...");
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
+                catch (LineUnavailableException error) {
+                    error.printStackTrace();
+                }
+            }
+            else {
+                System.out.println("Line not supported");
+            }
         }
     }
 
@@ -65,25 +65,29 @@ public class MicrophoneAudioRecorder implements AudioRecorder {
      */
     @Override
     public void stop() {
-        if (!isRecording) {
-            return;
-        }
-        isRecording = false;
+        // Check if the recording is active
+        if (isRecording) {
+            isRecording = false;
 
-        if (captureThread != null && captureThread.isAlive()) {
-            captureThread.interrupt();
-            try {
-                captureThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            // Interrupt the capture thread if it's running
+            if (captureThread != null && captureThread.isAlive()) {
+                captureThread.interrupt();
+                try {
+                    captureThread.join();
+                }
+                catch (InterruptedException error) {
+                    error.printStackTrace();
+                }
             }
-        }
+            // Stop and close the target data line to release resources
+            if (targetDataLine != null) {
+                targetDataLine.stop();
+                targetDataLine.close();
+            }
 
-        if (targetDataLine != null) {
-            targetDataLine.stop();
-            targetDataLine.close();
+            // Output the message indicating the recording has stopped
+            System.out.println("Recording stopped.");
         }
-        System.out.println("Recording stopped.");
     }
 
     /**
@@ -93,7 +97,11 @@ public class MicrophoneAudioRecorder implements AudioRecorder {
      */
     @Override
     public byte[] getAudioData() {
-        return out != null ? out.toByteArray() : new byte[0];
+        byte[] byteArray = new byte[0];
+        if (out != null) {
+            byteArray = out.toByteArray();
+        }
+        return byteArray;
     }
 
     /**
@@ -102,11 +110,32 @@ public class MicrophoneAudioRecorder implements AudioRecorder {
      * @return The AudioFormat for the recording.
      */
     private AudioFormat getAudioFormat() {
-        float sampleRate = 16000F;
-        int sampleSizeInBits = 16;
-        int channels = 1;
-        boolean signed = true;
-        boolean bigEndian = false;
+        final float sampleRate = 16000F;
+        final int sampleSizeInBits = 16;
+        final int channels = 1;
+        final boolean signed = true;
+        final boolean bigEndian = false;
         return new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
+    }
+
+    /**
+     * Method to capture the audio data in the background thread.
+     */
+    private void captureAudioData() {
+        final byte[] buffer = new byte[BUFFER_SIZE];
+        int bytesRead;
+
+        // Capture audio data in a loop while recording
+        while (isRecording && !Thread.currentThread().isInterrupted()) {
+            bytesRead = targetDataLine.read(buffer, 0, buffer.length);
+            out.write(buffer, 0, bytesRead);
+        }
+
+        try {
+            out.close();
+        }
+        catch (IOException error) {
+            error.printStackTrace();
+        }
     }
 }

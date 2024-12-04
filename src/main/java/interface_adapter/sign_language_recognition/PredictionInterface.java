@@ -1,7 +1,5 @@
 package interface_adapter.sign_language_recognition;
 
-import frameworks_and_drivers.sign_language_recognition.PythonScriptRunner;
-
 import java.io.IOException;
 
 /**
@@ -10,11 +8,11 @@ import java.io.IOException;
 public interface PredictionInterface {
 
     /**
-     * Starts the recognition process.
+     * Starts the sign language recognition process.
      *
-     * @param listener the listener to handle each prediction
-     * @throws IOException          if there is an I/O error
-     * @throws InterruptedException if the process is interrupted
+     * @param listener the PredictionListenerInterface implementation that handles prediction results
+     * @throws IOException if an I/O error occurs during the recognition process
+     * @throws InterruptedException if the recognition process is interrupted
      */
-    void startRecognition(PythonScriptRunner.PredictionListener listener) throws IOException, InterruptedException;
+    void startRecognition(PredictionListenerInterface listener) throws IOException, InterruptedException;
 }

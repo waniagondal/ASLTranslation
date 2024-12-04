@@ -1,4 +1,5 @@
 package entity;
+
 /**
  * Represents the transcription of audio input.
  * This entity holds the text result of processing audio data through a speech-to-text system.

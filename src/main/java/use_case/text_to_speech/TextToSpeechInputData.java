@@ -14,7 +14,6 @@ public class TextToSpeechInputData {
     private final double speakingRate;
     private final double pitch;
 
-
     /**
      * Constructs a TextToSpeechInputData instance using the provided text, language code, and audio settings.
      *
@@ -22,7 +21,7 @@ public class TextToSpeechInputData {
      * @param languageCode The language code for speech synthesis (e.g., "en-US").
      * @param audioSettings The audio settings containing voice type, speaking rate, volume, and pitch.
      */
-    public TextToSpeechInputData(String text, String languageCode, AudioSettings audioSettings ) {
+    public TextToSpeechInputData(String text, String languageCode, AudioSettings audioSettings) {
         this.text = text;
         this.languageCode = languageCode;
         this.gender = audioSettings.getVoiceType();

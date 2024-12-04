@@ -1,21 +1,34 @@
 package view;
 
-import javax.sound.sampled.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import com.google.protobuf.ByteString;
 import entity.AudioSettings;
 import entity.AudioSettingsFactory;
-import frameworks_and_drivers.speech_to_text.AudioRecorder;
-import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
-import frameworks_and_drivers.text_to_speech.LanguageCodeMapper;
+import interface_adapter.ViewInterface;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
+import interface_adapter.speech_to_text.AudioRecorderInterface;
 import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.text_to_speech.TextToSpeechController;
 
@@ -24,66 +37,82 @@ import interface_adapter.text_to_speech.TextToSpeechController;
  * for the GestureBridge application. It provides components for displaying sign language recognition,
  * transcription, signLanguageTranslationDisplay, and speech synthesis. It interacts with controllers for managing
  * sign language signLanguageTranslationDisplay and speech-to-text conversion.
- */
+*/
 public class GestureBridgeView extends JPanel implements ViewInterface {
 
-    private JFrame frame;
     private JTextArea signLanguageTextArea;
     private JTextArea transcriptionTextArea;
     private JComboBox<String> languageBox;
-    private GlowButton textToSpeechButton, beginTranscriptionButton, endTranscriptionButton, translateButton;
+    private final GlowButton beginTranscriptionButton = new GlowButton(
+            "Begin Transcription", GestureBridgeConfiguration.PRIMARY_COLOR);
+    private final GlowButton endTranscriptionButton = new GlowButton(
+            "End Transcription", GestureBridgeConfiguration.ACCENT_COLOR);
 
     private SignLanguageTranslationController signLanguageTranslationController;
     private SpeechToTextController speechToTextController;
-    private AudioRecorder audioRecorderForTranscription;
+    private AudioRecorderInterface audioRecorderForTranscription;
     private TextToSpeechController textToSpeechController;
-    private AudioSettings audioSettings = new AudioSettingsFactory().create(1.5, false, 6.0);
+    private AudioSettings audioSettings = new AudioSettingsFactory().create(
+            GestureBridgeConfiguration.AUDIO_SETTINGS_SPEECH, true, GestureBridgeConfiguration.AUDIO_SETTING_PITCH);
     private Runnable onSettingsButtonClicked;
-
-    private final Color PRIMARY_COLOR = new Color(41, 128, 185);
-    private final Color SECONDARY_COLOR = new Color(52, 152, 219);
-    private final Color ACCENT_COLOR = new Color(231, 76, 60);
-    private final Color BACKGROUND_COLOR = new Color(236, 240, 241);
-    private final Color TEXT_COLOR = new Color(44, 62, 80);
-
 
     /**
      * Constructs a new GestureBridgeView and initializes the user interface.
      * This constructor sets up the layout, colors, and interactive components of the UI.
      */
     public GestureBridgeView() {
-        initializeUI();
+        initializeUserInterface();
     }
 
     /**
      * Sets the controller responsible for translating sign language to text.
      *
-     * @param signLanguageTranslationController the controller that handles sign language signLanguageTranslationDisplay.
+     * @param viewSignLanguageTranslationController the controller to handle
+     *                                              sign language signLanguageTranslationDisplay.
      */
-    public void setTranslationController(SignLanguageTranslationController signLanguageTranslationController) {
-        this.signLanguageTranslationController = signLanguageTranslationController;
+    public void setTranslationController(SignLanguageTranslationController viewSignLanguageTranslationController) {
+        this.signLanguageTranslationController = viewSignLanguageTranslationController;
     }
 
     /**
-     * Sets the controller responsible for converting speech to text.
+     * Sets the controller responsible for converting speech to text and assigns a new audio recorder for transcription.
      *
-     * @param speechToTextController the controller that handles speech-to-text conversion.
+     * @param newSpeechToTextController the SpeechToTextController responsible for managing speech-to-text conversion
+     * @param newAudioRecorderForTranscription the AudioRecorderInterface implementation to be used for
+     *                                         audio transcription
      */
-    public void setSpeechToTextController(SpeechToTextController speechToTextController, AudioRecorder audioRecorder) {
-        this.speechToTextController = speechToTextController;
-        this.audioRecorderForTranscription = audioRecorder;
+    public void setSpeechToTextController(SpeechToTextController newSpeechToTextController,
+                                          AudioRecorderInterface newAudioRecorderForTranscription) {
+        this.speechToTextController = newSpeechToTextController;
+        this.audioRecorderForTranscription = newAudioRecorderForTranscription;
     }
 
+    /**
+     * Sets the controller responsible for the Text-to-Speech functionality.
+     *
+     * @param textToSpeechController the controller responsible for managing Text-to-Speech operations.
+     */
     public void setTextToSpeechController(TextToSpeechController textToSpeechController) {
         this.textToSpeechController = textToSpeechController;
 
     }
 
+    /**
+     * Updates the audio settings for the system.
+     *
+     * @param audioSettings the {@link AudioSettings} object containing the desired audio configuration.
+     */
     @Override
     public void setAudioSettings(AudioSettings audioSettings) {
         this.audioSettings = audioSettings;
     }
 
+    /**
+     * Sets the action to be performed when the settings button is clicked.
+     * This method registers a Runnable to be executed when the settings button is clicked.
+     *
+     * @param onSettingsButtonClicked Runnable representing the action to execute when the settings button is clicked.
+     */
     public void setOnSettingsButtonClicked(Runnable onSettingsButtonClicked) {
         this.onSettingsButtonClicked = onSettingsButtonClicked;
     }
@@ -94,228 +123,93 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
      * text areas, buttons, labels, and other UI elements. This method is responsible
      * for defining the structure and appearance of the application's graphical interface.
      */
-    private void initializeUI() {
-        frame = new JFrame("GestureBridge");
+    private void initializeUserInterface() {
+        final JFrame frame = new JFrame("GestureBridge");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1280, 800);
+        frame.setSize(GestureBridgeConfiguration.FRAME_WIDTH, GestureBridgeConfiguration.FRAME_HEIGHT);
         frame.setLocationRelativeTo(null);
-        frame.setBackground(BACKGROUND_COLOR);
+        frame.setBackground(GestureBridgeConfiguration.BACKGROUND_COLOR);
 
-        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-        mainPanel.setBackground(BACKGROUND_COLOR);
-        mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        final JPanel mainPanel = createMainPanel();
+        frame.add(mainPanel);
+        frame.setVisible(true);
+    }
+
+    /**
+     * Creates and returns the main panel for the GestureBridge application.
+     *
+     * @return the main JPanel containing the UI components.
+     */
+    private JPanel createMainPanel() {
+        final JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(GestureBridgeConfiguration.BACKGROUND_COLOR);
+        mainPanel.setBorder(new EmptyBorder(
+                GestureBridgeConfiguration.BORDER_PADDING, GestureBridgeConfiguration.BORDER_PADDING,
+                GestureBridgeConfiguration.BORDER_PADDING, GestureBridgeConfiguration.BORDER_PADDING));
 
         signLanguageTextArea = new JTextArea();
         transcriptionTextArea = new JTextArea();
         languageBox = new JComboBox<>(new String[]{"English", "French", "Spanish", "Mandarin"});
 
-        JPanel logoPanel = createLogoPanel();
+        // Create GestureBridgeViewComponentCreation instance
+        final GestureBridgeViewComponentCreation uiComponents = new GestureBridgeViewComponentCreation(
+                signLanguageTextArea, transcriptionTextArea, languageBox);
+
+        final JPanel logoPanel = createLogoPanel();
         mainPanel.add(logoPanel, BorderLayout.NORTH);
 
-        JPanel contentPanel = new JPanel(new GridBagLayout());
-        contentPanel.setBackground(BACKGROUND_COLOR);
-        GridBagConstraints gbc = new GridBagConstraints();
+        final JPanel contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setBackground(GestureBridgeConfiguration.BACKGROUND_COLOR);
+        final GridBagConstraints gbc = new GridBagConstraints();
 
-        JLabel webcamLabel = createWebcamLabel();
+        final JLabel webcamLabel = uiComponents.createWebcamLabel();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.gridheight = 1;
-        gbc.weightx = 0.7;
-        gbc.weighty = 0.6;
+        gbc.weightx = GestureBridgeConfiguration.WEBCAM_GRID_WEIGHT_X;
+        gbc.weighty = GestureBridgeConfiguration.WEBCAM_GRID_WEIGHT_Y;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(0, 0, 10, 10);
+        gbc.insets = new Insets(0, 0, GestureBridgeConfiguration.GRID_INSETS_TOP_RIGHT,
+                GestureBridgeConfiguration.GRID_INSETS_TOP_RIGHT);
         contentPanel.add(webcamLabel, gbc);
 
-        JPanel signLanguagePanel = createSignLanguagePanel();
+        final JPanel signLanguagePanel = uiComponents.createSignLanguagePanel();
         gbc.gridy = 1;
-        gbc.weighty = 0.4;
+        gbc.weighty = GestureBridgeConfiguration.SIGN_LANGUAGE_PANEL_GRID_WEIGHT_Y;
         contentPanel.add(signLanguagePanel, gbc);
 
-        JPanel transcriptionPanel = createTranscriptionPanel();
+        final JPanel transcriptionPanel = uiComponents.createTranscriptionPanel();
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
         gbc.gridheight = 2;
-        gbc.weightx = 0.3;
-        gbc.weighty = 1.0;
-        gbc.insets = new Insets(0, 0, 10, 0);
+        gbc.weightx = GestureBridgeConfiguration.TRANSCRIPTION_PANEL_WEIGHT_X;
+        gbc.weighty = 1;
+        gbc.insets = new Insets(0, 0, 0, 0);
         contentPanel.add(transcriptionPanel, gbc);
 
-        JPanel buttonPanel = createButtonPanel();
+        final JPanel buttonPanel = createButtonPanel();
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.gridwidth = 3;
+        gbc.gridwidth = GestureBridgeConfiguration.BUTTON_PANEL_GRID_WIDTH;
         gbc.gridheight = 1;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0.1;
+        gbc.weightx = 1;
+        gbc.weighty = GestureBridgeConfiguration.BUTTON_PANEL_WEIGHT_Y;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 0, 0, 0);
         contentPanel.add(buttonPanel, gbc);
 
         mainPanel.add(contentPanel, BorderLayout.CENTER);
 
-        frame.add(mainPanel);
-        frame.setVisible(true);
+        return mainPanel;
     }
 
     /**
-     * Creates and returns a JPanel that contains the application's logo or title.
-     * The logo panel uses a left-aligned FlowLayout and displays the application name in a styled JLabel.
+     * Displays the predicted sign language recognition result in the sign language text area.
      *
-     * @return a JPanel containing the application's logo or title.
+     * @param prediction the predicted result of the sign language recognition to be displayed.
      */
-    private JPanel createLogoPanel() {
-        JPanel logoPanel = new JPanel(new BorderLayout());
-        logoPanel.setBackground(BACKGROUND_COLOR);
-
-        JLabel logoTextLabel = new JLabel("GestureBridge");
-        logoTextLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
-        logoTextLabel.setForeground(PRIMARY_COLOR);
-
-        // Add title panel to add the logo
-        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        titlePanel.setBackground(BACKGROUND_COLOR);
-        titlePanel.add(logoTextLabel);
-
-        // Create the panel for the settings button
-        JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        settingsPanel.setBackground(BACKGROUND_COLOR);
-        JButton settingsButton = new GlowButton("Settings", PRIMARY_COLOR);
-
-        // Listens for the button click
-        settingsButton.addActionListener(e -> {
-                if (onSettingsButtonClicked != null) {
-                    onSettingsButtonClicked.run();
-                }
-            });
-        settingsPanel.add(settingsButton);
-
-        // Format the title and button panel on the logo panel
-        logoPanel.add(titlePanel, BorderLayout.CENTER);
-        logoPanel.add(settingsPanel, BorderLayout.EAST);
-
-        return logoPanel;
-    }
-
-    /**
-     * Creates and returns a JLabel representing the webcam feed display.
-     * The label has a fixed size, a black background, and a white centered text with a border.
-     *
-     * @return a JLabel configured to display the webcam feed.
-     */
-    private JLabel createWebcamLabel() {
-        JLabel label = new JLabel("Webcam Feed");
-        label.setPreferredSize(new Dimension(640, 480));
-        label.setBackground(Color.BLACK);
-        label.setForeground(Color.WHITE);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setOpaque(true);
-        label.setBorder(BorderFactory.createLineBorder(PRIMARY_COLOR, 2));
-        return label;
-    }
-
-    /**
-     * Creates and returns a JPanel for displaying sign language recognition results.
-     * The panel contains a title label, a scrollable text area for recognition output, and a language selector.
-     *
-     * @return a JPanel configured for sign language recognition output.
-     */
-    private JPanel createSignLanguagePanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(BACKGROUND_COLOR);
-
-        JLabel titleLabel = new JLabel("Sign Language Recognition");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        titleLabel.setForeground(PRIMARY_COLOR);
-        panel.add(titleLabel, BorderLayout.NORTH);
-
-        signLanguageTextArea.setEditable(true);
-        signLanguageTextArea.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        signLanguageTextArea.setLineWrap(true);
-        signLanguageTextArea.setWrapStyleWord(true);
-        signLanguageTextArea.setBackground(Color.WHITE);
-        signLanguageTextArea.setForeground(TEXT_COLOR);
-
-        JScrollPane scrollPane = new JScrollPane(signLanguageTextArea);
-        scrollPane.setBorder(BorderFactory.createLineBorder(SECONDARY_COLOR));
-
-        panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(languageBox, BorderLayout.SOUTH);
-
-        return panel;
-    }
-
-    /**
-     * Creates a panel for displaying the transcription results.
-     * This panel includes a title and a text area for showing the transcribed text.
-     *
-     * @return a JPanel for displaying transcription results.
-     */
-    private JPanel createTranscriptionPanel() {
-        JPanel panel = new JPanel(new BorderLayout(0, 10));
-        panel.setBackground(BACKGROUND_COLOR);
-
-        JLabel titleLabel = new JLabel("Transcription");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        titleLabel.setForeground(PRIMARY_COLOR);
-        panel.add(titleLabel, BorderLayout.NORTH);
-
-        transcriptionTextArea.setEditable(false);
-        transcriptionTextArea.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        transcriptionTextArea.setLineWrap(true);
-        transcriptionTextArea.setWrapStyleWord(true);
-        transcriptionTextArea.setBackground(Color.WHITE);
-        transcriptionTextArea.setForeground(TEXT_COLOR);
-
-        JScrollPane scrollPane = new JScrollPane(transcriptionTextArea);
-        scrollPane.setBorder(BorderFactory.createLineBorder(SECONDARY_COLOR));
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        return panel;
-    }
-
-    /**
-     * Creates a panel containing control buttons for various functionalities
-     * such as signLanguageTranslationDisplay, text-to-speech, and transcription management.
-     *
-     * @return a JPanel containing action buttons.
-     */
-    private JPanel createButtonPanel() {
-        JPanel panel = new JPanel(new GridLayout(1, 3, 10, 0));
-        panel.setBackground(BACKGROUND_COLOR);
-
-        translateButton = new GlowButton("Translate", SECONDARY_COLOR);
-        textToSpeechButton = new GlowButton("Text to Speech", SECONDARY_COLOR);
-        beginTranscriptionButton = new GlowButton("Begin Transcription", PRIMARY_COLOR);
-        endTranscriptionButton = new GlowButton("End Transcription", ACCENT_COLOR);
-
-        translateButton.addActionListener(e -> translationProcess());
-        textToSpeechButton.addActionListener(e -> {
-            try {
-                beginTextToSpeech();
-            } catch (LineUnavailableException | IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        beginTranscriptionButton.addActionListener(e -> beginTranscription());
-        endTranscriptionButton.addActionListener(e -> {
-            try {
-                endTranscription();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        panel.add(translateButton);
-        panel.add(textToSpeechButton);
-        panel.add(beginTranscriptionButton);
-        panel.add(endTranscriptionButton);
-
-        return panel;
-    }
-
-
     @Override
     public void signLanguageRecognitionDisplay(String prediction) {
         signLanguageTextArea.append(prediction);
@@ -337,6 +231,8 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
      * Finalizes and stops the transcription process.
      * This method appends a message to the transcription text area indicating that the transcription process has ended,
      * enables the "Begin Transcription" button, and disables the "End Transcription" button.
+     *
+     * @throws Exception if an error occurs during the transcription finalization process.
      */
     private void endTranscription() throws Exception {
         transcriptionTextArea.append("The transcription process has ended.\n");
@@ -355,18 +251,22 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
 
     /**
      * Stops the audio recording and processes the recorded audio data.
-     * Once recording stops, the audio data is fetched from the recorder and sent to the Speech-to-Text controller for transcription.
+     * Once recording stops, the audio data is fetched from the recorder and
+     * sent to the Speech-to-Text controller for transcription.
      *
      * @throws Exception if an error occurs during the recording stop or audio processing.
      */
     private void endRecordingAndProcess() throws Exception {
         audioRecorderForTranscription.stop();
-        // This would be same as the ".getText()" that takes the input data from the view that connects to the controller
-        byte[] audioData = audioRecorderForTranscription.getAudioData();
+        final byte[] audioData = audioRecorderForTranscription.getAudioData();
         speechToTextController.processSpeech(audioData);
     }
 
-    // This method is initially called by view in presenter, include it in an interface
+    /**
+     * Displays the transcription result of sign language in the transcription text area.
+     *
+     * @param transcription the transcription result of the sign language input to be displayed.
+     */
     @Override
     public void signLanguageTranscriptionDisplay(String transcription) {
         transcriptionTextArea.setText("Transcription Result: " + transcription);
@@ -379,70 +279,137 @@ public class GestureBridgeView extends JPanel implements ViewInterface {
      * It then triggers the translation process using the signLanguageTranslationController.
      */
     private void translationProcess() {
-        String language = (String) languageBox.getSelectedItem();
-        String text = signLanguageTextArea.getText();
+        final String language = (String) languageBox.getSelectedItem();
+        final String text = signLanguageTextArea.getText();
         signLanguageTranslationController.execute(language, text);
     }
 
+    /**
+     * Displays the translated sign language text in the sign language text area.
+     * This method is used to update the UI by setting the provided translation into the
+     * signLanguageTextArea. The translation is assumed to be a string that represents
+     * the text form of the translated sign language.
+     *
+     * @param translation the translated text to be displayed in the sign language text area.
+     */
     @Override
     public void signLanguageTranslationDisplay(String translation) {
         signLanguageTextArea.setText(translation);
     }
 
+    /**
+     * Initiates the Text-to-Speech (TTS) conversion for the text in the sign language text area.
+     * This method retrieves the input text from the signLanguageTextArea, gets the selected
+     * language from the language box, maps the language to its corresponding language code,
+     * and passes the necessary information (text, language code, and audio settings) to
+     * the textToSpeechController to convert the text to speech.
+     *
+     * @throws LineUnavailableException if the system's audio line is unavailable for output.
+     * @throws IOException if there is an error in processing or writing audio data.
+     */
     private void beginTextToSpeech() throws LineUnavailableException, IOException {
-        String inputText = signLanguageTextArea.getText();
-        String language = (String) languageBox.getSelectedItem();
-        String languageCode = LanguageCodeMapper.getLanguageCode(language);
-        AudioSettings audioSettings = this.audioSettings;
-        textToSpeechController.execute(inputText, languageCode, audioSettings);
+        final String inputText = signLanguageTextArea.getText();
+        final String language = (String) languageBox.getSelectedItem();
+        final String languageCode = LanguageCodeMapper.getLanguageCode(language);
+        final AudioSettings newAudioSettings = this.audioSettings;
+        textToSpeechController.execute(inputText, languageCode, newAudioSettings);
     }
 
+    /**
+     * Plays the provided audio content.
+     * This method converts the provided ByteString audio content into an AudioInputStream,
+     * then uses the system's default Clip to play the audio.
+     *
+     * @param audioContents the audio data in ByteString format to be played.
+     * @throws LineUnavailableException if a line (e.g., audio output) is unavailable for playback.
+     * @throws IOException if an I/O error occurs while reading the audio or opening the clip.
+     */
     @Override
     public void playAudio(ByteString audioContents) throws LineUnavailableException, IOException {
         // Convert ByteString to AudioInputStream
-        AudioInputStream audioStream = new AudioInputStream(
+        final AudioInputStream audioStream = new AudioInputStream(
                 new ByteArrayInputStream(audioContents.toByteArray()),
                 new AudioFormat(16000, 16, 1, true, false),
                 audioContents.size());
 
         // Get the system's default clip to play the audio
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioStream); // Open the audio stream
-        clip.start();  // Start playback
+        final Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        clip.start();
     }
 
-    private static class GlowButton extends JButton {
-        private final Color baseColor;
+    /**
+     * Creates a panel containing control buttons for various functionalities
+     * such as signLanguageTranslationDisplay, text-to-speech, and transcription management.
+     * @return a JPanel containing action buttons.
+     */
+    public JPanel createButtonPanel() {
+        final JPanel panel = new JPanel(new GridLayout(1, 3, 10, 0));
+        panel.setBackground(GestureBridgeConfiguration.BACKGROUND_COLOR);
 
-        public GlowButton(String text, Color color) {
-            super(text);
-            this.baseColor = color;
-            setContentAreaFilled(false);
-            setFocusPainted(false);
-            setBorderPainted(false);
-            setFont(new Font("Segoe UI", Font.BOLD, 16));
-            setForeground(Color.WHITE);
-            setPreferredSize(new Dimension(200, 50));
-        }
+        final GlowButton translateButton = new GlowButton("Translate", GestureBridgeConfiguration.SECONDARY_COLOR);
+        final GlowButton textToSpeechButton = new GlowButton("Text to Speech",
+                GestureBridgeConfiguration.SECONDARY_COLOR);
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2d = (Graphics2D) g.create();
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        // Add listeners to buttons
+        translateButton.addActionListener(event -> translationProcess());
+        textToSpeechButton.addActionListener(event -> {
+            try {
+                beginTextToSpeech();
+            }
+            catch (LineUnavailableException | IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        beginTranscriptionButton.addActionListener(event -> beginTranscription());
+        endTranscriptionButton.addActionListener(event -> {
+            try {
+                endTranscription();
+            }
+            catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
-            int width = getWidth();
-            int height = getHeight();
+        panel.add(translateButton);
+        panel.add(textToSpeechButton);
+        panel.add(beginTranscriptionButton);
+        panel.add(endTranscriptionButton);
 
-            g2d.setColor(baseColor);
-            g2d.fill(new RoundRectangle2D.Float(0, 0, width, height, 20, 20));
+        return panel;
+    }
 
-            g2d.setColor(Color.WHITE);
-            FontMetrics fm = g2d.getFontMetrics();
-            Rectangle2D r = fm.getStringBounds(getText(), g2d);
-            int x = (width - (int) r.getWidth()) / 2;
-            int y = (height - (int) r.getHeight()) / 2 + fm.getAscent();
-            g2d.drawString(getText(), x, y);
-        }
+    /**
+     * Creates and returns a JPanel that contains the application's logo or title.
+     * @return a JPanel containing the application's logo or title.
+     */
+    public JPanel createLogoPanel() {
+        final JPanel logoPanel = new JPanel(new BorderLayout());
+        logoPanel.setBackground(GestureBridgeConfiguration.BACKGROUND_COLOR);
+
+        final JLabel logoTextLabel = new JLabel("GestureBridge");
+        logoTextLabel.setFont(new Font(GestureBridgeConfiguration.FONT_TYPE,
+                Font.BOLD, GestureBridgeConfiguration.LOGO_FONT_SIZE));
+        logoTextLabel.setForeground(GestureBridgeConfiguration.PRIMARY_COLOR);
+
+        final JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        titlePanel.setBackground(GestureBridgeConfiguration.BACKGROUND_COLOR);
+        titlePanel.add(logoTextLabel);
+
+        final JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        settingsPanel.setBackground(GestureBridgeConfiguration.BACKGROUND_COLOR);
+        final JButton settingsButton = new GlowButton("Settings", GestureBridgeConfiguration.PRIMARY_COLOR);
+
+        settingsButton.addActionListener(event -> {
+            if (onSettingsButtonClicked != null) {
+                onSettingsButtonClicked.run();
+            }
+        });
+        settingsPanel.add(settingsButton);
+
+        logoPanel.add(titlePanel, BorderLayout.CENTER);
+        logoPanel.add(settingsPanel, BorderLayout.EAST);
+
+        return logoPanel;
     }
 }
-

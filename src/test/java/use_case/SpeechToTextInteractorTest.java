@@ -1,6 +1,6 @@
 package use_case;
 
-import frameworks_and_drivers.speech_to_text.SpeechRecognizer;
+import interface_adapter.speech_to_text.SpeechRecognizerInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import use_case.speech_to_text.SpeechToTextInputData;
@@ -14,15 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SpeechToTextInteractorTest {
 
-    private SpeechRecognizer speechRecognizer;
-    private SpeechToTextOutputBoundary outputBoundary;
     private SpeechToTextInteractor interactor;
     private StringBuilder outputResult;
 
     @BeforeEach
     void setUp() {
         // Simple implementation of SpeechRecognizer
-        speechRecognizer = audioData -> {
+        SpeechRecognizerInterface speechRecognizerInterface = audioData -> {
             if (audioData == null || audioData.length == 0) {
                 throw new IOException("Invalid audio data");
             }
@@ -31,10 +29,10 @@ class SpeechToTextInteractorTest {
 
         // Simple implementation of SpeechToTextOutputBoundary
         outputResult = new StringBuilder();
-        outputBoundary = outputData -> outputResult.append(outputData.getTranscription());
+        SpeechToTextOutputBoundary outputBoundary = outputData -> outputResult.append(outputData.getTranscription());
 
         // Initialize the interactor
-        interactor = new SpeechToTextInteractor(speechRecognizer, outputBoundary);
+        interactor = new SpeechToTextInteractor(speechRecognizerInterface, outputBoundary);
     }
 
     @Test

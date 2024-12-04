@@ -4,7 +4,8 @@ import interface_adapter.sign_language_translation.SignLanguageTranslationDataAc
 
 /**
  * The interactor responsible for handling the logic of sign language signLanguageTranslationDisplay.
- * This class processes the signLanguageTranslationDisplay request and communicates with the data access object and the presenter.
+ * This class processes the signLanguageTranslationDisplay request and
+ * communicates with the data access object and the presenter.
  */
 public class SignLanguageTranslationInteractor implements SignLanguageTranslationInputBoundary {
 
@@ -17,8 +18,9 @@ public class SignLanguageTranslationInteractor implements SignLanguageTranslatio
      * @param languageDataAccessObject the data access object used to translate text
      * @param signLanguageTranslationOutputBoundary the presenter responsible for displaying the result
      */
-    public SignLanguageTranslationInteractor(SignLanguageTranslationDataAccessInterface languageDataAccessObject,
-                                             SignLanguageTranslationOutputBoundary signLanguageTranslationOutputBoundary) {
+    public SignLanguageTranslationInteractor(
+            SignLanguageTranslationDataAccessInterface languageDataAccessObject,
+            SignLanguageTranslationOutputBoundary signLanguageTranslationOutputBoundary) {
         this.languageDataAccessObject = languageDataAccessObject;
         this.signLanguageTranslationPresenter = signLanguageTranslationOutputBoundary;
     }
@@ -36,13 +38,14 @@ public class SignLanguageTranslationInteractor implements SignLanguageTranslatio
         final String text = signLanguageTranslationInputData.getText();
 
         // Perform the signLanguageTranslationDisplay using the data access object (DAO)
-        String translatedText = languageDataAccessObject.translate(language, text);
+        final String translatedText = languageDataAccessObject.translate(language, text);
 
         // Prepare the output data with the translated text
-        SignLanguageTranslationOutputData signLanguageTranslationOutputData =
+        final SignLanguageTranslationOutputData signLanguageTranslationOutputData =
                 new SignLanguageTranslationOutputData(translatedText);
 
         // Pass the translated output data to the presenter to update the view
         signLanguageTranslationPresenter.prepareSuccessView(signLanguageTranslationOutputData);
     }
 }
+

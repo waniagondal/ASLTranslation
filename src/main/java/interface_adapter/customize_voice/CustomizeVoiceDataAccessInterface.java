@@ -2,6 +2,11 @@ package interface_adapter.customize_voice;
 
 import entity.AudioSettings;
 
+/**
+ * Defines the contract for data access operations related to customizing voice settings.
+ * This interface provides methods to change, set, and retrieve audio settings used for
+ * customizing the voice output.
+ */
 public interface CustomizeVoiceDataAccessInterface {
 
     /**

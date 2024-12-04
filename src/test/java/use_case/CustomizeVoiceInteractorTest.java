@@ -1,14 +1,12 @@
 package use_case;
 
-import data_access.VoiceDataAccessObject;
 import entity.AudioSettings;
 import entity.AudioSettingsFactory;
+import frameworks_and_drivers.customize_voice.VoiceDataAccessObject;
 import interface_adapter.customize_voice.CustomizeVoiceDataAccessInterface;
-import interface_adapter.customize_voice.CustomizeVoicePresenter;
 import org.junit.Test;
 import use_case.customize_voice.*;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomizeVoiceInteractorTest {
@@ -22,17 +20,8 @@ public class CustomizeVoiceInteractorTest {
         final AudioSettings settings = factory.create(2, false, 10);
         voiceSettingsRepo.changeSettings(settings);
 
-        CustomizeVoiceOutputBoundary successPresenter = new CustomizeVoiceOutputBoundary() {
-            @Override
-            public void prepareSuccessView(CustomizeVoiceOutputData outputData) {
-                assertEquals(2, settings.getSpeed());
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail("Use case failure is unexpected.");
-            }
-        };
+        CustomizeVoiceOutputBoundary successPresenter = outputData -> assertEquals(
+                2, settings.getSpeed());
 
         CustomizeVoiceInputBoundary interactor = new CustomizeVoiceInteractor(voiceSettingsRepo,
                 successPresenter, new AudioSettingsFactory());
@@ -48,20 +37,16 @@ public class CustomizeVoiceInteractorTest {
         AudioSettings settings = factory.create(2, false, 10);
         voiceSettingsRepo.changeSettings(settings);
 
-        CustomizeVoiceOutputBoundary successPresenter = new CustomizeVoiceOutputBoundary() {
-            @Override
-            public void prepareSuccessView(CustomizeVoiceOutputData outputData) {
-                assertEquals(2, outputData.getAudioSettings().getSpeed());
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail("Use case failure is unexpected.");
-            }
-        };
-
-        CustomizeVoiceInputBoundary interactor = new CustomizeVoiceInteractor(voiceSettingsRepo,
-                successPresenter, new AudioSettingsFactory());
+        CustomizeVoiceInputBoundary interactor = getCustomizeVoiceInputBoundary(voiceSettingsRepo);
         interactor.execute(inputData);
+    }
+
+    private static CustomizeVoiceInputBoundary getCustomizeVoiceInputBoundary(
+            CustomizeVoiceDataAccessInterface voiceSettingsRepo) {
+        CustomizeVoiceOutputBoundary successPresenter = outputData -> assertEquals(
+                2, outputData.getAudioSettings().getSpeed());
+
+        return new CustomizeVoiceInteractor(voiceSettingsRepo,
+                successPresenter, new AudioSettingsFactory());
     }
 }

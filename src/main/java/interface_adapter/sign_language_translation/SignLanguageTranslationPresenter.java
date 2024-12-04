@@ -1,12 +1,11 @@
 package interface_adapter.sign_language_translation;
 
+import interface_adapter.ViewInterface;
 import use_case.sign_language_translation.SignLanguageTranslationOutputBoundary;
 import use_case.sign_language_translation.SignLanguageTranslationOutputData;
-import view.ViewInterface;
 
 /**
  * Presenter for handling the presentation logic of the sign language signLanguageTranslationDisplay use case.
- * Implements the Output Boundary to receive and process the signLanguageTranslationDisplay results.
  */
 public class SignLanguageTranslationPresenter implements SignLanguageTranslationOutputBoundary {
 
@@ -29,19 +28,8 @@ public class SignLanguageTranslationPresenter implements SignLanguageTranslation
      */
     @Override
     public void prepareSuccessView(SignLanguageTranslationOutputData outputData) {
-        String translatedText = outputData.getTranslatedText();
+        final String translatedText = outputData.getTranslatedText();
         view.signLanguageTranslationDisplay(translatedText);
-    }
-
-    /**
-     * Prepare and present the failure view in case of an error during signLanguageTranslationDisplay.
-     * Updates the SignLanguageView with an error message.
-     *
-     * @param error the error message to display
-     */
-    @Override
-    public void prepareFailView(String error) {
-        view.signLanguageTranslationDisplay("Error: " + error);
     }
 }
 

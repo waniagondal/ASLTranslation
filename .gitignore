@@ -1,0 +1,16 @@
+# Ignore the configuration folder inside the java folder
+java/secret_configuration/
+
+# Ignore .class files and compiled Java classes
+*.class
+
+# Ignore JAR files
+*.jar
+
+# Ignore IDE files (e.g., IntelliJ, Eclipse)
+.idea/
+.vscode/
+*.iml
+
+# Ignore log files
+*.log

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import frameworks_and_drivers.speech_to_text.MicrophoneAudioRecorder;
 import interface_adapter.customize_voice.CustomizeVoiceController;
-import interface_adapter.sign_language_recognition.SignLanguageController;
+import interface_adapter.sign_language_recognition.SignLanguageRecognitionController;
 import interface_adapter.sign_language_translation.SignLanguageTranslationController;
 import interface_adapter.speech_to_text.SpeechToTextController;
 import interface_adapter.text_to_speech.TextToSpeechController;
@@ -16,7 +16,7 @@ import view.VoiceSettingsView;
  * Initializes all components and starts the application workflow.
  */
 public class Main {
-    private static final MicrophoneAudioRecorder audioRecorder = new MicrophoneAudioRecorder();
+    private static final MicrophoneAudioRecorder AUDIO_RECORDER = new MicrophoneAudioRecorder();
 
     /**
      * Sets the controllers in the main application view.
@@ -37,7 +37,7 @@ public class Main {
             CustomizeVoiceController customizeVoiceController
     ) {
         view.setTextToSpeechController(textToSpeechController);
-        view.setSpeechToTextController(speechToTextController, audioRecorder);
+        view.setSpeechToTextController(speechToTextController, AUDIO_RECORDER);
         view.setTranslationController(translationController);
         voiceSettingsView.setCustomizeVoiceController(customizeVoiceController);
     }
@@ -57,7 +57,7 @@ public class Main {
         final SpeechToTextController speechToTextController = SpeechToTextModule.initialize(gestureBridgeView);
         final SignLanguageTranslationController translationController = SignLanguageTranslationModule.initialize(
                 gestureBridgeView);
-        final SignLanguageController recognitionController = SignLanguageRecognitionModule.initialize(
+        final SignLanguageRecognitionController recognitionController = SignLanguageRecognitionModule.initialize(
                 gestureBridgeView);
         final CustomizeVoiceController voiceController = VoiceCustomizationModule.initialize(
                 gestureBridgeView, voiceSettingsView);
