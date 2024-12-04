@@ -15,7 +15,7 @@ The platform will initially support ASL fingerspelling, with plans to extend voc
 - Shuxiao Song (@SSX-song)
 
 ## 📜 TABLE OF CONTENTS
-- [**GESTUREBRIDGE MANIFESTO**](#💖-GESTUREBRIDGE-MANIFESTO)
+- [**GESTUREBRIDGE MANIFESTO**](#:sparkling_heart:-gesturebridge-manifesto)
 - [**FEATURES**](#features)
 - [**INSTALLATION GUIDE**](#installation-guide)
 - [**USAGE GUIDE**](#usage-guide)
