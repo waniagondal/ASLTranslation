@@ -112,14 +112,55 @@ mystyle.xml is included in your repository, then paste the following code to che
 ```
 - Set the checkstyle as default to check your code any time.
 
-### Common Issues
-**Q: I added the dependencies in my pom file, but the program still doesn't run, why?**
-A: Try clicking on the pom file, go to the "Maven" option, and click "Reload Project". If it doesn't work ,try re-installing the dependencies
-and checking if they are in the right version
+### FAQ on Software Installation and Troubleshooting
 
-**Q: I tried running the program but I'm getting API errors, why?**
-A: It might be because you haven't added an appropriate API key. For Google Cloud APIs, you need to generate them on the console and use your own
-API to access the functions. For more instructions, click [here](https://cloud.google.com/apis/docs/getting-started)
+**Q: Is this software limited to specific operating systems or hardware?**
+**A:** This software was developed and tested on macOS (10.15 or later). It should work on other operating systems (Windows and Linux), but you may need to take some additional steps to ensure full compatibility.
+ - Operating Systems:
+     1. macOS (10.15 or later)
+     2. Windows (Windows 10 or later) - For Windows, ensure you have a compatible Java Development Kit (JDK) installed (Java 8 or later). You might need to set up the environment variables (like JAVA_HOME) correctly.
+     3. Linux (Ubuntu 20.04 or later or equivalent) - For Linux, you may need to install dependencies via package managers like apt (for Ubuntu) and ensure your environment matches the requirements.
+ - Hardware Requirements:
+     1. Minimum 4 GB RAM (8 GB recommended)
+     2. 1 GB of free disk space (more may be needed for dependencies)
+     3. Multi-core processor (2 GHz or faster recommended)
+   
+**Q: I added the dependencies in my pom.xml file, but the program still doesn't run. Why?**
+**A:** This issue usually happens if your IDE has not properly loaded or synchronized the dependencies after they were added to the pom.xml file.
+**Solution:**
+ - Click on the pom.xml file in your IDE.
+ - Go to the "Maven" menu option and click Reload Project (in IntelliJ IDEA, this is usually in the right-hand sidebar).
+ - If this doesn't solve the issue, try re-importing the dependencies:
+     1. Right-click on the pom.xml file and select Reimport.
+     2. Ensure that the dependencies are in the correct versions by checking the Maven tool window.
+
+**Q: I tried running the program, but I'm getting API errors. What should I do?**
+**A: API errors are often caused by missing or incorrect API keys.**
+**Solution:**
+ - Ensure you have generated and correctly inserted a valid API key for the service you are trying to use (e.g., Google Cloud APIs).
+ - For Google Cloud APIs:
+     1. Go to the [Google Cloud Console](https://cloud.google.com/apis/docs/getting-started).
+     2. Create a new API key for your project.
+     3. Insert the generated API key into your project configuration.
+     4. Double-check that your API key has the correct permissions and is authorized to access the necessary resources.
+
+**Q: My Checkstyle configuration isn't working. What could be the problem?**
+**A:** This issue is typically caused by a missing or misconfigured Checkstyle configuration file.
+**Solution:**
+ - Ensure that the mystyle.xml Checkstyle configuration file is included in your repository.
+ - Set Checkstyle as the default code checker in your IDE:
+     1. In IntelliJ IDEA, go to Preferences > Code Style > Checkstyle.
+     2. Set your custom mystyle.xml as the default Checkstyle configuration.
+     3. Ensure that Checkstyle is enabled for code inspections.
+
+**Q: What IDEs are recommended for this project?**
+**A:** It is highly recommended to use an IDE such as IntelliJ IDEA or Eclipse for easier development and debugging. These IDEs support dependency management, running programs, and configuring additional tools like Checkstyle.
+
+**Q: What should I do if the program still doesn't run after resolving these issues?**
+A: Try the following general troubleshooting steps:
+ - **Verify Java Version:** Make sure the Java version installed on your system is compatible with the project requirements (22.0.2) Check it using the command java -version in the terminal.
+ - **Rebuild Project:** If the program doesn't run even after resolving the dependencies, try rebuilding the project by selecting Build > Rebuild Project in your IDE.
+ - **Check Network Connectivity:** Ensure your network connection is stable, especially if you're fetching dependencies from an external repository (like Maven Central).
 
 ## USAGE GUIDE
 1. **Webcam Access**: After downloading, ensure your webcam is accessible for sign language recognition.
