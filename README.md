@@ -10,7 +10,7 @@ The platform will initially support ASL fingerspelling, with plans to extend voc
 ## CONTRIBUTORS
 - Wania Sikandar Gondal ([@waniagondal](https://github.com/waniagondal))
 - Yibin Wang ([@YIBIN35](https://github.com/YIBIN35))
-- Fang (Trent) Sheng ([F@4NG66](https://github.com/F4NG66))
+- Fang (Trent) Sheng ([F4NG66](https://github.com/F4NG66))
 - Gavin Jiawei Song ([@gavinsong45](https://github.com/gavinsong45))
 - Shuxiao Song ([@SSX-song](https://github.com/SSX-song))
 
