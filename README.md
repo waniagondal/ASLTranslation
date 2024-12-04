@@ -1,33 +1,33 @@
 # GESTUREBRIDGE —— HUMAN CONNECTION FOR ALL 👋🌉
 
-## 🌟 PROJECT OVERVIEW
+## PROJECT OVERVIEW
 **GestureBridge** is a groundbreaking **sign language translation application** that leverages machine learning to create seamless communication between individuals who use sign language and those who don't. This innovative platform captures ASL sign language gestures through a camera, interprets them, converts them into written text, and vocalizes that text—offering a **real-time, accessible communication experience**.
 
 At its core, GestureBridge is more a bridge to fostering **greater inclusivity and understanding** between communities. By breaking down communication barriers, we hope to empower individuals who are deaf or hard of hearing, as well as their families, friends, and colleagues. We believe that **human connection** is the foundation of any thriving society, and our mission is to help people connect through language, regardless of the medium they use. 🤝💬
 
 The platform will initially support ASL fingerspelling, with plans to extend vocabulary and functionality over time. GestureBridge will continually evolve to offer better, more accurate sign language recognition and translation, creating a more inclusive environment for all
 
-## 👥 CONTRIBUTORS
+## CONTRIBUTORS
 - Wania Sikandar Gondal (@waniagondal)
 - Yibin Wang (@YIBIN35)
 - Fang (Trent) Sheng (F@4NG66)
 - Gavin Jiawei Song (@gavinsong45)
 - Shuxiao Song (@SSX-song)
 
-## 📜 TABLE OF CONTENTS
-- [**GESTUREBRIDGE MANIFESTO**](#💖-gesturebridge-manifesto)
+## TABLE OF CONTENTS
+- [**GESTUREBRIDGE MANIFESTO**](#gesturebridge-manifesto)
 - [**FEATURES**](#features)
 - [**INSTALLATION GUIDE**](#installation-guide)
 - [**USAGE GUIDE**](#usage-guide)
 - [**LICENSE**](#license)
 - [**FEEDBACK AND CONTRIBUTIONS**](#feedback-and-contributions)
 
-## 💖 GESTUREBRIDGE MANIFESTO
+## GESTUREBRIDGE MANIFESTO
 At **GestureBridge**, we don’t just create software—we create **connections**. Our mission is to build a world where **language is no barrier** to understanding, communication, and human connection. We believe that **language**—whether spoken, written, or gestured—should empower people to share ideas, thoughts, and emotions without limitations. 
 
 By using **GestureBridge**, you're not just accessing a tool—you're contributing to **a future where inclusivity, empathy, and understanding are the foundation** of all interactions. Together, we aim to create a more **accessible world** where **everyone is heard**, and **everyone belongs**, no matter how they communicate. 🌍💬
 
-## ⚙️ FEATURES
+## FEATURES
 
 - **Real-Time Sign Language Recognition** 🤖: GestureBridge can instantly recognize sign language via your webcam feed, allowing seamless interaction. Currently, the application supports fingerspelling, with plans to incorporate more gestures in future updates.
   
@@ -76,7 +76,7 @@ By using **GestureBridge**, you're not just accessing a tool—you're contributi
     }
 ```
 
-## 🛠️ INSTALLATION GUIDE
+## INSTALLATION GUIDE
 
 ### Requirements
 To successfully run this project, you will need to install the following dependencies:
@@ -121,7 +121,7 @@ and checking if they are in the right version
 A: It might be because you haven't added an appropriate API key. For Google Cloud APIs, you need to generate them on the console and use your own
 API to access the functions. For more instructions, click [here](https://cloud.google.com/apis/docs/getting-started)
 
-## 📖 USAGE GUIDE
+## USAGE GUIDE
 1. **Webcam Access**: After downloading, ensure your webcam is accessible for sign language recognition.
    
 3. **Gesture Recognition**: Perform a gesture to express the content, which will appear in the “Sign Language Recognition” text box.
@@ -142,10 +142,10 @@ https://github.com/user-attachments/assets/1e16e11c-c808-40c7-af77-c3f6855e25c7
 
 https://github.com/user-attachments/assets/2aa36b9e-4560-4695-8f43-04b9d3be390e
 
-## 📜 LICENSE
+## LICENSE
 This project is licensed under the **Creative Commons** license. 
 
-## 💬 FEEDBACK AND CONNECTIONS
+## FEEDBACK AND CONNECTIONS
 We believe in the power of **collaboration** and the **importance of human connection**. Your feedback and contributions are vital to us. By participating, you're helping us create a more inclusive world where communication knows no barriers. 🌏
 
 ### Feedback
