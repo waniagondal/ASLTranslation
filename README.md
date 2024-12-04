@@ -78,7 +78,7 @@ By using **GestureBridge**, you're not just accessing a tool—you're contributi
 
 ## INSTALLATION GUIDE
 
-### Requirements
+### Requirements ⚙️
 To successfully run this project, you will need to install the following dependencies:
 
 - **Python** (version 3.7 or higher)
@@ -90,7 +90,7 @@ To successfully run this project, you will need to install the following depende
 - **Google Cloud Libraries** (version 26.49.0) for Cloud Translation, Speech-to-Text, and Text-to-Speech APIs
 - **CSC207 CheckStyle** (for code formatting)
 
-### Installing Python and Machine Learning Dependencies
+### Installing Python and Machine Learning Dependencies 🐍
 1. [Download Python](https://www.python.org/downloads/) (version 3.7 or higher) and install it.
 2.  To install required Python libraries, run (in Python):
 
@@ -98,13 +98,13 @@ To successfully run this project, you will need to install the following depende
     pip install -r model_requirements.txt
     ```
     
-### Installing Google Cloud APIs
+### Installing Google Cloud APIs ☁️
 Install the **Google Cloud APIs** by following the setup guides:
     - [Cloud Translation API](https://cloud.google.com/translate/docs/setup)
     - [Cloud Text-to-Speech API](https://cloud.google.com/text-to-speech/docs/before-you-begin)
     - [Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/docs/before-you-begin)
 
-### Installing Checkstyle
+### Installing Checkstyle ✅
 - We recommend using IDEs for this project (e.g., IntelliJ IDEA, Eclipse). To install the CSC207 checkstyle, make sure the file
 mystyle.xml is included in your repository, then paste the following code to checkstyle.xml file
 ```
@@ -112,7 +112,7 @@ mystyle.xml is included in your repository, then paste the following code to che
 ```
 - Set the checkstyle as default to check your code any time.
 
-### FAQ on Software Installation and Troubleshooting
+### FAQ on Software Installation and Troubleshooting ✅
 
 **Q: Is this software limited to specific operating systems or hardware?**
 **A:** This software was developed and tested on macOS (10.15 or later). It should work on other operating systems (Windows and Linux), but you may need to take some additional steps to ensure full compatibility.
@@ -189,17 +189,30 @@ This project is licensed under the **Creative Commons** license.
 ## FEEDBACK AND CONTRIBUTIONS
 We believe in the power of **collaboration** and the **importance of human connection**. Your feedback and contributions are vital to us. By participating, you're helping us create a more inclusive world where communication knows no barriers. 🌏
 
-### Feedback
+### Feedback 🗣️
 We value your opinions and suggestions to help us improve the project!
 Here's how you can provide feedback:
 
-- **How to Provide Feedback**:  
-  - Send an email to [wania.gondal@mail.utoronto.ca](mailto:wania.gondal@mail.utoronto.ca) with "GestureBridge" in the subject.
-  - Include your feedback, along with any relevant screenshots or code snippets.
-  - You will receive an acknowledgement of your feedback within 48 hours.
-  - Please check the issues tracker for further updates. If you provided your GitHub username when giving feedback, we will notify you when posting new changes.
+- **How to Provide Feedback:**
+   - Send an email to [wania.gondal@mail.utoronto.ca](mailto:wania.gondal@mail.utoronto.ca) with "GestureBridge" in the subject.
+   - Include your feedback, along with any relevant screenshots or code snippets.
+   - You will receive an acknowledgment of your feedback within 48 hours.
+   - Please check the issues tracker for further updates. If you provided your GitHub username when giving feedback, we will notify you when posting new changes.
+- **Guidelines for Providing Valid Feedback: GestureBridge's FABRIC Method**
+   - **F:** Feature - If you're suggesting a new feature, explain why it would benefit the project or users. Discuss the impact it might have and, if possible, how it can be implemented while aligning with the project's overall goals.
+   - **A:** Actionable - Your feedback should suggest possible improvements, solutions, or changes that are clear and achievable. Simply pointing out problems without suggesting a solution can delay progress.
+   - **B:** Bug-Reporting - If you are reporting a bug, provide detailed information on how to reproduce the issue, the environment you encountered it in, and any error messages or logs. This allows the maintainers to pinpoint the problem faster.
+   - **R:** Relevance - Ensure your feedback is relevant to the current project and within its scope. Feedback unrelated to the project or its goals may not be prioritized.
+   - **I:** Improvement - If you have suggestions for improving the user interface (UI), user experience (UX), or codebase, ensure they are clear, practical, and beneficial to the overall design or performance.
+   - **C:** Clear - Provide detailed feedback, clearly explaining the issue or suggestion. Avoid vague statements like “it doesn't work” or “it’s bad.” Instead, focus on specific problems and how they affect the user or functionality.
+    
+- **What to Expect When Submitting Feedback:**
+   - After you submit your feedback, it will be reviewed by the maintainers. Expect a response within 1-2 weeks, depending on the volume of submissions.
+   - If your feedback suggests a bug or issue, it may be prioritized and fixed in an upcoming release.
+   - If you propose a feature, it may be considered for future development based on its relevance and importance.
 
-### Contributions
+- 
+### Contributions 🤝
 We welcome contributions! Here's how you can help make GestureBridge even better:
 
 1. **Fork the Repository**: Click the "Fork" button on GitHub.
@@ -220,14 +233,29 @@ We welcome contributions! Here's how you can help make GestureBridge even better
 7. **Submit a Pull Request**: Open a PR on GitHub to propose your changes.
 
 #### Guidelines for a Good Pull Request
-- Ensure your branch is up to date with `main` to avoid conflicts.
-- Provide a clear and detailed description of your changes.
-- Ensure your changes adhere to **CSC207 CheckStyle**.
+- **Ensure your branch is up to date with `main'.**
+     1. Before making any changes, ensure your branch is up to date with the latest main branch to avoid conflicts. Run:
+        ```
+        git checkout main
+        git pull origin main
+        git checkout <your-branch>
+        git merge main
+        ```
+- **Provide a clear and detailed description of your changes.**
+     1. When creating a pull request, write a detailed description of the changes made. Describe what the problem is, how your changes fix it, and any context that might be helpful for reviewers.
+     2. Include information about any testing or verification steps you took to ensure the changes work as expected.
+- **Adhere to CSC207 CheckStyle and Clean Architecture / SOLID Principles:**
+     1. **CheckStyle:** Ensure your code adheres to the CSC207 CheckStyle guidelines. If unsure, run the CheckStyle in your IDE or use the command line to verify your code before submitting. Follow the correct indentation, naming conventions, and other style rules
+     2. **Clean Architecture:** Structure your code so that it follows Clean Architecture principles, ensuring clear separation of concerns and maintaining scalability and maintainability. A Clean Architecture Guide can be found [here](https://github.com/GunterMueller/Books-3/blob/master/Clean%20Architecture%20A%20Craftsman%20Guide%20to%20Software%20Structure%20and%20Design.pdf)
+     3. **SOLID Principles:** Ensure your code follows SOLID principles, which are:
+          - **S:** Single Responsibility Principle (SRP) – Each class should have only one reason to change.
+          - **O:** Open/Closed Principle (OCP) – The software should be open for extension but closed for modification.
+          - **L:** Liskov Substitution Principle (LSP) – Subtypes must be substitutable for their base types.
+          - **I:** Interface Segregation Principle (ISP) – Clients should not be forced to depend on interfaces they do not use.
+          - **D:** Dependency Inversion Principle (DIP) – High-level modules should not depend on low-level modules. Both should depend on abstractions.
 
-#### Review and Merge Protocols
-- Contributions and pull requests are reviewed weekly by the maintainers
-- Your contribution should be constructive, addressing either an existing issue or 
-help add a new feature
-- Your contribution should pass all checkstyle scans before being pushed
-- Once approved, your pull request will be merged to the main branch, and you will
-be credited as a contributor!
+  #### Review and Merge Protocols
+- **Weekly Review of Contributions:** All contributions and pull requests will be reviewed weekly by the maintainers. Be patient, as review times may vary depending on the volume of submissions.
+- **Purpose of Contributions:** Your pull request should address an existing issue or add a meaningful feature. Ensure that it provides value to the project.
+- **Checkstyle Compliance:** Your contribution should pass all CheckStyle scans before it is pushed. If there are any CheckStyle errors, they must be fixed before the pull request can be reviewed.
+- **Approval and Merging:** Once your pull request is reviewed and approved by the maintainers, it will be merged into the main branch. After merging, you will be credited as a contributor in the project’s history.
