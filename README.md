@@ -145,7 +145,7 @@ https://github.com/user-attachments/assets/2aa36b9e-4560-4695-8f43-04b9d3be390e
 ## LICENSE
 This project is licensed under the **Creative Commons** license. 
 
-## FEEDBACK AND CONNECTIONS
+## FEEDBACK AND CONTRIBUTIONS
 We believe in the power of **collaboration** and the **importance of human connection**. Your feedback and contributions are vital to us. By participating, you're helping us create a more inclusive world where communication knows no barriers. 🌏
 
 ### Feedback
