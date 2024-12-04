@@ -155,10 +155,8 @@ Here's how you can provide feedback:
 - **How to Provide Feedback**:  
   - Send an email to [wania.gondal@mail.utoronto.ca](mailto:wania.gondal@mail.utoronto.ca) with "GestureBridge" in the subject.
   - Include your feedback, along with any relevant screenshots or code snippets.
-
-- **How to Provide Feedback**:  
   - You will receive an acknowledgement of your feedback within 48 hours.
-  - Please check the issue tracker for further updates. If you provided your GitHub username when giving feedback, we will notify you when posting new changes.
+  - Please check the issues tracker for further updates. If you provided your GitHub username when giving feedback, we will notify you when posting new changes.
 
 ### Contributions
 We welcome contributions! Here's how you can help make GestureBridge even better:
