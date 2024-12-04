@@ -123,31 +123,31 @@ By using **GestureBridge**, you're not just accessing a tool—you're contributi
        
     - **Q: I added the dependencies in my pom.xml file, but the program still doesn't run. Why?**
     - **A:** This issue usually happens if your IDE has not properly loaded or synchronized the dependencies after they were added to the pom.xml file.
-    - **Solution:**
-        - Click on the pom.xml file in your IDE.
-        - Go to the "Maven" menu option and click Reload Project (in IntelliJ IDEA, this is usually in the right-hand sidebar).
-        - If this doesn't solve the issue, try re-importing the dependencies:
-            - Right-click on the pom.xml file and select Reimport.
-            - Ensure that the dependencies are in the correct versions by checking the Maven tool window.
+      - **Solution:**
+          - Click on the pom.xml file in your IDE.
+          - Go to the "Maven" menu option and click Reload Project (in IntelliJ IDEA, this is usually in the right-hand sidebar).
+          - If this doesn't solve the issue, try re-importing the dependencies:
+              - Right-click on the pom.xml file and select Reimport.
+              - Ensure that the dependencies are in the correct versions by checking the Maven tool window.
     
     - **Q: I tried running the program, but I'm getting API errors. What should I do?**
-    - **A: API errors are often caused by missing or incorrect API keys.**
-    - **Solution:**
-        - Ensure you have generated and correctly inserted a valid API key for the service you are trying to use (e.g., Google Cloud APIs).
-        - For Google Cloud APIs:
-            - Go to the [Google Cloud Console](https://cloud.google.com/apis/docs/getting-started).
-            - Create a new API key for your project.
-            - Insert the generated API key into your project configuration.
-            - Double-check that your API key has the correct permissions and is authorized to access the necessary resources.
+    - **A:** API errors are often caused by missing or incorrect API keys.
+      - **Solution:**
+          - Ensure you have generated and correctly inserted a valid API key for the service you are trying to use (e.g., Google Cloud APIs).
+          - For Google Cloud APIs:
+              - Go to the [Google Cloud Console](https://cloud.google.com/apis/docs/getting-started).
+              - Create a new API key for your project.
+              - Insert the generated API key into your project configuration.
+              - Double-check that your API key has the correct permissions and is authorized to access the necessary resources.
     
     - **Q: My Checkstyle configuration isn't working. What could be the problem?**
     - **A:** This issue is typically caused by a missing or misconfigured Checkstyle configuration file.
-    - **Solution:**
-        - Ensure that the mystyle.xml Checkstyle configuration file is included in your repository.
-        - Set Checkstyle as the default code checker in your IDE:
-            - In IntelliJ IDEA, go to Preferences > Code Style > Checkstyle.
-            - Set your custom mystyle.xml as the default Checkstyle configuration.
-            - Ensure that Checkstyle is enabled for code inspections.
+      - **Solution:**
+          - Ensure that the mystyle.xml Checkstyle configuration file is included in your repository.
+          - Set Checkstyle as the default code checker in your IDE:
+              - In IntelliJ IDEA, go to Preferences > Code Style > Checkstyle.
+              - Set your custom mystyle.xml as the default Checkstyle configuration.
+              - Ensure that Checkstyle is enabled for code inspections.
     
     - **Q: What IDEs are recommended for this project?**
     - **A:** It is highly recommended to use an IDE such as IntelliJ IDEA or Eclipse for easier development and debugging. These IDEs support dependency management, running programs, and configuring additional tools like Checkstyle.
