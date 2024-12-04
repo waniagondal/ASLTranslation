@@ -200,7 +200,6 @@ We believe in the power of **collaboration** and the **importance of human conne
       - After you submit your feedback, it will be reviewed by the maintainers. Expect a response within 1-2 weeks, depending on the volume of submissions.
       - If your feedback suggests a bug or issue, it may be prioritized and fixed in an upcoming release.
       - If you propose a feature, it may be considered for future development based on its relevance and importance.
-
 - ### Contributions 🤝
     - **How to Contribute**
         - **Fork the Repository**: Click the "Fork" button on GitHub.
