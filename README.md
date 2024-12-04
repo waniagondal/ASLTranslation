@@ -1,33 +1,34 @@
-# GestureBridge 👋🌉
+# GESTUREBRIDGE —— HUMAN CONNECTION FOR ALL 👋🌉
 
-### Overview 🌍
+## 🌟 PROJECT OVERVIEW
 **GestureBridge** is a groundbreaking **sign language translation application** that leverages machine learning to create seamless communication between individuals who use sign language and those who don't. This innovative platform captures ASL sign language gestures through a camera, interprets them, converts them into written text, and vocalizes that text—offering a **real-time, accessible communication experience**.
 
 At its core, GestureBridge is more a bridge to fostering **greater inclusivity and understanding** between communities. By breaking down communication barriers, we hope to empower individuals who are deaf or hard of hearing, as well as their families, friends, and colleagues. We believe that **human connection** is the foundation of any thriving society, and our mission is to help people connect through language, regardless of the medium they use. 🤝💬
 
-The platform will initially support ASL fingerspelling, with plans to extend vocabulary and functionality over time. GestureBridge will continually evolve to offer better, more accurate sign language recognition and translation, creating a more inclusive environment for all.
+The platform will initially support ASL fingerspelling, with plans to extend vocabulary and functionality over time. GestureBridge will continually evolve to offer better, more accurate sign language recognition and translation, creating a more inclusive environment for all
 
-
-### Contributors
+## 👥 CONTRIBUTORS
 - Wania Sikandar Gondal (@waniagondal)
 - Yibin Wang (@YIBIN35)
 - Fang (Trent) Sheng (F@4NG66)
 - Gavin Jiawei Song (@gavinsong45)
 - Shuxiao Song (@SSX-song)
 
---
+## 📜 TABLE OF CONTENTS
+- [**GESTUREBRIDGE MANIFESTO**](#ethos-the-importance-of-human-connection)
+- [**FEATURES**](#features)
+- [**INSTALLATION GUIDE**](#installation-instructions)
+- [**USAGE GUIDE**](#usage-guide)
+- [**LICENSE**](#license)
+- [**FEEDBACK AND CONTRIBUTIONS**](#feedback-and-contributions)
 
-### Table of Contents 📜
-- [**Features**](#features)
-- [**Installation Instructions**](#installation-instructions)
-- [**Usage Guide**](#usage-guide)
-- [**License**](#license)
-- [**Feedback and Contributions**](#feedback-and-contributions)
-- [**Ethos: The Importance of Human Connection**](#ethos-the-importance-of-human-connection)
+## 💖 GESTUREBRIDGE MANIFESTO
+At **GestureBridge**, we don’t just create software—we create **connections**. Our mission is to build a world where **language is no barrier** to understanding, communication, and human connection. We believe that **language**—whether spoken, written, or gestured—should empower people to share ideas, thoughts, and emotions without limitations. 
 
---
+By using **GestureBridge**, you're not just accessing a tool—you're contributing to **a future where inclusivity, empathy, and understanding are the foundation** of all interactions. Together, we aim to create a more **accessible world** where **everyone is heard**, and **everyone belongs**, no matter how they communicate. 🌍💬
 
-### Features ⚙️
+## FEATURES ⚙️
+
 - **Real-Time Sign Language Recognition** 🤖: GestureBridge can instantly recognize sign language via your webcam feed, allowing seamless interaction. Currently, the application supports fingerspelling, with plans to incorporate more gestures in future updates.
   
 ```
@@ -75,9 +76,7 @@ The platform will initially support ASL fingerspelling, with plans to extend voc
     }
 ```
 
---
-
-### Installation Instructions 🛠️
+### 🛠️ INSTALLATION GUIDE
 
 #### Requirements
 To successfully run this project, you will need to install the following dependencies:
@@ -121,10 +120,8 @@ and checking if they are in the right version
 **Q: I tried running the program but I'm getting API errors, why?**
 A: It might be because you haven't added an appropriate API key. For Google Cloud APIs, you need to generate them on the console and use your own
 API to access the functions. For more instructions, click [here](https://cloud.google.com/apis/docs/getting-started)
-   
---
 
-### Usage Guide 📖
+## 📖 USAGE GUIDE
 1. **Webcam Access**: After downloading, ensure your webcam is accessible for sign language recognition.
    
 3. **Gesture Recognition**: Perform a gesture to express the content, which will appear in the “Sign Language Recognition” text box.
@@ -145,14 +142,10 @@ https://github.com/user-attachments/assets/1e16e11c-c808-40c7-af77-c3f6855e25c7
 
 https://github.com/user-attachments/assets/2aa36b9e-4560-4695-8f43-04b9d3be390e
 
---
-
-### License 📜
+## 📜 LICENSE
 This project is licensed under the **Creative Commons** license. 
 
---
-
-### Feedback and Contributions 💬
+### 💬 FEEDBACK AND CONNECTIONS
 We believe in the power of **collaboration** and the **importance of human connection**. Your feedback and contributions are vital to us. By participating, you're helping us create a more inclusive world where communication knows no barriers. 🌏
 
 #### Feedback
@@ -199,14 +192,3 @@ help add a new feature
 - Your contribution should pass all checkstyle scans before being pushed
 - Once approved, your pull request will be merged to the main branch, and you will
 be credited as a contributor!
-
---
-
-### Ethos 💖
-At **GestureBridge**, we believe in the power of **human connection** and communication as a fundamental right. Language should never be a barrier to understanding and kindness. By empowering individuals to bridge the gap between sign language and spoken language, we aspire to create a world where everyone is heard and valued.
-
-Every line of code, every gesture captured, and every voice spoken is an opportunity to connect, share, and **build a more inclusive future**. We are not just building software; we are building bridges for better communication and understanding across the world. 🌍
-
----
-
-Together, we can **create a world without barriers**, where everyone communicates with ease and empathy. ✨
