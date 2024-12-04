@@ -1,4 +1,5 @@
 package entity;
+
 /**
  * Represents the transcription of audio input.
  * This entity holds the text result of processing audio data through a speech-to-text system.
@@ -10,7 +11,7 @@ public class AudioTranscription {
     private final String text;
 
     /**
-     * Constructs an AudioTranscription with the given transcribed text.
+     * Constructor to create an AudioTranscription object with the given transcribed text.
      *
      * @param text The transcribed text of the audio input.
      */

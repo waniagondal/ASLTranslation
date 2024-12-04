@@ -1,36 +1,52 @@
 package use_case.customize_voice;
 
-import entity.AudioParam;
-import entity.AudioParamFactory;
-import data_access.CustomizeVoiceDataAccessInterface;
-
+import entity.AudioSettings;
+import entity.AudioSettingsFactory;
+import interface_adapter.customize_voice.CustomizeVoiceDataAccessInterface;
 
 /**
- * The Customize Voice Interactor.
+ * The interactor responsible for managing the voice customization process.
+ * This class interacts with data access objects and presenters to customize
+ * the voice settings based on user input.
  */
 public class CustomizeVoiceInteractor implements CustomizeVoiceInputBoundary {
-    private final CustomizeVoiceDataAccessInterface customizeVoiceDataAccessObject;
-    private final CustomizeVoiceOutputBoundary audioParamPresenter;
-    private final AudioParamFactory audioParamFactory;
 
-    public CustomizeVoiceInteractor(CustomizeVoiceDataAccessInterface customizeVoiceDataAccessInterface,
-                                    CustomizeVoiceOutputBoundary customizeVoiceOutputBoundary,
-                                    AudioParamFactory audioParamFactory) {
-        this.customizeVoiceDataAccessObject = customizeVoiceDataAccessInterface;
-        this.audioParamPresenter = customizeVoiceOutputBoundary;
-        this.audioParamFactory = audioParamFactory;
+    private final CustomizeVoiceDataAccessInterface voiceSettingsDataAccessObject;
+    private final CustomizeVoiceOutputBoundary voiceSettingsPresenter;
+    private final AudioSettingsFactory audioSettingsFactory;
+
+    /**
+     * Constructs a new CustomizeVoiceInteractor with the provided dependencies.
+     *
+     * @param voiceSettingsDataAccessObject The data access object for interacting with voice settings.
+     * @param voiceSettingsPresenter        The presenter responsible for showing the success view.
+     * @param audioSettingsFactory         The factory used to create AudioSettings objects.
+     */
+    public CustomizeVoiceInteractor(CustomizeVoiceDataAccessInterface voiceSettingsDataAccessObject,
+                                    CustomizeVoiceOutputBoundary voiceSettingsPresenter,
+                                    AudioSettingsFactory audioSettingsFactory) {
+        this.voiceSettingsDataAccessObject = voiceSettingsDataAccessObject;
+        this.voiceSettingsPresenter = voiceSettingsPresenter;
+        this.audioSettingsFactory = audioSettingsFactory;
     }
 
+    /**
+     * Executes the voice customization logic, including creating new audio settings,
+     * saving them, and preparing the success view to be shown to the user.
+     *
+     * @param voiceInputData The input data containing the user's voice customization preferences.
+     */
     @Override
-    public void execute(CustomizeVoiceInputData customizeVoiceInputData) {
-        final AudioParam audioParam = audioParamFactory.create(customizeVoiceInputData.getVoiceSpeed(),
-                                                                customizeVoiceInputData.getVoiceVolume(),
-                                                                customizeVoiceInputData.getVoiceType(),
-                                                                customizeVoiceInputData.getVoicePitch());
-        customizeVoiceDataAccessObject.changeParam(audioParam);
+    public void execute(CustomizeVoiceInputData voiceInputData) {
+        // Create new AudioSettings object using the provided voice customization data
+        final AudioSettings audioSettings = audioSettingsFactory.create(voiceInputData.getSpeed(),
+                voiceInputData.getVoiceType(), voiceInputData.getPitch());
 
-        final CustomizeVoiceOutputData customizeVoiceOutputData = new CustomizeVoiceOutputData(false);
+        // Update the settings in the data access object
+        voiceSettingsDataAccessObject.changeSettings(audioSettings);
 
-        audioParamPresenter.prepareSuccessView(customizeVoiceOutputData);
+        // Prepare the output data and present the success view to the user
+        final CustomizeVoiceOutputData customizeVoiceOutputData = new CustomizeVoiceOutputData(audioSettings);
+        voiceSettingsPresenter.prepareSuccessView(customizeVoiceOutputData);
     }
 }

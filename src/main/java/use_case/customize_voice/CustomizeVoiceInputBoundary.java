@@ -1,13 +1,13 @@
 package use_case.customize_voice;
 
 /**
- * The Customize Voice Use Case.
+ * Input Boundary for TTS voice customization.
  */
 public interface CustomizeVoiceInputBoundary {
 
     /**
-     * Execute the Customize Voice Use Case.
-     * @param customizeVoiceInputData the input data for this use case
+     * Executes the customize voice use case.
+     * @param customizeVoiceInputData the input data
      */
     void execute(CustomizeVoiceInputData customizeVoiceInputData);
 }
