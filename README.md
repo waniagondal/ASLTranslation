@@ -183,7 +183,7 @@ We welcome contributions! Here's how you can help make GestureBridge even better
 - Provide a clear and detailed description of your changes.
 - Ensure your changes adhere to **CSC207 CheckStyle**.
 
-#### Review and Merge Protocols**
+#### Review and Merge Protocols
 - Contributions and pull requests are reviewed weekly by the maintainers
 - Your contribution should be constructive, addressing either an existing issue or 
 help add a new feature
