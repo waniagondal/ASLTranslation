@@ -219,7 +219,6 @@ We believe in the power of **collaboration** and the **importance of human conne
               git push origin feature/your-feature-name
               ```
         - **Submit a Pull Request**: Open a PR on GitHub to propose your changes.
-
     - #### Guidelines for a Good Pull Request
         - **Ensure your branch is up to date with `main'.**
             - Before making any changes, ensure your branch is up to date with the latest main branch to avoid conflicts. Run:
@@ -241,7 +240,6 @@ We believe in the power of **collaboration** and the **importance of human conne
                 - **L:** Liskov Substitution Principle (LSP) – Subtypes must be substitutable for their base types.
                 - **I:** Interface Segregation Principle (ISP) – Clients should not be forced to depend on interfaces they do not use.
                 - **D:** Dependency Inversion Principle (DIP) – High-level modules should not depend on low-level modules. Both should depend on abstractions.
-
     - #### Review and Merge Protocols
       - **Weekly Review of Contributions:** All contributions and pull requests will be reviewed weekly by the maintainers. Be patient, as review times may vary depending on the volume of submissions.
       - **Purpose of Contributions:** Your pull request should address an existing issue or add a meaningful feature. Ensure that it provides value to the project.
