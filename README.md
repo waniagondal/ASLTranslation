@@ -17,7 +17,7 @@ The platform will initially support ASL fingerspelling, with plans to extend voc
 ## 📜 TABLE OF CONTENTS
 - [**GESTUREBRIDGE MANIFESTO**](#gesturebridge-manifesto)
 - [**FEATURES**](#features)
-- [**INSTALLATION GUIDE**](#installation-instructions)
+- [**INSTALLATION GUIDE**](#installation-guide)
 - [**USAGE GUIDE**](#usage-guide)
 - [**LICENSE**](#license)
 - [**FEEDBACK AND CONTRIBUTIONS**](#feedback-and-contributions)
@@ -27,7 +27,7 @@ At **GestureBridge**, we don’t just create software—we create **connections*
 
 By using **GestureBridge**, you're not just accessing a tool—you're contributing to **a future where inclusivity, empathy, and understanding are the foundation** of all interactions. Together, we aim to create a more **accessible world** where **everyone is heard**, and **everyone belongs**, no matter how they communicate. 🌍💬
 
-## FEATURES ⚙️
+## ⚙️ FEATURES
 
 - **Real-Time Sign Language Recognition** 🤖: GestureBridge can instantly recognize sign language via your webcam feed, allowing seamless interaction. Currently, the application supports fingerspelling, with plans to incorporate more gestures in future updates.
   
@@ -112,7 +112,7 @@ mystyle.xml is included in your repository, then paste the following code to che
 ```
 - Set the checkstyle as default to check your code any time.
 
-### Common Issues❓
+### Common Issues
 **Q: I added the dependencies in my pom file, but the program still doesn't run, why?**
 A: Try clicking on the pom file, go to the "Maven" option, and click "Reload Project". If it doesn't work ,try re-installing the dependencies
 and checking if they are in the right version
