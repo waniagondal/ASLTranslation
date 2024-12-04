@@ -77,8 +77,6 @@ By using **GestureBridge**, you're not just accessing a tool—you're contributi
 
 ## INSTALLATION GUIDE
 - ### Requirements ⚙️
-To successfully run this project, you will need to install the following dependencies:
-
     - **Python** (version 3.7 or higher)
     - **MediaPipe** (version 0.10.18)
     - **NumPy** (version 1.26.4)
@@ -110,7 +108,7 @@ To successfully run this project, you will need to install the following depende
     ```
     - Set the checkstyle as default to check your code any time.
 
-- ### FAQ on Software Installation and Troubleshooting ✅
+- ### FAQ on Software Installation and Troubleshooting 🆘
 
     - **Q: Is this software limited to specific operating systems or hardware?**
     - **A:** This software was developed and tested on macOS (10.15 or later). It should work on other operating systems (Windows and Linux), but you may need to take some additional steps to ensure full compatibility.
