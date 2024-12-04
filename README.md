@@ -15,7 +15,7 @@ The platform will initially support ASL fingerspelling, with plans to extend voc
 - Shuxiao Song (@SSX-song)
 
 ## 📜 TABLE OF CONTENTS
-- [**GESTUREBRIDGE MANIFESTO**](#ethos-the-importance-of-human-connection)
+- [**GESTUREBRIDGE MANIFESTO**](#gesturebridge-manifesto)
 - [**FEATURES**](#features)
 - [**INSTALLATION GUIDE**](#installation-instructions)
 - [**USAGE GUIDE**](#usage-guide)
@@ -76,9 +76,9 @@ By using **GestureBridge**, you're not just accessing a tool—you're contributi
     }
 ```
 
-### 🛠️ INSTALLATION GUIDE
+## 🛠️ INSTALLATION GUIDE
 
-#### Requirements
+### Requirements
 To successfully run this project, you will need to install the following dependencies:
 
 - **Python** (version 3.7 or higher)
@@ -90,7 +90,7 @@ To successfully run this project, you will need to install the following depende
 - **Google Cloud Libraries** (version 26.49.0) for Cloud Translation, Speech-to-Text, and Text-to-Speech APIs
 - **CSC207 CheckStyle** (for code formatting)
 
-#### Installing Python and Machine Learning Dependencies
+### Installing Python and Machine Learning Dependencies
 1. [Download Python](https://www.python.org/downloads/) (version 3.7 or higher) and install it.
 2.  To install required Python libraries, run (in Python):
 
@@ -98,13 +98,13 @@ To successfully run this project, you will need to install the following depende
     pip install -r model_requirements.txt
     ```
     
-#### Installing Google Cloud APIs
+### Installing Google Cloud APIs
 Install the **Google Cloud APIs** by following the setup guides:
     - [Cloud Translation API](https://cloud.google.com/translate/docs/setup)
     - [Cloud Text-to-Speech API](https://cloud.google.com/text-to-speech/docs/before-you-begin)
     - [Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/docs/before-you-begin)
 
-#### Installing Checkstyle
+### Installing Checkstyle
 - We recommend using IDEs for this project (e.g., IntelliJ IDEA, Eclipse). To install the CSC207 checkstyle, make sure the file
 mystyle.xml is included in your repository, then paste the following code to checkstyle.xml file
 ```
@@ -112,7 +112,7 @@ mystyle.xml is included in your repository, then paste the following code to che
 ```
 - Set the checkstyle as default to check your code any time.
 
-#### Common Issues❓
+### Common Issues❓
 **Q: I added the dependencies in my pom file, but the program still doesn't run, why?**
 A: Try clicking on the pom file, go to the "Maven" option, and click "Reload Project". If it doesn't work ,try re-installing the dependencies
 and checking if they are in the right version
@@ -126,29 +126,29 @@ API to access the functions. For more instructions, click [here](https://cloud.g
    
 3. **Gesture Recognition**: Perform a gesture to express the content, which will appear in the “Sign Language Recognition” text box.
    
-5. **Translation**: Choose a language from the dropdown and click “Translate” to convert the recognized text into another language.
+3. **Translation**: Choose a language from the dropdown and click “Translate” to convert the recognized text into another language.
    
 https://github.com/user-attachments/assets/1fb94de8-56ec-4cf3-808c-aa642d2d0cf1
 
-7. **Text-to-Speech**: After translating the text, click “Text to Speech” to hear the translation.
+4. **Text-to-Speech**: After translating the text, click “Text to Speech” to hear the translation.
 
 https://github.com/user-attachments/assets/98782227-67ba-4af5-92a1-0d3fb0cc90cf
  
-9. **Voice Customization**: Modify the voice settings (e.g., type, pitch, speed) by clicking the “Settings” button.
+5. **Voice Customization**: Modify the voice settings (e.g., type, pitch, speed) by clicking the “Settings” button.
 
 https://github.com/user-attachments/assets/1e16e11c-c808-40c7-af77-c3f6855e25c7
 
-11. **Speech-to-Text**: To transcribe spoken language into text, click “Begin Transcription” and speak into the microphone, then click "End Transcription" once you have finished. Your transcription will appear in the transcription area.
+6. **Speech-to-Text**: To transcribe spoken language into text, click “Begin Transcription” and speak into the microphone, then click "End Transcription" once you have finished. Your transcription will appear in the transcription area.
 
 https://github.com/user-attachments/assets/2aa36b9e-4560-4695-8f43-04b9d3be390e
 
 ## 📜 LICENSE
 This project is licensed under the **Creative Commons** license. 
 
-### 💬 FEEDBACK AND CONNECTIONS
+## 💬 FEEDBACK AND CONNECTIONS
 We believe in the power of **collaboration** and the **importance of human connection**. Your feedback and contributions are vital to us. By participating, you're helping us create a more inclusive world where communication knows no barriers. 🌏
 
-#### Feedback
+### Feedback
 We value your opinions and suggestions to help us improve the project!
 Here's how you can provide feedback:
 
@@ -160,7 +160,7 @@ Here's how you can provide feedback:
   - You will receive an acknowledgement of your feedback within 48 hours.
   - Please check the issue tracker for further updates. If you provided your GitHub username when giving feedback, we will notify you when posting new changes.
 
-#### Contributions
+### Contributions
 We welcome contributions! Here's how you can help make GestureBridge even better:
 
 1. **Fork the Repository**: Click the "Fork" button on GitHub.
@@ -180,12 +180,12 @@ We welcome contributions! Here's how you can help make GestureBridge even better
     ```
 7. **Submit a Pull Request**: Open a PR on GitHub to propose your changes.
 
-**Guidelines for a Good Pull Request**
+#### Guidelines for a Good Pull Request
 - Ensure your branch is up to date with `main` to avoid conflicts.
 - Provide a clear and detailed description of your changes.
 - Ensure your changes adhere to **CSC207 CheckStyle**.
 
-**Review and Merge Protocols**
+#### Review and Merge Protocols**
 - Contributions and pull requests are reviewed weekly by the maintainers
 - Your contribution should be constructive, addressing either an existing issue or 
 help add a new feature
