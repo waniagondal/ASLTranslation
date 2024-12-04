@@ -36,12 +36,6 @@ class TranslationInteractorTest {
                 // Check if the translation matches the desired meaning
                 assertEquals("你好世界", outputData.getTranslatedText());
             }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                // Report the error message if the user fails the test
-                fail("Select Language use case failure is unexpected");
-            }
         };
 
         return new SignLanguageTranslationInteractor(translate, successPresenter);

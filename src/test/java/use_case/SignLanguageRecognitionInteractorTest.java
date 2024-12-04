@@ -10,11 +10,11 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-// This tests only tests the interactor, which deals with the predictions of the python model
-// This test reached 100% coverage for interactor.
-// For the sake of simplicity and testing, the python model part is not tested through Java unit tests
-// Instead, their accuracy is tested by manually signing out gestures and checking the output result, alongside
-// finding the confidence score, which ended up being 92% through ML validatoion in pytroch.
+// This test focuses solely on the interactor, which handles predictions from the Python model.
+// The interactor is fully tested, achieving 100% test coverage.
+// For simplicity, the Python model itself is not tested through Java unit tests.
+// Instead, the model's accuracy is validated manually by recording gestures, verifying the output results,
+// and assessing the confidence score. Through ML validation in PyTorch, the model achieved a confidence score of 92%.
 class SignLanguageRecognitionInteractorTest {
 
     @Test
